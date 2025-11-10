@@ -86,12 +86,14 @@ const STATE = {
     map: null,
     territoryLayers: [],
     cityMarkers: [],
+    wallLayers: [],
     currentIndex: 0,
     isPlaying: false,
     animationId: null,
     lastUpdateTime: 0,
     animationSpeed: 3,
-    updateInterval: 600
+    updateInterval: 600,
+    isInitialized: false
 };
 
 // Speed configuration mapping
@@ -115,11 +117,41 @@ const MAP_CONFIG = {
 // INITIALIZATION
 // ============================================
 function init() {
-    initializeMap();
-    setupEventListeners();
-    addReferenceCities();
-    updateDisplay();
-    drawTerritories();
+    try {
+        showLoading();
+        initializeMap();
+        setupEventListeners();
+        setupKeyboardShortcuts();
+        addReferenceCities();
+        updateDisplay();
+        drawTerritories();
+        STATE.isInitialized = true;
+        hideLoading();
+    } catch (error) {
+        console.error('Initialization error:', error);
+        showError('Failed to initialize the application. Please refresh the page.');
+    }
+}
+
+// Loading screen helpers
+function showLoading() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.style.display = 'flex';
+}
+
+function hideLoading() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 300);
+    }
+}
+
+function showError(message) {
+    hideLoading();
+    alert(message);
 }
 
 function initializeMap() {
@@ -141,10 +173,92 @@ function initializeMap() {
 }
 
 function setupEventListeners() {
-    document.getElementById('timeline').addEventListener('input', handleTimelineChange);
-    document.getElementById('playBtn').addEventListener('click', togglePlay);
-    document.getElementById('resetBtn').addEventListener('click', reset);
-    document.getElementById('speedSlider').addEventListener('input', handleSpeedChange);
+    const timeline = document.getElementById('timeline');
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const speedSlider = document.getElementById('speedSlider');
+    
+    if (timeline) timeline.addEventListener('input', handleTimelineChange);
+    if (playBtn) playBtn.addEventListener('click', togglePlay);
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    if (speedSlider) {
+        speedSlider.addEventListener('input', handleSpeedChange);
+        speedSlider.addEventListener('change', (e) => {
+            e.target.setAttribute('aria-valuenow', e.target.value);
+        });
+    }
+}
+
+// ============================================
+// KEYBOARD SHORTCUTS
+// ============================================
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        // Ignore if user is typing in an input
+        if (e.target.tagName === 'INPUT') return;
+        
+        switch(e.key.toLowerCase()) {
+            case ' ':
+            case 'spacebar':
+                e.preventDefault();
+                togglePlay();
+                break;
+            case 'r':
+                e.preventDefault();
+                reset();
+                break;
+            case 'arrowleft':
+                e.preventDefault();
+                navigateTimeline(-1);
+                break;
+            case 'arrowright':
+                e.preventDefault();
+                navigateTimeline(1);
+                break;
+            case 'home':
+                e.preventDefault();
+                jumpToStart();
+                break;
+            case 'end':
+                e.preventDefault();
+                jumpToEnd();
+                break;
+        }
+    });
+}
+
+function navigateTimeline(direction) {
+    if (STATE.isPlaying) togglePlay();
+    
+    STATE.currentIndex = Math.max(0, Math.min(historicalData.length - 1, STATE.currentIndex + direction));
+    updateDisplay();
+    drawTerritories();
+    updateTimelineSlider();
+}
+
+function jumpToStart() {
+    if (STATE.isPlaying) togglePlay();
+    STATE.currentIndex = 0;
+    updateDisplay();
+    drawTerritories();
+    updateTimelineSlider();
+}
+
+function jumpToEnd() {
+    if (STATE.isPlaying) togglePlay();
+    STATE.currentIndex = historicalData.length - 1;
+    updateDisplay();
+    drawTerritories();
+    updateTimelineSlider();
+}
+
+function updateTimelineSlider() {
+    const timeline = document.getElementById('timeline');
+    if (timeline) {
+        const value = (STATE.currentIndex / (historicalData.length - 1)) * 100;
+        timeline.value = value;
+        timeline.setAttribute('aria-valuenow', Math.round(value));
+    }
 }
 
 // ============================================
@@ -446,11 +560,17 @@ function addReferenceCities() {
 // UPDATE TIME-BASED MARKERS
 // ============================================
 function updateTimeBasedMarkers() {
+    if (!STATE.map) return;
+    
     const currentYear = historicalData[STATE.currentIndex].year;
     
     // Clear existing city and fort markers
     STATE.cityMarkers.forEach(marker => {
-        STATE.map.removeLayer(marker);
+        try {
+            STATE.map.removeLayer(marker);
+        } catch (e) {
+            console.warn('Failed to remove marker:', e);
+        }
     });
     STATE.cityMarkers = [];
     
@@ -546,14 +666,18 @@ function updateTimeBasedMarkers() {
 // ============================================
 // DEFENSIVE WALLS AND LIMES
 // ============================================
-let wallLayers = [];
-
 function updateDefensiveWalls(currentYear) {
+    if (!STATE.map) return;
+    
     // Clear existing wall layers
-    wallLayers.forEach(layer => {
-        STATE.map.removeLayer(layer);
+    STATE.wallLayers.forEach(layer => {
+        try {
+            STATE.map.removeLayer(layer);
+        } catch (e) {
+            console.warn('Failed to remove wall layer:', e);
+        }
     });
-    wallLayers = [];
+    STATE.wallLayers = [];
     // Hadrian's Wall (122 CE - 128 CE)
     const hadriansWall = [
         [54.967, -1.600], // Wallsend
@@ -632,7 +756,7 @@ function updateDefensiveWalls(currentYear) {
         rhineLine.bindTooltip('Rhine Limes', { className: 'wall-label', sticky: true });
         rhineLine.on('mouseover', () => showWallInfo('Rhine Limes', -12, 260));
         rhineLine.on('click', () => showWallInfo('Rhine Limes', -12, 260));
-        wallLayers.push(rhineLine);
+        STATE.wallLayers.push(rhineLine);
     }
     
     // Danube Limes (10 to 400 CE)
@@ -641,7 +765,7 @@ function updateDefensiveWalls(currentYear) {
         danubeLine.bindTooltip('Danube Limes', { className: 'wall-label', sticky: true });
         danubeLine.on('mouseover', () => showWallInfo('Danube Limes', 10, 400));
         danubeLine.on('click', () => showWallInfo('Danube Limes', 10, 400));
-        wallLayers.push(danubeLine);
+        STATE.wallLayers.push(danubeLine);
     }
     
     // Upper Germanic Limes (85 to 260 CE)
@@ -650,7 +774,7 @@ function updateDefensiveWalls(currentYear) {
         germanicLine.bindTooltip('Upper Germanic Limes', { className: 'wall-label', sticky: true });
         germanicLine.on('mouseover', () => showWallInfo('Upper Germanic Limes', 85, 260));
         germanicLine.on('click', () => showWallInfo('Upper Germanic Limes', 85, 260));
-        wallLayers.push(germanicLine);
+        STATE.wallLayers.push(germanicLine);
     }
     
     // Hadrian's Wall (122 to 410 CE)
@@ -659,7 +783,7 @@ function updateDefensiveWalls(currentYear) {
         hadrianLine.bindTooltip('Hadrian\'s Wall (122-128 CE)', { className: 'wall-label', sticky: true });
         hadrianLine.on('mouseover', () => showWallInfo('Hadrian\'s Wall', 122, 410));
         hadrianLine.on('click', () => showWallInfo('Hadrian\'s Wall', 122, 410));
-        wallLayers.push(hadrianLine);
+        STATE.wallLayers.push(hadrianLine);
     }
     
     // Antonine Wall (142 to 162 CE)
@@ -668,7 +792,7 @@ function updateDefensiveWalls(currentYear) {
         antonineLine.bindTooltip('Antonine Wall (142-162 CE)', { className: 'wall-label', sticky: true });
         antonineLine.on('mouseover', () => showWallInfo('Antonine Wall', 142, 162));
         antonineLine.on('click', () => showWallInfo('Antonine Wall', 142, 162));
-        wallLayers.push(antonineLine);
+        STATE.wallLayers.push(antonineLine);
     }
 }
 
@@ -676,13 +800,21 @@ function updateDefensiveWalls(currentYear) {
 // TERRITORY VISUALIZATION
 // ============================================
 function clearTerritories() {
+    if (!STATE.map) return;
+    
     STATE.territoryLayers.forEach(layer => {
-        STATE.map.removeLayer(layer);
+        try {
+            STATE.map.removeLayer(layer);
+        } catch (e) {
+            console.warn('Failed to remove territory layer:', e);
+        }
     });
     STATE.territoryLayers = [];
 }
 
 function drawTerritories() {
+    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
+    
     clearTerritories();
     
     // Update time-based markers (cities, forts, walls)
@@ -775,6 +907,8 @@ function drawTerritories() {
 // ============================================
 function updateDisplay() {
     const data = historicalData[STATE.currentIndex];
+    if (!data) return;
+    
     const year = Math.abs(data.year);
     const era = data.year < 0 ? 'BCE' : 'CE';
     
@@ -782,6 +916,8 @@ function updateDisplay() {
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
+    
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
     
     // Add fade transition
     nameElement.style.opacity = '0';
@@ -939,15 +1075,20 @@ function showTerritoryInfo(periodData, isNewExpansion, lat, lon) {
 // EVENT HANDLERS
 // ============================================
 function handleTimelineChange(e) {
+    if (STATE.isPlaying) return; // Don't allow manual changes during playback
+    
     const value = parseInt(e.target.value);
     STATE.currentIndex = Math.floor((value / 100) * (historicalData.length - 1));
+    e.target.setAttribute('aria-valuenow', value);
     updateDisplay();
     drawTerritories();
 }
 
 function handleSpeedChange(e) {
-    STATE.animationSpeed = parseInt(e.target.value);
-    STATE.updateInterval = SPEED_MAP[STATE.animationSpeed];
+    const speed = parseInt(e.target.value);
+    STATE.animationSpeed = speed;
+    STATE.updateInterval = SPEED_MAP[speed];
+    e.target.setAttribute('aria-valuenow', speed);
 }
 
 // ============================================
@@ -959,15 +1100,21 @@ function togglePlay() {
     const pauseIcon = document.querySelector('.pause-icon');
     const playBtn = document.getElementById('playBtn');
     
+    if (!playBtn) return;
+    
     if (STATE.isPlaying) {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'inline';
+        if (playIcon) playIcon.style.display = 'none';
+        if (pauseIcon) pauseIcon.style.display = 'inline';
         playBtn.classList.add('playing');
+        playBtn.setAttribute('aria-pressed', 'true');
+        playBtn.setAttribute('aria-label', 'Pause animation');
         animate();
     } else {
-        playIcon.style.display = 'inline';
-        pauseIcon.style.display = 'none';
+        if (playIcon) playIcon.style.display = 'inline';
+        if (pauseIcon) pauseIcon.style.display = 'none';
         playBtn.classList.remove('playing');
+        playBtn.setAttribute('aria-pressed', 'false');
+        playBtn.setAttribute('aria-label', 'Play animation');
         if (STATE.animationId) {
             cancelAnimationFrame(STATE.animationId);
             STATE.animationId = null;
@@ -989,10 +1136,7 @@ function animate(timestamp = 0) {
         
         updateDisplay();
         drawTerritories();
-        
-        // Update timeline slider
-        const timelineValue = (STATE.currentIndex / (historicalData.length - 1)) * 100;
-        document.getElementById('timeline').value = timelineValue;
+        updateTimelineSlider();
         
         STATE.lastUpdateTime = timestamp;
     }
@@ -1007,7 +1151,7 @@ function reset() {
     STATE.currentIndex = 0;
     updateDisplay();
     drawTerritories();
-    document.getElementById('timeline').value = 0;
+    updateTimelineSlider();
 }
 
 // ============================================

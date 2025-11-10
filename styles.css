@@ -15,9 +15,12 @@
     --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.7);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
 }
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -25,6 +28,18 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 body {
@@ -139,6 +154,53 @@ h1 {
     }
 }
 
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #2d2416 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.3s ease;
+}
+
+.loading-content {
+    text-align: center;
+    color: var(--roman-gold);
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(212, 175, 55, 0.2);
+    border-top-color: var(--roman-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-content p {
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
 /* Main Content Area */
 .main-content {
     display: flex;
@@ -207,7 +269,8 @@ h1 {
     border: none !important;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
     cursor: pointer !important;
-    transition: transform 0.2s ease;
+    transition: var(--transition-fast);
+    will-change: transform;
 }
 
 .city-marker:hover {
@@ -354,29 +417,11 @@ h1 {
     border-right-color: rgba(20, 16, 12, 0.98) !important;
 }
 
-/* Territory animations */
-.pulse-animation {
-    animation: territoryPulse 1.5s ease-out;
-}
-
-@keyframes territoryPulse {
-    0% {
-        opacity: 0.3;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 0.8;
-    }
-    100% {
-        opacity: 0.6;
-        transform: scale(1);
-    }
-}
-
 /* Territory layer styles */
 .territory-established {
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
     cursor: pointer !important;
+    will-change: fill-opacity;
 }
 
 .territory-established:hover {
@@ -386,6 +431,7 @@ h1 {
 .territory-expansion {
     animation: expansionGlow 2s ease-in-out infinite;
     cursor: pointer !important;
+    will-change: opacity;
 }
 
 .territory-expansion:hover {
@@ -394,24 +440,17 @@ h1 {
 
 .territory-glow {
     animation: glowPulse 1.5s ease-in-out infinite;
+    will-change: opacity;
 }
 
 @keyframes expansionGlow {
-    0%, 100% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
 }
 
 @keyframes glowPulse {
-    0%, 100% {
-        opacity: 0.6;
-    }
-    50% {
-        opacity: 0.3;
-    }
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.3; }
 }
 
 /* ============================================
@@ -446,13 +485,17 @@ h1 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    will-change: transform;
 }
 
-.year-display:hover {
+.year-display:hover,
+.year-display:focus {
     box-shadow: 
         0 8px 35px rgba(212, 175, 55, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     transform: scale(1.02);
+    outline: 2px solid var(--roman-gold-light);
+    outline-offset: 2px;
 }
 
 .era {
@@ -708,6 +751,7 @@ h1 {
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
+    will-change: transform;
 }
 
 .btn::before {
@@ -721,11 +765,17 @@ h1 {
     background: rgba(255, 255, 255, 0.1);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
+    pointer-events: none;
 }
 
 .btn:hover::before {
     width: 300px;
     height: 300px;
+}
+
+.btn:focus {
+    outline: 2px solid var(--roman-gold-light);
+    outline-offset: 2px;
 }
 
 .btn-primary {
@@ -734,7 +784,8 @@ h1 {
     box-shadow: var(--shadow-sm);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
     background: linear-gradient(135deg, #a00000, #cc0000);
     box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
     transform: translateY(-3px);
@@ -746,12 +797,8 @@ h1 {
 }
 
 @keyframes buttonPulse {
-    0%, 100% {
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
-    }
+    0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
 }
 
 .btn-secondary {
@@ -760,7 +807,8 @@ h1 {
     box-shadow: var(--shadow-sm);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary:focus {
     background: linear-gradient(135deg, #5a4738, #6a5748);
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     transform: translateY(-3px);
@@ -799,6 +847,7 @@ h1 {
         inset 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
+.info-panel h2,
 .info-panel h3 {
     color: var(--roman-gold);
     font-size: clamp(1.1em, 3vw, 1.4em);

@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE">
-    <meta name="keywords" content="Roman Empire, History, Interactive Map, Ancient Rome">
+    <meta name="description" content="Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE with detailed historical information">
+    <meta name="keywords" content="Roman Empire, History, Interactive Map, Ancient Rome, Historical Timeline, Roman Republic">
+    <meta name="author" content="Roman Empire Historical Visualization">
+    <meta name="theme-color" content="#8B0000">
     <title>IMPERIVM ROMANVM - The Rise and Fall of Rome</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://server.arcgisonline.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://server.arcgisonline.com">
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
@@ -14,35 +22,40 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://server.arcgisonline.com">
 </head>
 <body>
+    <!-- Loading State -->
+    <div class="loading-overlay" id="loadingOverlay" aria-live="polite" aria-busy="true">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Loading Roman Empire...</p>
+        </div>
+    </div>
+
     <div class="container" role="main">
         <header role="banner">
             <h1>IMPERIVM ROMANVM</h1>
             <p class="subtitle">The Expansion of the Roman Empire · 509 BCE - 476 CE</p>
         </header>
 
-        <div class="main-content">
-            <div class="map-container" role="img" aria-label="Interactive map showing Roman Empire expansion">
-                <div id="map"></div>
-            </div>
+        <main class="main-content">
+            <section class="map-container" role="region" aria-label="Interactive map showing Roman Empire expansion">
+                <div id="map" role="application" aria-label="Roman Empire territorial map"></div>
+            </section>
 
             <aside class="sidebar" role="complementary">
                 <section class="info-panel" aria-live="polite" aria-atomic="true">
-                    <h3 id="periodName">Early Roman Republic</h3>
+                    <h2 id="periodName">Early Roman Republic</h2>
                     <p id="periodDescription">Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.</p>
                 </section>
 
                 <nav class="controls" aria-label="Animation controls">
                     <div class="button-group">
-                        <button id="playBtn" class="btn btn-primary" aria-label="Play animation" aria-pressed="false">
+                        <button id="playBtn" class="btn btn-primary" aria-label="Play animation" aria-pressed="false" title="Play/Pause (Space)">
                             <span class="play-icon" aria-hidden="true">▶</span>
                             <span class="pause-icon" aria-hidden="true">⏸</span>
                         </button>
-                        <button id="resetBtn" class="btn btn-secondary" aria-label="Reset to beginning">Reset</button>
+                        <button id="resetBtn" class="btn btn-secondary" aria-label="Reset to beginning" title="Reset to start (R)">Reset</button>
                     </div>
                     <div class="speed-control">
                         <label for="speedSlider">Animation Speed:</label>
@@ -55,7 +68,8 @@
                                aria-label="Animation speed from 1 (slow) to 5 (fast)"
                                aria-valuemin="1"
                                aria-valuemax="5"
-                               aria-valuenow="3">
+                               aria-valuenow="3"
+                               title="Adjust playback speed">
                         <div class="speed-labels" aria-hidden="true">
                             <span>Slow</span>
                             <span>Fast</span>
@@ -78,7 +92,8 @@
                                aria-label="Timeline slider from 509 BCE to 476 CE"
                                aria-valuemin="0"
                                aria-valuemax="100"
-                               aria-valuenow="0">
+                               aria-valuenow="0"
+                               title="Drag to navigate timeline (Arrow keys)">
                         <div class="timeline-markers" aria-hidden="true">
                             <div class="marker marker-republic" title="Roman Republic"></div>
                             <div class="marker marker-empire" title="Roman Empire Begins"></div>
@@ -88,10 +103,10 @@
                     </div>
                 </nav>
             </aside>
-        </div>
+        </main>
 
         <!-- Floating Year Display -->
-        <div class="year-display" id="yearDisplay" role="status" aria-live="polite">
+        <div class="year-display" id="yearDisplay" role="status" aria-live="polite" tabindex="0">
             <span id="currentYear">509</span>
             <span class="era">BCE</span>
         </div>
