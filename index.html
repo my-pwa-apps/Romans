@@ -47,6 +47,24 @@
                 <section class="info-panel" aria-live="polite" aria-atomic="true">
                     <h2 id="periodName">Early Roman Republic</h2>
                     <p id="periodDescription">Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.</p>
+                    
+                    <!-- Educational Context -->
+                    <div class="educational-section">
+                        <button class="edu-toggle" id="eduToggle" aria-expanded="false" aria-controls="eduContent">
+                            <span class="edu-icon">📚</span> Learn More
+                        </button>
+                        <div class="edu-content" id="eduContent" hidden>
+                            <h3>Historical Context</h3>
+                            <ul id="eduFacts">
+                                <li>The Roman Republic was founded in 509 BCE after overthrowing the last Etruscan king.</li>
+                                <li>Rome's government featured two consuls elected annually, a Senate, and popular assemblies.</li>
+                            </ul>
+                            <div class="key-figures" id="keyFigures">
+                                <h4>Key Figures</h4>
+                                <p id="figuresText">Coming soon...</p>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <nav class="controls" aria-label="Animation controls">
@@ -110,6 +128,27 @@
             <span id="currentYear">509</span>
             <span class="era">BCE</span>
         </div>
+
+        <!-- Mobile Touch Hints -->
+        <div class="mobile-hint" id="mobileHint">
+            <p>👆 Tap map to explore • Swipe timeline to navigate</p>
+        </div>
+
+        <!-- Educational Quiz Panel -->
+        <div class="quiz-panel" id="quizPanel" hidden>
+            <button class="quiz-close" id="quizClose" aria-label="Close quiz">×</button>
+            <h3>Test Your Knowledge!</h3>
+            <div class="quiz-content">
+                <p id="quizQuestion">Loading question...</p>
+                <div class="quiz-options" id="quizOptions"></div>
+            </div>
+            <button class="btn btn-primary quiz-next" id="quizNext" hidden>Next Question</button>
+        </div>
+
+        <!-- Quick Facts Button -->
+        <button class="quick-facts-btn" id="quickFactsBtn" title="Random Historical Fact">
+            💡
+        </button>
 
         <footer role="contentinfo">
             <div class="legend" role="list" aria-label="Map legend">

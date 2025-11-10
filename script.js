@@ -1,3 +1,166 @@
+// Educational Data - Historical Facts and Context
+const EDUCATIONAL_DATA = {
+    "-509": {
+        facts: [
+            "The Roman Republic was founded in 509 BCE after overthrowing King Tarquin the Proud.",
+            "Early Rome was governed by two consuls who served one-year terms.",
+            "The Senate, originally an advisory council, became the most powerful governing body.",
+            "Roman citizens were divided into Patricians (aristocrats) and Plebeians (commoners)."
+        ],
+        figures: ["Lucius Junius Brutus - Founder of the Republic", "Lucius Tarquinius Collatinus - First Consul"],
+        significance: "Foundation of Republican government that would last nearly 500 years"
+    },
+    "-450": {
+        facts: [
+            "The Twelve Tables (450 BCE) became Rome's first written law code.",
+            "These laws were displayed in the Roman Forum for all citizens to see.",
+            "The Conflict of the Orders between Patricians and Plebeians shaped Roman politics."
+        ],
+        figures: ["Decemviri - The Ten Men who codified Roman law"],
+        significance: "Establishment of written law and legal equality principles"
+    },
+    "-350": {
+        facts: [
+            "The Latin Wars (340-338 BCE) resulted in Roman domination of central Italy.",
+            "Rome granted citizenship to some conquered peoples, a unique policy.",
+            "The Via Appia, first major Roman road, was begun in 312 BCE."
+        ],
+        figures: ["Appius Claudius Caecus - Builder of the Appian Way"],
+        significance: "Rome's innovative approach to conquest through integration"
+    },
+    "-218": {
+        facts: [
+            "The First Punic War (264-241 BCE) was fought entirely over Sicily.",
+            "Rome built its first major navy to challenge Carthage's sea power.",
+            "This war made Rome a Mediterranean power for the first time."
+        ],
+        figures: ["Hamilcar Barca - Carthaginian general, father of Hannibal"],
+        significance: "Rome's transformation from land power to naval empire"
+    },
+    "-146": {
+        facts: [
+            "Carthage was completely destroyed in 146 BCE, ending the Third Punic War.",
+            "The same year, Corinth was also destroyed, making Greece a Roman province.",
+            "Rome inherited vast territories and immense wealth from these conquests.",
+            "The influx of slaves and wealth transformed Roman society."
+        ],
+        figures: ["Scipio Aemilianus - Conqueror of Carthage", "Cato the Elder - 'Carthago delenda est'"],
+        significance: "Rome becomes undisputed master of the Mediterranean"
+    },
+    "-50": {
+        facts: [
+            "Julius Caesar conquered Gaul (58-50 BCE), adding vast territories to Rome.",
+            "Caesar's Gallic Wars resulted in the death or enslavement of millions.",
+            "The conquest of Gaul brought immense wealth and military glory to Caesar.",
+            "Britain was invaded twice by Caesar (55-54 BCE) but not conquered."
+        ],
+        figures: ["Julius Caesar - Conqueror of Gaul", "Vercingetorix - Gallic resistance leader"],
+        significance: "Caesar's conquests shift power balance, leading to civil war"
+    },
+    "-27": {
+        facts: [
+            "Octavian became 'Augustus' in 27 BCE, marking the birth of the Roman Empire.",
+            "Augustus maintained Republican forms while holding supreme power.",
+            "The Pax Romana (Roman Peace) began, lasting nearly 200 years.",
+            "Augustus expanded and secured borders, reformed administration and military."
+        ],
+        figures: ["Augustus - First Roman Emperor", "Marcus Agrippa - General and Admiral"],
+        significance: "End of Republic, beginning of Imperial system"
+    },
+    "117": {
+        facts: [
+            "Under Trajan (98-117 CE), the empire reached its maximum territorial extent.",
+            "Trajan conquered Dacia (Romania), adding its gold and silver mines.",
+            "He also briefly conquered Mesopotamia, reaching the Persian Gulf.",
+            "Trajan was considered one of the 'Five Good Emperors'."
+        ],
+        figures: ["Trajan - Optimus Princeps (Best of Princes)", "Hadrian - His successor"],
+        significance: "Peak of Roman territorial expansion and prosperity"
+    },
+    "235": {
+        facts: [
+            "The Crisis of the Third Century (235-284 CE) nearly destroyed the empire.",
+            "26 emperors ruled in 50 years, most dying violently.",
+            "Barbarian invasions, plague, and economic collapse threatened Rome.",
+            "The empire briefly split into three competing states."
+        ],
+        figures: ["Gallienus - Struggled to hold empire together", "Aurelian - 'Restorer of the World'"],
+        significance: "Near collapse of Roman power, loss of many territories"
+    },
+    "337": {
+        facts: [
+            "Constantine the Great (306-337 CE) made Christianity the favored religion.",
+            "He founded Constantinople (modern Istanbul) as a 'New Rome'.",
+            "Constantine reunified the empire after defeating rival emperors.",
+            "The Council of Nicaea (325 CE) established Christian doctrine."
+        ],
+        figures: ["Constantine I - First Christian Emperor", "Helena - His mother, finder of the True Cross"],
+        significance: "Christianization of the Roman Empire"
+    },
+    "476": {
+        facts: [
+            "Romulus Augustulus was deposed in 476 CE by Odoacer, ending the Western Empire.",
+            "The Eastern Empire (Byzantine Empire) continued for another 1000 years.",
+            "Germanic kingdoms replaced Roman rule in the West.",
+            "Roman law, language, and culture profoundly influenced medieval Europe."
+        ],
+        figures: ["Romulus Augustulus - Last Western Emperor", "Odoacer - Germanic king"],
+        significance: "End of Western Rome, but not Roman civilization or influence"
+    }
+};
+
+// Quiz Questions for Educational Mode
+const QUIZ_QUESTIONS = [
+    {
+        question: "In what year was the Roman Republic founded?",
+        options: ["753 BCE", "509 BCE", "27 BCE", "44 BCE"],
+        correct: 1,
+        explanation: "The Roman Republic was founded in 509 BCE after overthrowing the last Etruscan king."
+    },
+    {
+        question: "Who was the first Roman Emperor?",
+        options: ["Julius Caesar", "Augustus", "Nero", "Trajan"],
+        correct: 1,
+        explanation: "Augustus (formerly Octavian) became the first Roman Emperor in 27 BCE."
+    },
+    {
+        question: "Which enemy did Rome fight in the Punic Wars?",
+        options: ["Greeks", "Carthaginians", "Persians", "Gauls"],
+        correct: 1,
+        explanation: "Rome fought three Punic Wars (264-146 BCE) against Carthage for control of the Mediterranean."
+    },
+    {
+        question: "Under which emperor did Rome reach its greatest extent?",
+        options: ["Augustus", "Hadrian", "Trajan", "Constantine"],
+        correct: 2,
+        explanation: "Trajan (98-117 CE) expanded the empire to its maximum size, conquering Dacia and Mesopotamia."
+    },
+    {
+        question: "What famous Gallic leader resisted Julius Caesar?",
+        options: ["Hannibal", "Spartacus", "Vercingetorix", "Boudica"],
+        correct: 2,
+        explanation: "Vercingetorix led the Gallic resistance against Caesar but was defeated at Alesia in 52 BCE."
+    },
+    {
+        question: "Which wall marked Rome's northern frontier in Britain?",
+        options: ["Antonine Wall", "Hadrian's Wall", "Great Wall", "Aurelian Wall"],
+        correct: 1,
+        explanation: "Hadrian's Wall (122-128 CE) stretched 73 miles across northern England."
+    },
+    {
+        question: "What year did the Western Roman Empire fall?",
+        options: ["410 CE", "455 CE", "476 CE", "527 CE"],
+        correct: 2,
+        explanation: "476 CE marks the traditional end when Romulus Augustulus was deposed by Odoacer."
+    },
+    {
+        question: "Which emperor made Christianity the favored religion?",
+        options: ["Nero", "Constantine", "Diocletian", "Julian"],
+        correct: 1,
+        explanation: "Constantine the Great legalized and favored Christianity in the early 4th century CE."
+    }
+];
+
 // Roman Empire Expansion Data
 const historicalData = [
     { year: -509, name: "Early Roman Republic", description: "Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.", territories: [[41.9, 12.5, 0.5]] },
@@ -93,7 +256,15 @@ const STATE = {
     lastUpdateTime: 0,
     animationSpeed: 3,
     updateInterval: 600,
-    isInitialized: false
+    isInitialized: false,
+    isMobile: false,
+    touchStartX: 0,
+    touchStartY: 0,
+    quizIndex: 0,
+    quizScore: 0,
+    eduExpanded: false,
+    infoLocked: false, // Track if info panel is locked to specific content
+    lockedContent: null // Store the locked content
 };
 
 // Speed configuration mapping
@@ -119,17 +290,42 @@ const MAP_CONFIG = {
 function init() {
     try {
         showLoading();
+        detectMobile();
         initializeMap();
         setupEventListeners();
         setupKeyboardShortcuts();
+        setupTouchGestures();
+        setupEducationalFeatures();
         addReferenceCities();
         updateDisplay();
+        updateEducationalContent();
         drawTerritories();
         STATE.isInitialized = true;
         hideLoading();
+        
+        // Show mobile hint briefly
+        if (STATE.isMobile) {
+            showMobileHint();
+        }
     } catch (error) {
         console.error('Initialization error:', error);
         showError('Failed to initialize the application. Please refresh the page.');
+    }
+}
+
+// Detect mobile device
+function detectMobile() {
+    STATE.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth <= 768;
+}
+
+function showMobileHint() {
+    const hint = document.getElementById('mobileHint');
+    if (hint) {
+        hint.classList.add('show');
+        setTimeout(() => {
+            hint.classList.remove('show');
+        }, 4000);
     }
 }
 
@@ -186,6 +382,63 @@ function setupEventListeners() {
         speedSlider.addEventListener('change', (e) => {
             e.target.setAttribute('aria-valuenow', e.target.value);
         });
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        detectMobile();
+    });
+}
+
+// ============================================
+// TOUCH GESTURES FOR MOBILE
+// ============================================
+function setupTouchGestures() {
+    const timeline = document.getElementById('timeline');
+    if (!timeline) return;
+    
+    let touchStartValue = 0;
+    
+    timeline.addEventListener('touchstart', (e) => {
+        touchStartValue = parseInt(timeline.value);
+        STATE.touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    timeline.addEventListener('touchmove', (e) => {
+        const touchDelta = e.touches[0].clientX - STATE.touchStartX;
+        const sensitivity = 0.5;
+        const newValue = Math.max(0, Math.min(100, touchStartValue + (touchDelta * sensitivity)));
+        timeline.value = newValue;
+        handleTimelineChange({ target: timeline });
+    }, { passive: true });
+    
+    // Swipe navigation on map for mobile
+    if (STATE.isMobile) {
+        const mapElement = document.getElementById('map');
+        if (mapElement) {
+            let swipeStartX = 0;
+            let swipeStartTime = 0;
+            
+            mapElement.addEventListener('touchstart', (e) => {
+                swipeStartX = e.touches[0].clientX;
+                swipeStartTime = Date.now();
+            }, { passive: true });
+            
+            mapElement.addEventListener('touchend', (e) => {
+                const swipeEndX = e.changedTouches[0].clientX;
+                const swipeTime = Date.now() - swipeStartTime;
+                const swipeDistance = swipeEndX - swipeStartX;
+                
+                // Only trigger if fast swipe (< 300ms) and significant distance (> 50px)
+                if (swipeTime < 300 && Math.abs(swipeDistance) > 50) {
+                    if (swipeDistance > 0) {
+                        navigateTimeline(-1); // Swipe right = previous
+                    } else {
+                        navigateTimeline(1); // Swipe left = next
+                    }
+                }
+            }, { passive: true });
+        }
     }
 }
 
@@ -600,18 +853,22 @@ function updateTimeBasedMarkers() {
                 offset: [0, -10]
             });
             
-            // Add click handler to show city info
+            // Add click handler to show and lock city info
             marker.on('click', () => {
-                showCityInfo(city);
+                showCityInfo(city, true); // true = lock the info
             });
             
-            // Add hover handler to show city info - both on marker and tooltip
+            // Add hover handler to show city info (but don't lock)
             marker.on('mouseover', () => {
-                showCityInfo(city);
+                if (!STATE.infoLocked) {
+                    showCityInfo(city, false);
+                }
             });
             
-            marker.on('tooltipopen', () => {
-                showCityInfo(city);
+            marker.on('mouseout', () => {
+                if (!STATE.infoLocked) {
+                    updateDisplay();
+                }
             });
             
             STATE.cityMarkers.push(marker);
@@ -644,15 +901,19 @@ function updateTimeBasedMarkers() {
             
             // Add hover and click handlers for fort info
             marker.on('click', () => {
-                showFortInfo(fort);
+                showFortInfo(fort, true); // true = lock the info
             });
             
             marker.on('mouseover', () => {
-                showFortInfo(fort);
+                if (!STATE.infoLocked) {
+                    showFortInfo(fort, false);
+                }
             });
             
-            marker.on('tooltipopen', () => {
-                showFortInfo(fort);
+            marker.on('mouseout', () => {
+                if (!STATE.infoLocked) {
+                    updateDisplay();
+                }
             });
             
             STATE.cityMarkers.push(marker);
@@ -754,8 +1015,13 @@ function updateDefensiveWalls(currentYear) {
     if (currentYear >= -12 && currentYear <= 260) {
         const rhineLine = L.polyline(rhineLimes, limesStyle).addTo(STATE.map);
         rhineLine.bindTooltip('Rhine Limes', { className: 'wall-label', sticky: true });
-        rhineLine.on('mouseover', () => showWallInfo('Rhine Limes', -12, 260));
-        rhineLine.on('click', () => showWallInfo('Rhine Limes', -12, 260));
+        rhineLine.on('mouseover', () => {
+            if (!STATE.infoLocked) showWallInfo('Rhine Limes', -12, 260, false);
+        });
+        rhineLine.on('mouseout', () => {
+            if (!STATE.infoLocked) updateDisplay();
+        });
+        rhineLine.on('click', () => showWallInfo('Rhine Limes', -12, 260, true));
         STATE.wallLayers.push(rhineLine);
     }
     
@@ -763,8 +1029,13 @@ function updateDefensiveWalls(currentYear) {
     if (currentYear >= 10 && currentYear <= 400) {
         const danubeLine = L.polyline(danubeLimes, limesStyle).addTo(STATE.map);
         danubeLine.bindTooltip('Danube Limes', { className: 'wall-label', sticky: true });
-        danubeLine.on('mouseover', () => showWallInfo('Danube Limes', 10, 400));
-        danubeLine.on('click', () => showWallInfo('Danube Limes', 10, 400));
+        danubeLine.on('mouseover', () => {
+            if (!STATE.infoLocked) showWallInfo('Danube Limes', 10, 400, false);
+        });
+        danubeLine.on('mouseout', () => {
+            if (!STATE.infoLocked) updateDisplay();
+        });
+        danubeLine.on('click', () => showWallInfo('Danube Limes', 10, 400, true));
         STATE.wallLayers.push(danubeLine);
     }
     
@@ -772,8 +1043,13 @@ function updateDefensiveWalls(currentYear) {
     if (currentYear >= 85 && currentYear <= 260) {
         const germanicLine = L.polyline(germanicLimes, limesStyle).addTo(STATE.map);
         germanicLine.bindTooltip('Upper Germanic Limes', { className: 'wall-label', sticky: true });
-        germanicLine.on('mouseover', () => showWallInfo('Upper Germanic Limes', 85, 260));
-        germanicLine.on('click', () => showWallInfo('Upper Germanic Limes', 85, 260));
+        germanicLine.on('mouseover', () => {
+            if (!STATE.infoLocked) showWallInfo('Upper Germanic Limes', 85, 260, false);
+        });
+        germanicLine.on('mouseout', () => {
+            if (!STATE.infoLocked) updateDisplay();
+        });
+        germanicLine.on('click', () => showWallInfo('Upper Germanic Limes', 85, 260, true));
         STATE.wallLayers.push(germanicLine);
     }
     
@@ -781,8 +1057,13 @@ function updateDefensiveWalls(currentYear) {
     if (currentYear >= 122 && currentYear <= 410) {
         const hadrianLine = L.polyline(hadriansWall, { ...wallStyle, color: '#654321' }).addTo(STATE.map);
         hadrianLine.bindTooltip('Hadrian\'s Wall (122-128 CE)', { className: 'wall-label', sticky: true });
-        hadrianLine.on('mouseover', () => showWallInfo('Hadrian\'s Wall', 122, 410));
-        hadrianLine.on('click', () => showWallInfo('Hadrian\'s Wall', 122, 410));
+        hadrianLine.on('mouseover', () => {
+            if (!STATE.infoLocked) showWallInfo('Hadrian\'s Wall', 122, 410, false);
+        });
+        hadrianLine.on('mouseout', () => {
+            if (!STATE.infoLocked) updateDisplay();
+        });
+        hadrianLine.on('click', () => showWallInfo('Hadrian\'s Wall', 122, 410, true));
         STATE.wallLayers.push(hadrianLine);
     }
     
@@ -790,8 +1071,13 @@ function updateDefensiveWalls(currentYear) {
     if (currentYear >= 142 && currentYear <= 162) {
         const antonineLine = L.polyline(antonineWall, { ...wallStyle, color: '#704214' }).addTo(STATE.map);
         antonineLine.bindTooltip('Antonine Wall (142-162 CE)', { className: 'wall-label', sticky: true });
-        antonineLine.on('mouseover', () => showWallInfo('Antonine Wall', 142, 162));
-        antonineLine.on('click', () => showWallInfo('Antonine Wall', 142, 162));
+        antonineLine.on('mouseover', () => {
+            if (!STATE.infoLocked) showWallInfo('Antonine Wall', 142, 162, false);
+        });
+        antonineLine.on('mouseout', () => {
+            if (!STATE.infoLocked) updateDisplay();
+        });
+        antonineLine.on('click', () => showWallInfo('Antonine Wall', 142, 162, true));
         STATE.wallLayers.push(antonineLine);
     }
 }
@@ -836,14 +1122,21 @@ function drawTerritories() {
             className: 'territory-established'
         }).addTo(STATE.map);
         
-        // Add hover event for territory info
+        // Add hover and click event for territory info
         circle.on('mouseover', () => {
-            showTerritoryInfo(data, false, territory[0], territory[1]);
+            if (!STATE.infoLocked) {
+                showTerritoryInfo(data, false, territory[0], territory[1], false);
+            }
         });
         
         circle.on('mouseout', () => {
-            // Restore current period info
-            updateDisplay();
+            if (!STATE.infoLocked) {
+                updateDisplay();
+            }
+        });
+        
+        circle.on('click', () => {
+            showTerritoryInfo(data, false, territory[0], territory[1], true);
         });
         
         STATE.territoryLayers.push(circle);
@@ -871,14 +1164,21 @@ function drawTerritories() {
                     className: 'territory-expansion'
                 }).addTo(STATE.map);
                 
-                // Add hover event for new expansion territories
+                // Add hover and click events for new expansion territories
                 circle.on('mouseover', () => {
-                    showTerritoryInfo(data, true, territory[0], territory[1]);
+                    if (!STATE.infoLocked) {
+                        showTerritoryInfo(data, true, territory[0], territory[1], false);
+                    }
                 });
                 
                 circle.on('mouseout', () => {
-                    // Restore current period info
-                    updateDisplay();
+                    if (!STATE.infoLocked) {
+                        updateDisplay();
+                    }
+                });
+                
+                circle.on('click', () => {
+                    showTerritoryInfo(data, true, territory[0], territory[1], true);
                 });
                 
                 STATE.territoryLayers.push(circle);
@@ -903,9 +1203,218 @@ function drawTerritories() {
 }
 
 // ============================================
+// EDUCATIONAL FEATURES
+// ============================================
+function setupEducationalFeatures() {
+    // Educational content toggle
+    const eduToggle = document.getElementById('eduToggle');
+    const eduContent = document.getElementById('eduContent');
+    
+    if (eduToggle && eduContent) {
+        eduToggle.addEventListener('click', () => {
+            STATE.eduExpanded = !STATE.eduExpanded;
+            eduContent.hidden = !STATE.eduExpanded;
+            eduToggle.setAttribute('aria-expanded', STATE.eduExpanded);
+            
+            if (STATE.eduExpanded) {
+                updateEducationalContent();
+            }
+        });
+    }
+    
+    // Quick facts button
+    const quickFactsBtn = document.getElementById('quickFactsBtn');
+    if (quickFactsBtn) {
+        quickFactsBtn.addEventListener('click', showRandomFact);
+    }
+    
+    // Quiz functionality
+    const quizClose = document.getElementById('quizClose');
+    const quizNext = document.getElementById('quizNext');
+    
+    if (quizClose) {
+        quizClose.addEventListener('click', closeQuiz);
+    }
+    
+    if (quizNext) {
+        quizNext.addEventListener('click', nextQuizQuestion);
+    }
+    
+    // Add quiz trigger (double-tap on mobile, long press on desktop)
+    const infoPanel = document.querySelector('.info-panel');
+    if (infoPanel && STATE.isMobile) {
+        let tapCount = 0;
+        let tapTimer;
+        
+        infoPanel.addEventListener('click', () => {
+            tapCount++;
+            if (tapCount === 1) {
+                tapTimer = setTimeout(() => {
+                    tapCount = 0;
+                }, 300);
+            } else if (tapCount === 2) {
+                clearTimeout(tapTimer);
+                tapCount = 0;
+                startQuiz();
+            }
+        });
+    }
+}
+
+function updateEducationalContent() {
+    const currentYear = historicalData[STATE.currentIndex].year;
+    const yearKey = String(currentYear);
+    const eduData = EDUCATIONAL_DATA[yearKey];
+    
+    const factsElement = document.getElementById('eduFacts');
+    const figuresElement = document.getElementById('figuresText');
+    
+    if (eduData && factsElement) {
+        factsElement.innerHTML = eduData.facts.map(fact => `<li>${fact}</li>`).join('');
+        
+        if (figuresElement && eduData.figures) {
+            figuresElement.textContent = eduData.figures.join(' • ');
+        }
+    } else if (factsElement) {
+        factsElement.innerHTML = '<li>Explore this period by clicking on cities, territories, and fortifications on the map!</li>';
+        if (figuresElement) {
+            figuresElement.textContent = 'Click cities and forts for more details.';
+        }
+    }
+}
+
+function showRandomFact() {
+    const currentYear = historicalData[STATE.currentIndex].year;
+    const yearKey = String(currentYear);
+    const eduData = EDUCATIONAL_DATA[yearKey];
+    
+    if (eduData && eduData.facts && eduData.facts.length > 0) {
+        const randomFact = eduData.facts[Math.floor(Math.random() * eduData.facts.length)];
+        
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = 'fact-toast';
+        toast.innerHTML = `<strong>💡 Did you know?</strong><br>${randomFact}`;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
+    }
+}
+
+function startQuiz() {
+    STATE.quizIndex = 0;
+    STATE.quizScore = 0;
+    const quizPanel = document.getElementById('quizPanel');
+    if (quizPanel) {
+        quizPanel.hidden = false;
+        loadQuizQuestion();
+    }
+}
+
+function loadQuizQuestion() {
+    if (STATE.quizIndex >= QUIZ_QUESTIONS.length) {
+        showQuizResults();
+        return;
+    }
+    
+    const question = QUIZ_QUESTIONS[STATE.quizIndex];
+    const questionElement = document.getElementById('quizQuestion');
+    const optionsElement = document.getElementById('quizOptions');
+    const nextBtn = document.getElementById('quizNext');
+    
+    if (questionElement) questionElement.textContent = question.question;
+    if (nextBtn) nextBtn.hidden = true;
+    
+    if (optionsElement) {
+        optionsElement.innerHTML = question.options.map((option, index) => 
+            `<button class="quiz-option" data-index="${index}">${option}</button>`
+        ).join('');
+        
+        // Add click handlers
+        optionsElement.querySelectorAll('.quiz-option').forEach(btn => {
+            btn.addEventListener('click', () => checkAnswer(parseInt(btn.dataset.index)));
+        });
+    }
+}
+
+function checkAnswer(selectedIndex) {
+    const question = QUIZ_QUESTIONS[STATE.quizIndex];
+    const optionsElement = document.getElementById('quizOptions');
+    const nextBtn = document.getElementById('quizNext');
+    
+    if (optionsElement) {
+        const buttons = optionsElement.querySelectorAll('.quiz-option');
+        buttons.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+                btn.classList.add('correct');
+            } else if (index === selectedIndex) {
+                btn.classList.add('incorrect');
+            }
+        });
+        
+        if (selectedIndex === question.correct) {
+            STATE.quizScore++;
+        }
+        
+        // Show explanation
+        const explanation = document.createElement('p');
+        explanation.className = 'quiz-explanation';
+        explanation.textContent = question.explanation;
+        optionsElement.appendChild(explanation);
+    }
+    
+    if (nextBtn) nextBtn.hidden = false;
+}
+
+function nextQuizQuestion() {
+    STATE.quizIndex++;
+    loadQuizQuestion();
+}
+
+function showQuizResults() {
+    const questionElement = document.getElementById('quizQuestion');
+    const optionsElement = document.getElementById('quizOptions');
+    const nextBtn = document.getElementById('quizNext');
+    
+    const percentage = Math.round((STATE.quizScore / QUIZ_QUESTIONS.length) * 100);
+    let message = '';
+    
+    if (percentage >= 80) {
+        message = '🏆 Excellent! You\'re a Roman history expert!';
+    } else if (percentage >= 60) {
+        message = '👍 Good job! You know your Roman history!';
+    } else {
+        message = '📚 Keep exploring to learn more about Rome!';
+    }
+    
+    if (questionElement) {
+        questionElement.innerHTML = `<strong>${message}</strong><br>Score: ${STATE.quizScore}/${QUIZ_QUESTIONS.length} (${percentage}%)`;
+    }
+    
+    if (optionsElement) {
+        optionsElement.innerHTML = '<button class="quiz-option" onclick="startQuiz()">Try Again</button>';
+    }
+    
+    if (nextBtn) nextBtn.hidden = true;
+}
+
+function closeQuiz() {
+    const quizPanel = document.getElementById('quizPanel');
+    if (quizPanel) quizPanel.hidden = true;
+}
+
+// ============================================
 // UI UPDATES
 // ============================================
-function updateDisplay() {
+function updateDisplay(forceUpdate = false) {
+    // Don't update if info is locked unless forced
+    if (STATE.infoLocked && !forceUpdate) return;
+    
     const data = historicalData[STATE.currentIndex];
     if (!data) return;
     
@@ -930,14 +1439,68 @@ function updateDisplay() {
         descElement.textContent = data.description;
         nameElement.style.opacity = '1';
         descElement.style.opacity = '1';
+        
+        // Update educational content if expanded
+        if (STATE.eduExpanded) {
+            updateEducationalContent();
+        }
     }, 150);
 }
 
-function showCityInfo(city) {
+// Helper function to lock info panel content
+function lockInfoPanel(content) {
+    STATE.infoLocked = true;
+    STATE.lockedContent = content;
+    
+    // Add visual indicator that info is locked
+    const infoPanel = document.querySelector('.info-panel');
+    if (infoPanel) {
+        infoPanel.classList.add('info-locked');
+        
+        // Add unlock hint if not already present
+        if (!infoPanel.querySelector('.unlock-hint')) {
+            const hint = document.createElement('div');
+            hint.className = 'unlock-hint';
+            hint.innerHTML = '📌 Click anywhere to unlock and return to timeline';
+            hint.addEventListener('click', unlockInfoPanel);
+            infoPanel.insertBefore(hint, infoPanel.firstChild);
+        }
+    }
+}
+
+// Helper function to unlock info panel
+function unlockInfoPanel() {
+    STATE.infoLocked = false;
+    STATE.lockedContent = null;
+    
+    const infoPanel = document.querySelector('.info-panel');
+    if (infoPanel) {
+        infoPanel.classList.remove('info-locked');
+        
+        // Remove unlock hint
+        const hint = infoPanel.querySelector('.unlock-hint');
+        if (hint) hint.remove();
+    }
+    
+    // Restore current period display
+    updateDisplay(true);
+}
+
+function showCityInfo(city, isClick = false) {
+    // If it's a click, lock the info panel
+    if (isClick) {
+        lockInfoPanel({ type: 'city', data: city });
+    }
+    
+    // Don't update if locked to different content
+    if (STATE.infoLocked && STATE.lockedContent?.data !== city) return;
+    
     const yearElement = document.getElementById('currentYear');
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
+    
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
     
     const year = Math.abs(city.year);
     const era = city.year < 0 ? 'BCE' : 'CE';
@@ -956,11 +1519,21 @@ function showCityInfo(city) {
     }, 150);
 }
 
-function showFortInfo(fort) {
+function showFortInfo(fort, isClick = false) {
+    // If it's a click, lock the info panel
+    if (isClick) {
+        lockInfoPanel({ type: 'fort', data: fort });
+    }
+    
+    // Don't update if locked to different content
+    if (STATE.infoLocked && STATE.lockedContent?.data !== fort) return;
+    
     const yearElement = document.getElementById('currentYear');
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
+    
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
     
     const year = Math.abs(fort.year);
     const era = fort.year < 0 ? 'BCE' : 'CE';
@@ -996,11 +1569,21 @@ function showFortInfo(fort) {
     }, 150);
 }
 
-function showWallInfo(wallName, startYear, endYear) {
+function showWallInfo(wallName, startYear, endYear, isClick = false) {
+    // If it's a click, lock the info panel
+    if (isClick) {
+        lockInfoPanel({ type: 'wall', data: { wallName, startYear, endYear } });
+    }
+    
+    // Don't update if locked to different content
+    if (STATE.infoLocked && STATE.lockedContent?.data?.wallName !== wallName) return;
+    
     const yearElement = document.getElementById('currentYear');
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
+    
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
     
     const year = Math.abs(startYear);
     const era = startYear < 0 ? 'BCE' : 'CE';
@@ -1033,15 +1616,26 @@ function showWallInfo(wallName, startYear, endYear) {
     }, 150);
 }
 
-function showTerritoryInfo(periodData, isNewExpansion, lat, lon) {
+function showTerritoryInfo(periodData, isNewExpansion, lat, lon, isClick = false) {
+    const regionName = getRegionName(lat, lon);
+    
+    // If it's a click, lock the info panel
+    if (isClick) {
+        lockInfoPanel({ type: 'territory', data: { periodData, isNewExpansion, lat, lon, regionName } });
+    }
+    
+    // Don't update if locked to different content
+    if (STATE.infoLocked && STATE.lockedContent?.data?.regionName !== regionName) return;
+    
     const yearElement = document.getElementById('currentYear');
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
+    
     const year = Math.abs(periodData.year);
     const era = periodData.year < 0 ? 'BCE' : 'CE';
-    const regionName = getRegionName(lat, lon);
     
     let description = '';
     
