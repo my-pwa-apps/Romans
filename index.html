@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE">
+    <meta name="keywords" content="Roman Empire, History, Interactive Map, Ancient Rome">
+    <title>IMPERIVM ROMANVM - The Rise and Fall of Rome</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin="anonymous" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://server.arcgisonline.com">
+</head>
+<body>
+    <div class="container" role="main">
+        <header role="banner">
+            <h1>IMPERIVM ROMANVM</h1>
+            <p class="subtitle">The Expansion of the Roman Empire · 509 BCE - 476 CE</p>
+        </header>
+
+        <div class="main-content">
+            <div class="map-container" role="img" aria-label="Interactive map showing Roman Empire expansion">
+                <div id="map"></div>
+            </div>
+
+            <aside class="sidebar" role="complementary">
+                <section class="info-panel" aria-live="polite" aria-atomic="true">
+                    <h3 id="periodName">Early Roman Republic</h3>
+                    <p id="periodDescription">Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.</p>
+                </section>
+
+                <nav class="controls" aria-label="Animation controls">
+                    <div class="button-group">
+                        <button id="playBtn" class="btn btn-primary" aria-label="Play animation" aria-pressed="false">
+                            <span class="play-icon" aria-hidden="true">▶</span>
+                            <span class="pause-icon" aria-hidden="true">⏸</span>
+                        </button>
+                        <button id="resetBtn" class="btn btn-secondary" aria-label="Reset to beginning">Reset</button>
+                    </div>
+                    <div class="speed-control">
+                        <label for="speedSlider">Animation Speed:</label>
+                        <input type="range" 
+                               id="speedSlider" 
+                               min="1" 
+                               max="5" 
+                               value="3" 
+                               step="1"
+                               aria-label="Animation speed from 1 (slow) to 5 (fast)"
+                               aria-valuemin="1"
+                               aria-valuemax="5"
+                               aria-valuenow="3">
+                        <div class="speed-labels" aria-hidden="true">
+                            <span>Slow</span>
+                            <span>Fast</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-control" role="region" aria-label="Timeline scrubber">
+                        <div class="timeline-labels" aria-hidden="true">
+                            <span>509 BCE</span>
+                            <span>27 BCE</span>
+                            <span>117 CE</span>
+                            <span>476 CE</span>
+                        </div>
+                        <input type="range" 
+                               id="timeline" 
+                               min="0" 
+                               max="100" 
+                               value="0" 
+                               step="1"
+                               aria-label="Timeline slider from 509 BCE to 476 CE"
+                               aria-valuemin="0"
+                               aria-valuemax="100"
+                               aria-valuenow="0">
+                        <div class="timeline-markers" aria-hidden="true">
+                            <div class="marker marker-republic" title="Roman Republic"></div>
+                            <div class="marker marker-empire" title="Roman Empire Begins"></div>
+                            <div class="marker marker-peak" title="Greatest Extent"></div>
+                            <div class="marker marker-fall" title="Fall of Western Empire"></div>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Floating Year Display -->
+        <div class="year-display" id="yearDisplay" role="status" aria-live="polite">
+            <span id="currentYear">509</span>
+            <span class="era">BCE</span>
+        </div>
+
+        <footer role="contentinfo">
+            <div class="legend" role="list" aria-label="Map legend">
+                <div class="legend-item" role="listitem">
+                    <div class="legend-color-established" aria-hidden="true"></div>
+                    <span>Established Territory</span>
+                </div>
+                <div class="legend-item" role="listitem">
+                    <div class="legend-color-expansion" aria-hidden="true"></div>
+                    <span>Recent Expansion</span>
+                </div>
+                <div class="legend-item" role="listitem">
+                    <div class="legend-city" aria-hidden="true">●</div>
+                    <span>Roman Cities</span>
+                </div>
+                <div class="legend-item" role="listitem">
+                    <div class="legend-fort" aria-hidden="true">⚔</div>
+                    <span>Forts & Fortresses</span>
+                </div>
+                <div class="legend-item" role="listitem">
+                    <div class="legend-wall" aria-hidden="true">- - -</div>
+                    <span>Walls & Limes</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin="anonymous"></script>
+    
+    <!-- Main Application -->
+    <script src="script.js"></script>
+</body>
+</html>
