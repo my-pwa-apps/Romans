@@ -1508,13 +1508,21 @@ footer {
     }
     
     .btn {
-        padding: 10px 16px;
-        min-width: auto;
+        padding: 8px 12px;
+        min-width: 70px;
         flex: 1;
-        font-size: 0.9em;
+        font-size: 0.85em;
         /* Touch targets for mobile */
         min-height: 44px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+    }
+    
+    #playBtn {
+        max-width: 50px;
+    }
+    
+    #resetBtn {
+        font-size: 0.8em;
     }
     
     /* Compact icons on mobile */
@@ -1702,11 +1710,16 @@ footer {
     }
     
     .btn {
-        padding: var(--spacing-sm);
-        font-size: 0.85em;
+        padding: 6px 10px;
+        font-size: 0.8em;
         min-height: 44px; /* Maintain accessibility */
         flex: 1;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
+        min-width: 60px;
+    }
+    
+    #playBtn {
+        max-width: 48px;
     }
     
     .quiz-panel {

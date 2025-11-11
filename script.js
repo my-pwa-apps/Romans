@@ -698,7 +698,15 @@ const MAP_CONFIG = {
     center: [45, 15],
     zoom: 4,
     minZoom: 3,
-    maxZoom: 7
+    maxZoom: 7,
+    // Responsive zoom based on viewport width
+    getResponsiveZoom: () => {
+        const width = window.innerWidth;
+        if (width < 480) return 3;        // Very small phones
+        if (width < 768) return 3.5;      // Phones
+        if (width < 1024) return 3.75;    // Tablets
+        return 4;                          // Desktop
+    }
 };
 
 // ============================================
@@ -851,7 +859,7 @@ function showError(message) {
 function initializeMap() {
     STATE.map = L.map('map', {
         center: MAP_CONFIG.center,
-        zoom: MAP_CONFIG.zoom,
+        zoom: MAP_CONFIG.getResponsiveZoom(),
         minZoom: MAP_CONFIG.minZoom,
         maxZoom: MAP_CONFIG.maxZoom,
         zoomControl: true,
@@ -864,6 +872,18 @@ function initializeMap() {
         attribution: 'Tiles &copy; Esri',
         maxZoom: 19
     }).addTo(STATE.map);
+    
+    // Adjust zoom on window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const newZoom = MAP_CONFIG.getResponsiveZoom();
+            if (STATE.map && Math.abs(STATE.map.getZoom() - newZoom) > 0.3) {
+                STATE.map.setZoom(newZoom, { animate: true });
+            }
+        }, 300);
+    });
 }
 
 function setupEventListeners() {
