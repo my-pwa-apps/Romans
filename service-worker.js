@@ -1,16 +1,17 @@
-const CACHE_VERSION = 'imperivm-v1.0.1';
+const CACHE_VERSION = 'imperivm-v1.0.2';
 const CACHE_NAME = `${CACHE_VERSION}-core`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
 // Files to cache immediately on install
+// Using relative paths for GitHub Pages compatibility
 const CORE_ASSETS = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
+    './',
+    './index.html',
+    './styles.css',
+    './script.js',
+    './manifest.json',
+    './icons/icon-192x192.png',
+    './icons/icon-512x512.png'
 ];
 
 // External resources to cache
