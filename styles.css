@@ -524,6 +524,14 @@ h1 {
     flex-shrink: 0;
 }
 
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 /* ============================================
    TIMELINE CONTROL IN SIDEBAR
    ============================================ */
@@ -659,14 +667,6 @@ h1 {
 .marker-empire { left: 48.9%; }
 .marker-peak { left: 63.6%; }
 .marker-fall { left: 100%; }
-
-/* Buttons */
-.button-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 15px;
-}
 
 /* Speed Control */
 .speed-control {
@@ -1366,16 +1366,23 @@ footer {
     .button-group {
         flex-direction: row;
         align-items: stretch;
-        gap: 10px;
+        gap: 8px;
     }
     
     .btn {
-        padding: 16px 24px;
+        padding: 10px 16px;
         min-width: auto;
         flex: 1;
-        font-size: 1em;
-        /* Larger touch targets for mobile */
-        min-height: 48px;
+        font-size: 0.9em;
+        /* Touch targets for mobile */
+        min-height: 44px;
+        letter-spacing: 1px;
+    }
+    
+    /* Compact icons on mobile */
+    .play-icon,
+    .pause-icon {
+        font-size: 0.9em;
     }
     
     .speed-control {
@@ -1441,13 +1448,23 @@ footer {
     
     /* Educational features on mobile */
     .edu-toggle {
-        padding: 14px 20px;
-        font-size: 1.05em;
-        min-height: 48px;
+        padding: 10px 16px;
+        font-size: 0.95em;
+        min-height: 44px;
     }
     
     .edu-content {
-        font-size: 0.9em;
+        font-size: 0.85em;
+        padding: 12px;
+    }
+    
+    /* More compact controls section on mobile */
+    .controls {
+        gap: 12px;
+    }
+    
+    .button-group {
+        margin-bottom: 12px;
     }
     
     .quiz-panel {
@@ -1536,11 +1553,21 @@ footer {
     }
     
     .button-group {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 6px;
     }
     
     .btn {
-        width: 100%;
+        padding: 8px 12px;
+        font-size: 0.85em;
+        min-height: 40px;
+        flex: 1;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Even more compact button text on very small screens */
+    #resetBtn {
+        font-size: 0.8em;
     }
     
     .quiz-panel {
