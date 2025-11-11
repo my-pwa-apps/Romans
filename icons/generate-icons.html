@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <p>Open browser console and run the script below to generate icons</p>
+    <canvas id="canvas"></canvas>
+    
+    <script>
+        function generateIcon(size) {
+            const canvas = document.getElementById('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background - Roman red
+            ctx.fillStyle = '#8B0000';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Gold border
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = size * 0.05;
+            ctx.strokeRect(size * 0.05, size * 0.05, size * 0.9, size * 0.9);
+            
+            // Roman numerals "SPQR"
+            ctx.fillStyle = '#FFD700';
+            ctx.font = `bold ${size * 0.25}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('SPQR', size / 2, size / 2);
+            
+            // Small laurel wreath effect (simple circles)
+            ctx.strokeStyle = '#FFD700';
+            ctx.lineWidth = size * 0.02;
+            ctx.beginPath();
+            ctx.arc(size * 0.25, size * 0.25, size * 0.08, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(size * 0.75, size * 0.25, size * 0.08, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(size * 0.25, size * 0.75, size * 0.08, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(size * 0.75, size * 0.75, size * 0.08, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Download
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+        
+        // Generate all required sizes
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        console.log('Click "Generate Icons" button or run: sizes.forEach(size => generateIcon(size))');
+        
+        // Auto-generate on load (comment out if you want manual control)
+        setTimeout(() => {
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    generateIcon(size);
+                    console.log(`Generated ${size}x${size} icon`);
+                }, index * 500); // Stagger downloads
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

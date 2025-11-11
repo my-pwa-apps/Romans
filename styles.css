@@ -1660,6 +1660,120 @@ footer {
 }
 
 /* ============================================
+   PWA INSTALL BANNER
+   ============================================ */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--roman-red) 0%, #a52a2a 100%);
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.install-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.install-banner-content span {
+    flex: 1;
+    min-width: 200px;
+    font-weight: 500;
+}
+
+.install-banner-content button {
+    background: white;
+    color: var(--roman-red);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.install-banner-content button:hover {
+    background: var(--roman-gold);
+    transform: scale(1.05);
+}
+
+#dismissBtn {
+    background: transparent;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+#dismissBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* PWA Standalone Mode Adjustments */
+@media (display-mode: standalone) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+    
+    .container {
+        min-height: 100vh;
+    }
+    
+    /* Add offline indicator */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--roman-gold);
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    body.offline::before {
+        opacity: 1;
+        background: #ff6b6b;
+    }
+}
+
+/* iOS PWA Safe Area Support */
+@supports (padding: max(0px)) {
+    .container {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+    
+    header {
+        padding-top: max(1rem, env(safe-area-inset-top));
+    }
+}
+
+/* ============================================
    PRINT STYLES
    ============================================ */
 @media print {
@@ -1669,8 +1783,9 @@ footer {
     
     .timeline-control,
     .year-display,
-    .controls {
-        display: none;
+    .controls,
+    .install-banner {
+        display: none !important;
     }
     
     .container {

@@ -2356,7 +2356,95 @@ if (document.readyState === 'loading') {
     initApp();
 }
 
+// ============================================
+// PWA OFFLINE DETECTION
+// ============================================
+function setupOfflineDetection() {
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            document.body.classList.remove('offline');
+            console.log('✅ Back online');
+        } else {
+            document.body.classList.add('offline');
+            console.log('📵 Offline mode - using cached data');
+        }
+    }
+    
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    
+    // Initial check
+    updateOnlineStatus();
+}
+
+// ============================================
+// PWA INSTALLATION AND UPDATES
+// ============================================
+function setupPWAFeatures() {
+    // Check if running as installed PWA
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+                      || window.navigator.standalone 
+                      || document.referrer.includes('android-app://');
+    
+    if (isStandalone) {
+        console.log('✅ Running as installed PWA');
+        document.body.classList.add('pwa-standalone');
+    }
+    
+    // Setup offline detection
+    setupOfflineDetection();
+    
+    // Save state to localStorage for offline access
+    function saveAppState() {
+        try {
+            const appState = {
+                currentIndex: STATE.currentIndex,
+                quizScore: STATE.quizScore,
+                quizAnswered: STATE.quizAnswered,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('romanEmpireState', JSON.stringify(appState));
+        } catch (error) {
+            console.warn('Could not save app state:', error);
+        }
+    }
+    
+    // Restore state on load
+    function restoreAppState() {
+        try {
+            const savedState = localStorage.getItem('romanEmpireState');
+            if (savedState) {
+                const appState = JSON.parse(savedState);
+                // Only restore if less than 24 hours old
+                if (Date.now() - appState.timestamp < 24 * 60 * 60 * 1000) {
+                    STATE.currentIndex = appState.currentIndex || 0;
+                    STATE.quizScore = appState.quizScore || 0;
+                    STATE.quizAnswered = appState.quizAnswered || 0;
+                    console.log('✅ Restored previous session');
+                }
+            }
+        } catch (error) {
+            console.warn('Could not restore app state:', error);
+        }
+    }
+    
+    // Save state periodically and on visibility change
+    setInterval(saveAppState, 30000); // Every 30 seconds
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            saveAppState();
+        }
+    });
+    
+    // Restore state on init
+    restoreAppState();
+}
+
 function initApp() {
+    // Setup PWA features first
+    setupPWAFeatures();
+    
+    // Then initialize the main app
     init();
     
     // Make year display draggable (but not the timeline)
