@@ -655,25 +655,33 @@ function getRegionName(lat, lon) {
 // STATE MANAGEMENT
 // ============================================
 const STATE = {
+    // Map & Rendering
     map: null,
     territoryLayers: [],
     cityMarkers: [],
     wallLayers: [],
+    
+    // Timeline & Animation
     currentIndex: 0,
     isPlaying: false,
     animationId: null,
     lastUpdateTime: 0,
     animationSpeed: 3,
     updateInterval: 600,
+    
+    // UI State
     isInitialized: false,
     isMobile: false,
     touchStartX: 0,
     touchStartY: 0,
+    eduExpanded: false,
+    infoLocked: false,
+    lockedContent: null,
+    
+    // Quiz State
     quizIndex: 0,
     quizScore: 0,
-    eduExpanded: false,
-    infoLocked: false, // Track if info panel is locked to specific content
-    lockedContent: null // Store the locked content
+    quizAnswered: 0
 };
 
 // Speed configuration mapping
@@ -694,6 +702,80 @@ const MAP_CONFIG = {
 };
 
 // ============================================
+// UTILITY FUNCTIONS
+// ============================================
+const utils = {
+    // Format year display
+    formatYear: (year) => {
+        const absYear = Math.abs(year);
+        const era = year < 0 ? 'BCE' : 'CE';
+        return { year: absYear, era };
+    },
+    
+    // Fade element opacity with callback
+    fadeElement: (element, fadeOut = true, callback) => {
+        if (!element) return;
+        element.style.opacity = fadeOut ? '0' : '1';
+        if (callback && fadeOut) {
+            setTimeout(callback, 150);
+        }
+    },
+    
+    // Update display elements with transition
+    updateDisplayElements: (yearEl, eraEl, nameEl, descEl, year, era, name, desc) => {
+        if (!yearEl || !eraEl || !nameEl || !descEl) return;
+        
+        utils.fadeElement(nameEl, true, () => {
+            yearEl.textContent = year;
+            eraEl.textContent = era;
+            nameEl.textContent = name;
+            descEl.textContent = desc;
+            utils.fadeElement(nameEl, false);
+            utils.fadeElement(descEl, false);
+        });
+        utils.fadeElement(descEl, true);
+    },
+    
+    // Remove layers safely
+    removeLayers: (layers, map) => {
+        if (!map) return;
+        layers.forEach(layer => {
+            try {
+                map.removeLayer(layer);
+            } catch (e) {
+                console.warn('Failed to remove layer:', e);
+            }
+        });
+        return [];
+    },
+    
+    // Debounce function for performance
+    debounce: (func, wait) => {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    },
+    
+    // Throttle function for scrolling/resizing
+    throttle: (func, limit) => {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+};
+
+// ============================================
 // INITIALIZATION
 // ============================================
 function init() {
@@ -710,15 +792,22 @@ function init() {
         updateEducationalContent();
         drawTerritories();
         STATE.isInitialized = true;
-        hideLoading();
         
-        // Show mobile hint briefly
-        if (STATE.isMobile) {
-            showMobileHint();
-        }
+        // Use requestAnimationFrame for smooth loading completion
+        requestAnimationFrame(() => {
+            hideLoading();
+            
+            // Show mobile hint briefly
+            if (STATE.isMobile) {
+                showMobileHint();
+            }
+        });
+        
+        console.log('✅ IMPERIVM ROMANVM initialized successfully');
     } catch (error) {
-        console.error('Initialization error:', error);
+        console.error('❌ Initialization error:', error);
         showError('Failed to initialize the application. Please refresh the page.');
+        hideLoading();
     }
 }
 
@@ -783,6 +872,7 @@ function setupEventListeners() {
     const resetBtn = document.getElementById('resetBtn');
     const speedSlider = document.getElementById('speedSlider');
     
+    // Attach event listeners with passive option where appropriate
     if (timeline) timeline.addEventListener('input', handleTimelineChange);
     if (playBtn) playBtn.addEventListener('click', togglePlay);
     if (resetBtn) resetBtn.addEventListener('click', reset);
@@ -793,10 +883,13 @@ function setupEventListeners() {
         });
     }
     
-    // Handle window resize
-    window.addEventListener('resize', () => {
+    // Handle window resize with throttling for performance
+    const throttledResize = utils.throttle(() => {
         detectMobile();
-    });
+        if (STATE.map) STATE.map.invalidateSize();
+    }, 250);
+    
+    window.addEventListener('resize', throttledResize, { passive: true });
 }
 
 // ============================================
@@ -807,10 +900,13 @@ function setupTouchGestures() {
     if (!timeline) return;
     
     let touchStartValue = 0;
+    let touchStartTime = 0;
     
+    // Improved touch handling for timeline
     timeline.addEventListener('touchstart', (e) => {
         touchStartValue = parseInt(timeline.value);
         STATE.touchStartX = e.touches[0].clientX;
+        touchStartTime = Date.now();
     }, { passive: true });
     
     timeline.addEventListener('touchmove', (e) => {
@@ -819,34 +915,74 @@ function setupTouchGestures() {
         const newValue = Math.max(0, Math.min(100, touchStartValue + (touchDelta * sensitivity)));
         timeline.value = newValue;
         handleTimelineChange({ target: timeline });
+        
+        // Add subtle vibration feedback on mobile if available
+        if ('vibrate' in navigator && Math.abs(touchDelta) > 20) {
+            // Vibrate every 50px of movement
+            const vibrationThreshold = Math.floor(Math.abs(touchDelta) / 50);
+            if (vibrationThreshold > STATE.lastVibration || 0) {
+                navigator.vibrate(10); // Very subtle 10ms vibration
+                STATE.lastVibration = vibrationThreshold;
+            }
+        }
     }, { passive: true });
     
-    // Swipe navigation on map for mobile
+    // Enhanced swipe navigation on map for mobile
     if (STATE.isMobile) {
         const mapElement = document.getElementById('map');
         if (mapElement) {
             let swipeStartX = 0;
+            let swipeStartY = 0;
             let swipeStartTime = 0;
+            let isSwipe = false;
             
             mapElement.addEventListener('touchstart', (e) => {
-                swipeStartX = e.touches[0].clientX;
-                swipeStartTime = Date.now();
+                // Only track single-finger touches for navigation
+                if (e.touches.length === 1) {
+                    swipeStartX = e.touches[0].clientX;
+                    swipeStartY = e.touches[0].clientY;
+                    swipeStartTime = Date.now();
+                    isSwipe = true;
+                }
+            }, { passive: true });
+            
+            mapElement.addEventListener('touchmove', (e) => {
+                // Detect if this is more likely a map pan than a navigation swipe
+                if (isSwipe && e.touches.length === 1) {
+                    const deltaY = Math.abs(e.touches[0].clientY - swipeStartY);
+                    const deltaX = Math.abs(e.touches[0].clientX - swipeStartX);
+                    // If vertical movement exceeds horizontal, cancel swipe navigation
+                    if (deltaY > deltaX * 1.5) {
+                        isSwipe = false;
+                    }
+                }
             }, { passive: true });
             
             mapElement.addEventListener('touchend', (e) => {
+                if (!isSwipe || e.changedTouches.length !== 1) return;
+                
                 const swipeEndX = e.changedTouches[0].clientX;
                 const swipeTime = Date.now() - swipeStartTime;
                 const swipeDistance = swipeEndX - swipeStartX;
                 
-                // Only trigger if fast swipe (< 300ms) and significant distance (> 50px)
-                if (swipeTime < 300 && Math.abs(swipeDistance) > 50) {
+                // Only trigger if fast swipe (< 300ms) and significant distance (> 70px)
+                if (swipeTime < 300 && Math.abs(swipeDistance) > 70) {
+                    e.preventDefault(); // Prevent any default action
+                    
+                    // Haptic feedback for swipe navigation
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate(20);
+                    }
+                    
                     if (swipeDistance > 0) {
                         navigateTimeline(-1); // Swipe right = previous
                     } else {
                         navigateTimeline(1); // Swipe left = next
                     }
                 }
-            }, { passive: true });
+                
+                isSwipe = false;
+            }, { passive: false });
         }
     }
 }
@@ -1226,15 +1362,8 @@ function updateTimeBasedMarkers() {
     
     const currentYear = historicalData[STATE.currentIndex].year;
     
-    // Clear existing city and fort markers
-    STATE.cityMarkers.forEach(marker => {
-        try {
-            STATE.map.removeLayer(marker);
-        } catch (e) {
-            console.warn('Failed to remove marker:', e);
-        }
-    });
-    STATE.cityMarkers = [];
+    // Clear existing city and fort markers efficiently
+    STATE.cityMarkers = utils.removeLayers(STATE.cityMarkers, STATE.map);
     
     // Add cities that have been founded by current year
     const cityIcon = L.divIcon({
@@ -1339,15 +1468,8 @@ function updateTimeBasedMarkers() {
 function updateDefensiveWalls(currentYear) {
     if (!STATE.map) return;
     
-    // Clear existing wall layers
-    STATE.wallLayers.forEach(layer => {
-        try {
-            STATE.map.removeLayer(layer);
-        } catch (e) {
-            console.warn('Failed to remove wall layer:', e);
-        }
-    });
-    STATE.wallLayers = [];
+    // Clear existing wall layers efficiently
+    STATE.wallLayers = utils.removeLayers(STATE.wallLayers, STATE.map);
     // Hadrian's Wall (122 CE - 128 CE)
     const hadriansWall = [
         [54.967, -1.600], // Wallsend
@@ -1496,15 +1618,7 @@ function updateDefensiveWalls(currentYear) {
 // ============================================
 function clearTerritories() {
     if (!STATE.map) return;
-    
-    STATE.territoryLayers.forEach(layer => {
-        try {
-            STATE.map.removeLayer(layer);
-        } catch (e) {
-            console.warn('Failed to remove territory layer:', e);
-        }
-    });
-    STATE.territoryLayers = [];
+    STATE.territoryLayers = utils.removeLayers(STATE.territoryLayers, STATE.map);
 }
 
 function drawTerritories() {
@@ -1979,23 +2093,11 @@ function showCityInfo(city, isClick = false) {
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
-    if (!yearElement || !eraElement || !nameElement || !descElement) return;
-    
-    const year = Math.abs(city.year);
-    const era = city.year < 0 ? 'BCE' : 'CE';
-    
-    // Update with fade transition
-    nameElement.style.opacity = '0';
-    descElement.style.opacity = '0';
-    
-    setTimeout(() => {
-        yearElement.textContent = year;
-        eraElement.textContent = era;
-        nameElement.textContent = city.name;
-        descElement.textContent = city.description;
-        nameElement.style.opacity = '1';
-        descElement.style.opacity = '1';
-    }, 150);
+    const { year, era } = utils.formatYear(city.year);
+    utils.updateDisplayElements(
+        yearElement, eraElement, nameElement, descElement,
+        year, era, city.name, city.description
+    );
 }
 
 function showFortInfo(fort, isClick = false) {
@@ -2198,18 +2300,25 @@ function togglePlay() {
 function animate(timestamp = 0) {
     if (!STATE.isPlaying) return;
     
-    if (timestamp - STATE.lastUpdateTime >= STATE.updateInterval) {
+    // Calculate elapsed time for smooth frame-independent animation
+    const elapsed = timestamp - STATE.lastUpdateTime;
+    
+    if (elapsed >= STATE.updateInterval) {
         STATE.currentIndex++;
         
+        // Check if we've reached the end
         if (STATE.currentIndex >= historicalData.length) {
             STATE.currentIndex = historicalData.length - 1;
             togglePlay();
             return;
         }
         
-        updateDisplay();
-        drawTerritories();
-        updateTimelineSlider();
+        // Batch DOM updates for better performance
+        requestAnimationFrame(() => {
+            updateDisplay();
+            drawTerritories();
+            updateTimelineSlider();
+        });
         
         STATE.lastUpdateTime = timestamp;
     }
