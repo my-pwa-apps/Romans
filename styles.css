@@ -443,6 +443,16 @@ h1 {
     will-change: opacity;
 }
 
+/* Animated borders for polygon territories */
+.leaflet-interactive {
+    transition: stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+}
+
+.leaflet-interactive:hover {
+    stroke-width: 3 !important;
+    stroke-opacity: 1 !important;
+}
+
 @keyframes expansionGlow {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 1; }
@@ -451,6 +461,12 @@ h1 {
 @keyframes glowPulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 0.3; }
+}
+
+/* Pulsing border animation for newly conquered territories */
+@keyframes borderMarch {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 20; }
 }
 
 /* ============================================

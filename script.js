@@ -161,27 +161,436 @@ const QUIZ_QUESTIONS = [
     }
 ];
 
-// Roman Empire Expansion Data
+// Territory shape types: 'circle' or 'polygon'
+// Polygon territories use [lat, lon] coordinates to define actual shapes
+// Circle territories use [lat, lon, radius] for simpler representation
+
+// Roman Empire Expansion Data with more realistic territory shapes
 const historicalData = [
-    { year: -509, name: "Early Roman Republic", description: "Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.", territories: [[41.9, 12.5, 0.5]] },
-    { year: -450, name: "Expanding Republic", description: "Rome consolidates control over Latium and begins conflicts with neighboring tribes.", territories: [[41.9, 12.5, 1.2]] },
-    { year: -350, name: "Central Italy", description: "Victory in the Latin Wars. Rome dominates central Italy through warfare and alliances.", territories: [[41.9, 12.5, 2.0], [40.8, 14.3, 1.0]] },
-    { year: -275, name: "Italian Peninsula", description: "Pyrrhic Wars concluded. Rome controls most of the Italian peninsula south of the Po Valley.", territories: [[42.5, 12.5, 3.5], [40.8, 14.3, 1.8], [38.1, 15.6, 1.2]] },
-    { year: -218, name: "First Punic War", description: "After defeating Carthage, Rome gains Sicily, Sardinia, and Corsica - its first provinces outside Italy.", territories: [[42.5, 12.5, 3.8], [40.8, 14.3, 2.0], [38.1, 15.6, 1.5], [37.5, 14.0, 1.2], [40.0, 9.0, 0.8], [42.0, 9.0, 0.6]] },
-    { year: -146, name: "Mediterranean Power", description: "Carthage destroyed, Greece conquered. Rome becomes the dominant power in the Mediterranean.", territories: [[42.5, 12.5, 4.0], [40.8, 14.3, 2.2], [38.1, 15.6, 1.6], [37.5, 14.0, 1.3], [40.0, 9.0, 1.0], [39.0, 22.0, 2.0], [36.8, 10.0, 1.0], [37.0, -5.0, 1.5]] },
-    { year: -50, name: "Caesar's Conquests", description: "Julius Caesar conquers Gaul. Rome controls vast territories from Spain to Asia Minor.", territories: [[42.5, 12.5, 4.2], [40.8, 14.3, 2.3], [46.0, 2.0, 4.5], [40.4, -3.7, 4.0], [39.0, 22.0, 2.5], [38.0, 23.5, 2.0], [37.0, 35.0, 2.0], [36.8, 10.0, 1.2], [33.0, 35.0, 1.5], [51.5, 4.0, 1.5]] },
-    { year: -27, name: "Birth of the Empire", description: "Octavian becomes Augustus, first Roman Emperor. The Republic transitions to Empire.", territories: [[42.5, 12.5, 4.3], [40.8, 14.3, 2.4], [46.0, 2.0, 4.8], [40.4, -3.7, 4.5], [39.0, 22.0, 3.0], [38.0, 23.5, 2.3], [37.0, 35.0, 2.2], [36.8, 10.0, 1.3], [30.0, 31.0, 2.5], [33.0, 35.0, 1.8], [51.5, 4.0, 1.8]] },
-    { year: 14, name: "Augustan Empire", description: "Augustus dies after establishing imperial frontiers. The empire is stable and prosperous.", territories: [[42.5, 12.5, 4.4], [40.8, 14.3, 2.5], [46.0, 2.0, 5.0], [40.4, -3.7, 4.8], [39.0, 22.0, 3.2], [38.0, 23.5, 2.5], [37.0, 35.0, 2.4], [36.8, 10.0, 1.4], [30.0, 31.0, 3.0], [33.0, 35.0, 2.0], [51.5, 4.0, 2.0], [48.0, 16.0, 2.5]] },
-    { year: 69, name: "Flavian Dynasty", description: "Year of Four Emperors ends. Vespasian founds the Flavian dynasty and stabilizes the empire.", territories: [[42.5, 12.5, 4.5], [40.8, 14.3, 2.6], [46.0, 2.0, 5.2], [40.4, -3.7, 5.0], [39.0, 22.0, 3.4], [38.0, 23.5, 2.7], [37.0, 35.0, 2.6], [36.8, 10.0, 1.5], [30.0, 31.0, 3.2], [33.0, 35.0, 2.2], [51.5, 4.0, 2.2], [48.0, 16.0, 3.0], [51.0, -2.5, 1.8]] },
-    { year: 117, name: "Greatest Extent", description: "Under Trajan, the empire reaches its maximum territorial extent, from Britain to Mesopotamia.", territories: [[42.5, 12.5, 4.6], [40.8, 14.3, 2.7], [46.0, 2.0, 5.5], [40.4, -3.7, 5.2], [39.0, 22.0, 3.8], [38.0, 23.5, 3.0], [37.0, 35.0, 3.0], [36.8, 10.0, 1.6], [30.0, 31.0, 3.5], [33.0, 35.0, 2.5], [33.0, 44.0, 2.5], [51.5, 4.0, 2.5], [48.0, 16.0, 3.5], [51.0, -2.5, 2.0], [54.0, -2.0, 1.5], [45.0, 25.0, 3.0], [35.0, 33.0, 3.0]] },
-    { year: 180, name: "Pax Romana Ends", description: "Marcus Aurelius dies. The era of peace and prosperity begins to wane with increasing pressures.", territories: [[42.5, 12.5, 4.6], [40.8, 14.3, 2.7], [46.0, 2.0, 5.5], [40.4, -3.7, 5.2], [39.0, 22.0, 3.8], [38.0, 23.5, 3.0], [37.0, 35.0, 3.0], [36.8, 10.0, 1.6], [30.0, 31.0, 3.5], [33.0, 35.0, 2.5], [33.0, 44.0, 2.5], [51.5, 4.0, 2.5], [48.0, 16.0, 3.5], [51.0, -2.5, 2.0], [54.0, -2.0, 1.5], [45.0, 25.0, 3.0], [35.0, 33.0, 3.0]] },
-    { year: 235, name: "Crisis Begins", description: "The Crisis of the Third Century begins. Political instability and barbarian invasions threaten the empire.", territories: [[42.5, 12.5, 4.5], [40.8, 14.3, 2.6], [46.0, 2.0, 5.3], [40.4, -3.7, 5.0], [39.0, 22.0, 3.7], [38.0, 23.5, 2.9], [37.0, 35.0, 2.8], [36.8, 10.0, 1.5], [30.0, 31.0, 3.4], [33.0, 35.0, 2.3], [51.5, 4.0, 2.4], [48.0, 16.0, 3.3], [51.0, -2.5, 1.9], [54.0, -2.0, 1.4], [45.0, 25.0, 2.8]] },
-    { year: 284, name: "Diocletian's Reforms", description: "Diocletian becomes emperor and institutes reforms, dividing the empire into East and West.", territories: [[42.5, 12.5, 4.4], [40.8, 14.3, 2.5], [46.0, 2.0, 5.2], [40.4, -3.7, 4.9], [39.0, 22.0, 3.6], [38.0, 23.5, 2.8], [37.0, 35.0, 2.7], [36.8, 10.0, 1.5], [30.0, 31.0, 3.3], [33.0, 35.0, 2.2], [51.5, 4.0, 2.3], [48.0, 16.0, 3.2], [51.0, -2.5, 1.8], [54.0, -2.0, 1.3], [45.0, 25.0, 2.7]] },
-    { year: 337, name: "Constantine's Legacy", description: "Constantine the Great dies after making Christianity official and founding Constantinople.", territories: [[42.5, 12.5, 4.4], [40.8, 14.3, 2.5], [46.0, 2.0, 5.1], [40.4, -3.7, 4.8], [39.0, 22.0, 3.5], [38.0, 23.5, 2.8], [37.0, 35.0, 2.7], [36.8, 10.0, 1.5], [30.0, 31.0, 3.2], [33.0, 35.0, 2.2], [51.5, 4.0, 2.2], [48.0, 16.0, 3.1], [51.0, -2.5, 1.7], [54.0, -2.0, 1.2], [45.0, 25.0, 2.7], [41.0, 29.0, 1.5]] },
-    { year: 395, name: "Empire Divided", description: "The empire permanently splits into Eastern and Western halves after Theodosius I's death.", territories: [[42.5, 12.5, 4.2], [40.8, 14.3, 2.4], [46.0, 2.0, 4.8], [40.4, -3.7, 4.5], [39.0, 22.0, 3.3], [38.0, 23.5, 2.7], [37.0, 35.0, 2.6], [36.8, 10.0, 1.4], [30.0, 31.0, 3.0], [51.5, 4.0, 2.0], [48.0, 16.0, 2.8], [51.0, -2.5, 1.5], [45.0, 25.0, 2.5], [41.0, 29.0, 1.5]] },
-    { year: 410, name: "Sack of Rome", description: "Visigoths sack Rome - a profound psychological blow. Western territories increasingly lost.", territories: [[42.5, 12.5, 3.8], [40.8, 14.3, 2.2], [46.0, 2.0, 4.2], [40.4, -3.7, 3.8], [39.0, 22.0, 2.8], [38.0, 23.5, 2.4], [37.0, 35.0, 2.3], [36.8, 10.0, 1.2], [30.0, 31.0, 2.7], [48.0, 16.0, 2.3], [51.0, -2.5, 1.2], [45.0, 25.0, 2.2], [41.0, 29.0, 1.4]] },
-    { year: 450, name: "Western Collapse", description: "Hunnic invasions and barbarian kingdoms. The Western Empire clings to Italy and parts of Gaul.", territories: [[42.5, 12.5, 3.2], [40.8, 14.3, 1.8], [46.0, 2.0, 2.8], [40.4, -3.7, 2.5], [39.0, 22.0, 2.2], [37.0, 35.0, 1.8], [30.0, 31.0, 2.3], [48.0, 16.0, 1.8], [45.0, 25.0, 1.8], [41.0, 29.0, 1.3]] },
-    { year: 476, name: "Fall of the West", description: "Romulus Augustulus deposed. The Western Roman Empire falls, though the East continues for 1000 years.", territories: [[42.5, 12.5, 2.5], [40.8, 14.3, 1.5], [39.0, 22.0, 1.8], [37.0, 35.0, 1.5], [30.0, 31.0, 2.0], [45.0, 25.0, 1.5], [41.0, 29.0, 1.2]] }
+    { 
+        year: -509, 
+        name: "Early Roman Republic", 
+        description: "Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.", 
+        territories: [
+            {
+                type: 'polygon',
+                name: 'Latium',
+                coords: [
+                    [41.9, 12.3],
+                    [41.8, 12.6],
+                    [41.7, 12.7],
+                    [41.6, 12.6],
+                    [41.7, 12.4],
+                    [41.8, 12.2]
+                ]
+            }
+        ]
+    },
+    { 
+        year: -450, 
+        name: "Expanding Republic", 
+        description: "Rome consolidates control over Latium and begins conflicts with neighboring tribes.", 
+        territories: [
+            {
+                type: 'polygon',
+                name: 'Greater Latium',
+                coords: [
+                    [42.3, 11.8],
+                    [42.2, 13.0],
+                    [41.5, 13.4],
+                    [41.2, 13.0],
+                    [41.3, 12.2],
+                    [41.8, 11.5],
+                    [42.1, 11.6]
+                ]
+            }
+        ]
+    },
+    { 
+        year: -350, 
+        name: "Central Italy", 
+        description: "Victory in the Latin Wars. Rome dominates central Italy through warfare and alliances.", 
+        territories: [
+            {
+                type: 'polygon',
+                name: 'Central Italy',
+                coords: [
+                    [43.0, 11.5],
+                    [43.0, 13.5],
+                    [42.0, 14.5],
+                    [40.5, 15.0],
+                    [40.0, 14.0],
+                    [40.5, 12.5],
+                    [41.5, 11.0],
+                    [42.5, 11.0]
+                ]
+            }
+        ]
+    },
+    { 
+        year: -275, 
+        name: "Italian Peninsula", 
+        description: "Pyrrhic Wars concluded. Rome controls most of the Italian peninsula south of the Po Valley.", 
+        territories: [
+            {
+                type: 'polygon',
+                name: 'Italia',
+                coords: [
+                    [44.5, 11.0], // Po Valley
+                    [44.5, 13.5],
+                    [43.5, 15.5],
+                    [41.5, 16.5],
+                    [40.0, 17.5], // Heel
+                    [39.5, 16.5],
+                    [38.0, 16.0], // Calabria
+                    [37.5, 15.5],
+                    [38.0, 14.5], // Sicily approach
+                    [39.0, 13.0],
+                    [40.0, 12.0],
+                    [41.0, 10.5],
+                    [42.5, 10.0],
+                    [43.5, 10.0]
+                ]
+            }
+        ]
+    },
+    { 
+        year: -218, 
+        name: "First Punic War", 
+        description: "After defeating Carthage, Rome gains Sicily, Sardinia, and Corsica - its first provinces outside Italy.", 
+        territories: [
+            // Italia
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            // Sicily
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            // Sardinia
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            // Corsica
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] }
+        ]
+    },
+    { 
+        year: -146, 
+        name: "Mediterranean Power", 
+        description: "Carthage destroyed, Greece conquered. Rome becomes the dominant power in the Mediterranean.", 
+        territories: [
+            // Italia
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            // Sicily
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            // Sardinia & Corsica
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Macedonia & Greece
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // North Africa (former Carthage territory)
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.0], [36.0, 11.5], [35.0, 10.5], [34.5, 9.0], [35.5, 8.5], [37.0, 9.0]] },
+            // Hispania coastal
+            { type: 'polygon', name: 'Hispania Citerior', coords: [[42.5, 2.5], [41.5, 3.0], [40.0, 0.5], [38.5, -1.0], [39.5, -2.5], [41.0, -2.0], [42.0, 1.0]] }
+        ]
+    },
+    { 
+        year: -50, 
+        name: "Caesar's Conquests", 
+        description: "Julius Caesar conquers Gaul. Rome controls vast territories from Spain to Asia Minor.", 
+        territories: [
+            // Italia
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            // Sicily, Sardinia, Corsica
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Gallia (France) - Caesar's major conquest
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            // Hispania (full Spain and Portugal)
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            // Macedonia & Greece
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Asia Minor (western coast)
+            { type: 'polygon', name: 'Asia', coords: [[40.5, 26.5], [39.5, 28.5], [38.0, 29.5], [37.0, 28.5], [36.5, 27.0], [37.0, 26.0], [38.5, 26.0], [40.0, 26.0]] },
+            // Africa (North Africa)
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.0], [36.0, 11.5], [35.0, 10.5], [34.5, 9.0], [35.5, 8.5], [37.0, 9.0]] },
+            // Illyricum (Balkans west)
+            { type: 'polygon', name: 'Illyricum', coords: [[45.5, 13.5], [44.5, 16.0], [42.5, 19.0], [41.0, 19.5], [42.0, 16.0], [43.5, 14.0], [45.0, 13.0]] }
+        ]
+    },
+    { 
+        year: -27, 
+        name: "Birth of the Empire", 
+        description: "Octavian becomes Augustus, first Roman Emperor. The Republic transitions to Empire.", 
+        territories: [
+            // Italia
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Gallia (expanded)
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            // Hispania
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            // Macedonia, Greece, Asia Minor
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[41.0, 26.5], [40.0, 29.5], [38.5, 32.0], [37.0, 34.0], [36.0, 33.0], [36.5, 30.0], [37.5, 27.5], [39.0, 26.0], [40.5, 26.0]] },
+            // Syria & Judea
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 38.5], [34.5, 40.5], [33.0, 39.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            // Aegyptus (Egypt)
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            // Africa (expanded North Africa)
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 12.0], [33.0, 11.0], [32.5, 10.0], [34.0, 8.5], [36.0, 8.5], [37.0, 9.0]] },
+            // Illyricum
+            { type: 'polygon', name: 'Illyricum', coords: [[45.5, 13.5], [44.5, 17.5], [42.5, 19.5], [41.0, 19.5], [42.0, 16.0], [43.5, 14.0], [45.0, 13.0]] }
+        ]
+    },
+    { 
+        year: 14, 
+        name: "Augustan Empire", 
+        description: "Augustus dies after establishing imperial frontiers. The empire is stable and prosperous.", 
+        territories: [
+            // Core territories (Italia and islands)
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Gallia
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            // Hispania
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            // Balkans (Illyricum, Macedonia)
+            { type: 'polygon', name: 'Illyricum', coords: [[45.5, 13.5], [44.5, 17.5], [42.5, 19.5], [41.0, 19.5], [42.0, 16.0], [43.5, 14.0], [45.0, 13.0]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Asia Minor (expanded)
+            { type: 'polygon', name: 'Asia Minor', coords: [[41.0, 26.5], [40.0, 29.5], [38.5, 32.5], [37.0, 35.0], [36.0, 33.5], [36.5, 30.5], [37.5, 27.5], [39.0, 26.0], [40.5, 26.0]] },
+            // Eastern provinces
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 38.5], [34.5, 41.0], [33.0, 39.5], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            // Africa
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 12.0], [33.0, 11.5], [32.5, 10.0], [34.0, 8.5], [36.0, 8.5], [37.0, 9.0]] },
+            // Germania (limited Rhine territories)
+            { type: 'polygon', name: 'Germania Inferior', coords: [[52.0, 4.5], [51.5, 6.5], [50.5, 7.0], [50.0, 5.5], [51.0, 4.0]] }
+        ]
+    },
+    { 
+        year: 69, 
+        name: "Flavian Dynasty", 
+        description: "Year of Four Emperors ends. Vespasian founds the Flavian dynasty and stabilizes the empire.", 
+        territories: [
+            // Core
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Western provinces
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[55.0, -3.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -5.5], [54.0, -4.5]] },
+            // Central provinces
+            { type: 'polygon', name: 'Illyricum', coords: [[45.5, 13.5], [44.5, 17.5], [42.5, 19.5], [41.0, 19.5], [42.0, 16.0], [43.5, 14.0], [45.0, 13.0]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Eastern provinces
+            { type: 'polygon', name: 'Asia Minor', coords: [[41.0, 26.5], [40.0, 29.5], [38.5, 32.5], [37.0, 35.0], [36.0, 33.5], [36.5, 30.5], [37.5, 27.5], [39.0, 26.0], [40.5, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 38.5], [34.5, 41.0], [33.0, 39.5], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 12.5], [33.0, 12.0], [31.5, 10.5], [33.5, 8.5], [36.0, 8.5], [37.0, 9.0]] }
+        ]
+    },
+    { 
+        year: 117, 
+        name: "Greatest Extent", 
+        description: "Under Trajan, the empire reaches its maximum territorial extent, from Britain to Mesopotamia.", 
+        territories: [
+            // Core Italia and islands
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Western provinces
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            // Central Europe
+            { type: 'polygon', name: 'Germania Superior', coords: [[50.5, 7.0], [49.5, 9.5], [48.0, 10.0], [47.5, 8.0], [48.5, 6.5]] },
+            { type: 'polygon', name: 'Raetia', coords: [[48.0, 10.0], [47.0, 12.0], [46.5, 11.0], [47.0, 9.5]] },
+            { type: 'polygon', name: 'Noricum', coords: [[48.5, 13.0], [47.5, 15.0], [46.5, 14.0], [47.0, 12.5]] },
+            // Balkans and Danube
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
+            { type: 'polygon', name: 'Dacia', coords: [[47.5, 23.0], [46.5, 26.5], [45.0, 27.5], [44.0, 26.0], [44.5, 23.0], [46.0, 22.5]] },
+            { type: 'polygon', name: 'Moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Asia Minor (full control)
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            // Eastern provinces at peak
+            { type: 'polygon', name: 'Armenia', coords: [[40.5, 43.0], [39.5, 45.5], [38.0, 44.5], [38.5, 42.0], [39.5, 41.5]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Mesopotamia', coords: [[37.0, 40.0], [36.0, 43.5], [34.0, 45.5], [33.0, 44.5], [32.5, 41.0], [34.0, 39.5]] },
+            { type: 'polygon', name: 'Judaea', coords: [[33.0, 35.0], [32.0, 35.5], [31.0, 34.5], [31.5, 34.0], [32.5, 34.5]] },
+            { type: 'polygon', name: 'Arabia', coords: [[32.0, 35.5], [30.5, 36.5], [29.0, 35.0], [29.5, 34.0], [31.0, 34.5]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            // North Africa
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] },
+            { type: 'polygon', name: 'Mauretania', coords: [[36.0, -5.0], [35.0, 0.0], [33.0, 2.0], [31.5, 0.0], [32.0, -5.0], [34.0, -7.0]] }
+        ]
+    },
+    { 
+        year: 180, 
+        name: "Pax Romana Ends", 
+        description: "Marcus Aurelius dies. The era of peace and prosperity begins to wane with increasing pressures.", 
+        territories: [
+            // Same as 117 CE - still at maximum extent
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            { type: 'polygon', name: 'Germania Superior', coords: [[50.5, 7.0], [49.5, 9.5], [48.0, 10.0], [47.5, 8.0], [48.5, 6.5]] },
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
+            { type: 'polygon', name: 'Dacia', coords: [[47.5, 23.0], [46.5, 26.5], [45.0, 27.5], [44.0, 26.0], [44.5, 23.0], [46.0, 22.5]] },
+            { type: 'polygon', name: 'Moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Mesopotamia', coords: [[37.0, 40.0], [36.0, 43.5], [34.0, 45.5], [33.0, 44.5], [32.5, 41.0], [34.0, 39.5]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] }
+        ]
+    },
+    { 
+        year: 235, 
+        name: "Crisis Begins", 
+        description: "The Crisis of the Third Century begins. Political instability and barbarian invasions threaten the empire.", 
+        territories: [
+            // Core Italia and islands remain
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            // Western provinces (stable but under pressure)
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            // Danube frontier weakened - Germania lost, Dacia threatened
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
+            { type: 'polygon', name: 'Moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Eastern provinces remain
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] }
+        ]
+    },
+    { 
+        year: 284, 
+        name: "Diocletian's Reforms", 
+        description: "Diocletian becomes emperor and institutes reforms, dividing the empire into East and West.", 
+        territories: [
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
+            { type: 'polygon', name: 'Moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] }
+        ]
+    },
+    { 
+        year: 337, 
+        name: "Constantine's Legacy", 
+        description: "Constantine the Great dies after making Christianity official and founding Constantinople.", 
+        territories: [
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Sardinia', coords: [[41.2, 9.5], [40.8, 9.8], [40.0, 9.5], [39.2, 9.0], [39.0, 8.5], [39.5, 8.2], [40.5, 8.5], [41.0, 9.0]] },
+            { type: 'polygon', name: 'Corsica', coords: [[43.0, 9.4], [42.5, 9.5], [41.8, 9.2], [41.5, 8.8], [42.0, 8.7], [42.8, 8.8], [43.1, 9.2]] },
+            { type: 'polygon', name: 'Gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] }
+        ]
+    },
+    { 
+        year: 395, 
+        name: "Empire Divided", 
+        description: "The empire permanently splits into Eastern and Western halves after Theodosius I's death.", 
+        territories: [
+            { type: 'polygon', name: 'Italia', coords: [[44.5, 11.0], [44.5, 13.5], [43.5, 15.5], [41.5, 16.5], [40.0, 17.5], [39.5, 16.5], [38.0, 16.0], [37.5, 15.5], [38.0, 14.5], [39.0, 13.0], [40.0, 12.0], [41.0, 10.5], [42.5, 10.0], [43.5, 10.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Gallia', coords: [[50.0, 2.5], [49.5, 5.0], [48.0, 6.5], [46.0, 5.5], [44.0, 3.0], [43.5, -1.5], [46.0, -3.5], [48.0, -4.0], [49.0, -1.5]] },
+            { type: 'polygon', name: 'Hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
+            { type: 'polygon', name: 'Pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 19.5], [45.0, 18.0], [46.0, 15.5]] },
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa', coords: [[37.5, 10.0], [36.5, 11.0], [34.5, 11.5], [33.0, 11.0], [32.0, 10.0], [33.5, 9.0], [35.5, 9.0]] }
+        ]
+    },
+    { 
+        year: 410, 
+        name: "Sack of Rome", 
+        description: "Visigoths sack Rome - a profound psychological blow. Western territories increasingly lost.", 
+        territories: [
+            // Western Empire collapsing
+            { type: 'polygon', name: 'Italia', coords: [[44.0, 11.5], [44.0, 13.0], [43.0, 15.0], [41.5, 16.0], [40.0, 16.5], [39.0, 15.0], [38.5, 13.5], [39.5, 12.0], [41.0, 11.0], [43.0, 11.0]] },
+            { type: 'polygon', name: 'Sicilia', coords: [[38.2, 15.5], [37.5, 15.0], [37.0, 14.5], [36.8, 13.5], [37.5, 12.5], [38.2, 12.3], [38.5, 13.5], [38.3, 14.8]] },
+            { type: 'polygon', name: 'Gallia South', coords: [[45.0, 2.5], [44.0, 5.0], [43.0, 4.0], [43.5, 1.0], [44.5, 1.5]] },
+            { type: 'polygon', name: 'Hispania Coast', coords: [[41.5, 2.0], [40.0, 2.5], [38.5, 0.5], [37.5, -2.0], [38.5, -3.5], [40.0, -2.5]] },
+            // Eastern Empire stable
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
+            { type: 'polygon', name: 'Africa East', coords: [[35.0, 10.5], [34.0, 11.5], [32.5, 11.0], [32.0, 10.0], [33.0, 9.5], [34.5, 9.5]] }
+        ]
+    },
+    { 
+        year: 450, 
+        name: "Western Collapse", 
+        description: "Hunnic invasions and barbarian kingdoms. The Western Empire clings to Italy and parts of Gaul.", 
+        territories: [
+            // Western Empire nearly gone
+            { type: 'polygon', name: 'Italia Central', coords: [[43.0, 11.5], [43.0, 13.0], [42.0, 14.0], [41.0, 15.0], [40.0, 14.5], [40.0, 12.5], [41.0, 11.5], [42.0, 11.0]] },
+            { type: 'polygon', name: 'Gallia Remnant', coords: [[44.5, 3.0], [43.5, 5.0], [43.0, 4.0], [43.5, 2.5]] },
+            // Eastern Empire strong
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] }
+        ]
+    },
+    { 
+        year: 476, 
+        name: "Fall of the West", 
+        description: "Romulus Augustulus deposed. The Western Roman Empire falls, though the East continues for 1000 years.", 
+        territories: [
+            // Only Eastern Empire remains (Byzantine Empire)
+            { type: 'polygon', name: 'Thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
+            { type: 'polygon', name: 'Macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            { type: 'polygon', name: 'Asia Minor', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
+            { type: 'polygon', name: 'Syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
+            { type: 'polygon', name: 'Aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] }
+        ]
+    }
 ];
 
 // Function to identify region based on coordinates
@@ -1113,89 +1522,159 @@ function drawTerritories() {
     
     // Draw all current territories with base layer
     data.territories.forEach(territory => {
-        const circle = L.circle([territory[0], territory[1]], {
-            radius: territory[2] * 100000,
-            fillColor: '#8B0000',
-            fillOpacity: 0.3,
-            color: '#8B0000',
-            weight: 0,
-            className: 'territory-established'
-        }).addTo(STATE.map);
+        let shape;
+        
+        // Handle polygon territories (realistic shapes)
+        if (territory.type === 'polygon') {
+            shape = L.polygon(territory.coords, {
+                fillColor: '#8B0000',
+                fillOpacity: 0.3,
+                color: '#8B0000',
+                weight: 1,
+                opacity: 0.5,
+                className: 'territory-established'
+            }).addTo(STATE.map);
+        } 
+        // Handle circle territories (legacy simple representation)
+        else {
+            shape = L.circle([territory[0], territory[1]], {
+                radius: territory[2] * 100000,
+                fillColor: '#8B0000',
+                fillOpacity: 0.3,
+                color: '#8B0000',
+                weight: 0,
+                className: 'territory-established'
+            }).addTo(STATE.map);
+        }
+        
+        // Get center point for info display
+        const centerLat = territory.type === 'polygon' 
+            ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
+            : territory[0];
+        const centerLon = territory.type === 'polygon'
+            ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
+            : territory[1];
         
         // Add hover and click event for territory info
-        circle.on('mouseover', () => {
+        shape.on('mouseover', () => {
             if (!STATE.infoLocked) {
-                showTerritoryInfo(data, false, territory[0], territory[1], false);
+                showTerritoryInfo(data, false, centerLat, centerLon, false);
             }
         });
         
-        circle.on('mouseout', () => {
+        shape.on('mouseout', () => {
             if (!STATE.infoLocked) {
                 updateDisplay();
             }
         });
         
-        circle.on('click', () => {
-            showTerritoryInfo(data, false, territory[0], territory[1], true);
+        shape.on('click', () => {
+            showTerritoryInfo(data, false, centerLat, centerLon, true);
         });
         
-        STATE.territoryLayers.push(circle);
+        STATE.territoryLayers.push(shape);
     });
     
     // Highlight recently added territories (not in previous period)
     if (STATE.currentIndex > 0) {
         const previousData = historicalData[STATE.currentIndex - 1];
+        
+        // Create set of previous territory keys (handle both polygon and circle formats)
         const previousTerritorySet = new Set(
-            previousData.territories.map(t => `${t[0]},${t[1]},${t[2]}`)
+            previousData.territories.map(t => {
+                if (t.type === 'polygon') {
+                    return t.name || JSON.stringify(t.coords);
+                }
+                return `${t[0]},${t[1]},${t[2]}`;
+            })
         );
         
         data.territories.forEach((territory, index) => {
-            const key = `${territory[0]},${territory[1]},${territory[2]}`;
+            // Generate unique key for this territory
+            const key = territory.type === 'polygon' 
+                ? (territory.name || JSON.stringify(territory.coords))
+                : `${territory[0]},${territory[1]},${territory[2]}`;
             
             // If this territory wasn't in the previous period, it's new expansion
             if (!previousTerritorySet.has(key)) {
-                const circle = L.circle([territory[0], territory[1]], {
-                    radius: territory[2] * 100000,
-                    fillColor: '#DC143C',
-                    fillOpacity: 0.4,
-                    color: '#FFD700',
-                    weight: 2,
-                    opacity: 0.8,
-                    className: 'territory-expansion'
-                }).addTo(STATE.map);
+                let expansionShape;
+                
+                // Draw expansion highlight based on territory type
+                if (territory.type === 'polygon') {
+                    expansionShape = L.polygon(territory.coords, {
+                        fillColor: '#DC143C',
+                        fillOpacity: 0.4,
+                        color: '#FFD700',
+                        weight: 2,
+                        opacity: 0.8,
+                        className: 'territory-expansion'
+                    }).addTo(STATE.map);
+                } else {
+                    expansionShape = L.circle([territory[0], territory[1]], {
+                        radius: territory[2] * 100000,
+                        fillColor: '#DC143C',
+                        fillOpacity: 0.4,
+                        color: '#FFD700',
+                        weight: 2,
+                        opacity: 0.8,
+                        className: 'territory-expansion'
+                    }).addTo(STATE.map);
+                }
+                
+                // Get center point for info display
+                const centerLat = territory.type === 'polygon' 
+                    ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
+                    : territory[0];
+                const centerLon = territory.type === 'polygon'
+                    ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
+                    : territory[1];
                 
                 // Add hover and click events for new expansion territories
-                circle.on('mouseover', () => {
+                expansionShape.on('mouseover', () => {
                     if (!STATE.infoLocked) {
-                        showTerritoryInfo(data, true, territory[0], territory[1], false);
+                        showTerritoryInfo(data, true, centerLat, centerLon, false);
                     }
                 });
                 
-                circle.on('mouseout', () => {
+                expansionShape.on('mouseout', () => {
                     if (!STATE.infoLocked) {
                         updateDisplay();
                     }
                 });
                 
-                circle.on('click', () => {
-                    showTerritoryInfo(data, true, territory[0], territory[1], true);
+                expansionShape.on('click', () => {
+                    showTerritoryInfo(data, true, centerLat, centerLon, true);
                 });
                 
-                STATE.territoryLayers.push(circle);
+                STATE.territoryLayers.push(expansionShape);
                 
-                // Add outer glow for newest territories
+                // Add outer glow for newest territories during animation
                 if (STATE.isPlaying) {
-                    const glowCircle = L.circle([territory[0], territory[1]], {
-                        radius: territory[2] * 100000 * 1.2,
-                        fillColor: 'transparent',
-                        fillOpacity: 0,
-                        color: '#FFD700',
-                        weight: 3,
-                        opacity: 0.6,
-                        className: 'territory-glow'
-                    }).addTo(STATE.map);
+                    let glowShape;
+                    if (territory.type === 'polygon') {
+                        // For polygons, add a slightly larger border effect
+                        glowShape = L.polygon(territory.coords, {
+                            fillColor: 'transparent',
+                            fillOpacity: 0,
+                            color: '#FFD700',
+                            weight: 4,
+                            opacity: 0.6,
+                            className: 'territory-glow'
+                        }).addTo(STATE.map);
+                    } else {
+                        // For circles, add a larger radius glow
+                        glowShape = L.circle([territory[0], territory[1]], {
+                            radius: territory[2] * 100000 * 1.2,
+                            fillColor: 'transparent',
+                            fillOpacity: 0,
+                            color: '#FFD700',
+                            weight: 3,
+                            opacity: 0.6,
+                            className: 'territory-glow'
+                        }).addTo(STATE.map);
+                    }
                     
-                    STATE.territoryLayers.push(glowCircle);
+                    STATE.territoryLayers.push(glowShape);
                 }
             }
         });
