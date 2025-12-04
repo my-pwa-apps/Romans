@@ -2011,31 +2011,30 @@ function animateExpansion() {
     } else {
         STATE.expansionAnimating = false;
         STATE.expansionProgress = 1;
-        // Move all expanding layers to established layers now that animation is complete
-        STATE.establishedLayers = STATE.establishedLayers.concat(STATE.expandingLayers);
-        STATE.expandingLayers = [];
+        
+        // Animation complete - now merge the expanding territories into established
+        // and clean up any territories that are no longer part of the current period
+        finalizeExpansion();
     }
 }
 
-// Start expansion animation for new territories
-function startExpansionAnimation() {
-    STATE.expansionProgress = 0;
-    STATE.expansionStartTime = performance.now();
-    STATE.expansionAnimating = true;
+// Called when expansion animation completes - merges layers and cleans up
+function finalizeExpansion() {
+    if (!STATE.expandingTerritoriesData) return;
     
-    // Adjust duration based on animation speed
-    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
-    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
+    const { data, currentTerritorySet } = STATE.expandingTerritoriesData;
     
-    animateExpansion();
+    // Move expanding layers to established
+    STATE.establishedLayers = STATE.establishedLayers.concat(STATE.expandingLayers);
+    STATE.expandingLayers = [];
+    
+    // Clear the cached data
+    STATE.expandingTerritoriesData = null;
 }
 
 // Start expansion animation for new territories
 function startExpansionAnimation() {
     if (!STATE.map || !historicalData[STATE.currentIndex]) return;
-    
-    // Clear all previous territory layers before starting new animation
-    clearTerritories();
     
     STATE.expansionProgress = 0;
     STATE.expansionStartTime = performance.now();
@@ -2061,8 +2060,17 @@ function startExpansionAnimation() {
         })
     ) : new Set();
     
-    // Separate existing and new territories
-    const existingNow = [];
+    // Create set of current territory keys
+    const currentTerritorySet = new Set(
+        data.territories.map(t => {
+            if (t.type === 'polygon') {
+                return t.name || JSON.stringify(t.coords);
+            }
+            return `${t[0]},${t[1]},${t[2]}`;
+        })
+    );
+    
+    // Find territories that are ONLY new (didn't exist before)
     const newTerritories = [];
     
     data.territories.forEach(territory => {
@@ -2070,9 +2078,7 @@ function startExpansionAnimation() {
             ? (territory.name || JSON.stringify(territory.coords))
             : `${territory[0]},${territory[1]},${territory[2]}`;
         
-        if (previousTerritorySet.has(key)) {
-            existingNow.push(territory);
-        } else {
+        if (!previousTerritorySet.has(key)) {
             newTerritories.push(territory);
         }
     });
@@ -2091,15 +2097,16 @@ function startExpansionAnimation() {
     STATE.expandingTerritoriesData = {
         data,
         newTerritoriesWithOrigin,
-        maxDistance
+        maxDistance,
+        currentTerritorySet,
+        previousTerritorySet
     };
     
-    // Draw existing territories once (they stay static during animation)
-    existingNow.forEach(territory => {
-        drawSingleTerritory(territory, data, false, 1, null, 'established');
-    });
+    // DON'T clear existing territories - keep them visible during animation
+    // Only clear the expanding layers from any previous animation
+    clearExpandingLayers();
     
-    // Start animation loop
+    // Start animation loop - new territories will animate in on top of existing
     animateExpansion();
 }
 
@@ -2820,12 +2827,10 @@ function animate(timestamp = 0) {
             return;
         }
         
-        // Batch DOM updates for better performance
-        requestAnimationFrame(() => {
-            updateDisplay();
-            drawTerritories();
-            updateTimelineSlider();
-        });
+        // Update display and territories synchronously
+        updateDisplay();
+        drawTerritories();
+        updateTimelineSlider();
         
         STATE.lastUpdateTime = timestamp;
     }
