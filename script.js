@@ -2003,7 +2003,7 @@ function animateExpansion() {
     const elapsed = now - STATE.expansionStartTime;
     STATE.expansionProgress = Math.min(1, elapsed / STATE.expansionDuration);
     
-    // Only redraw the expanding territories (established ones stay static)
+    // Only redraw the expanding territories (previous territories stay untouched)
     drawExpandingTerritories(STATE.expansionProgress);
     
     if (STATE.expansionProgress < 1) {
@@ -2012,37 +2012,16 @@ function animateExpansion() {
         STATE.expansionAnimating = false;
         STATE.expansionProgress = 1;
         
-        // Animation complete - now merge the expanding territories into established
-        // and clean up any territories that are no longer part of the current period
-        finalizeExpansion();
+        // Animation complete - merge expanding layers into the main layer array
+        STATE.territoryLayers = STATE.territoryLayers.concat(STATE.expandingLayers);
+        STATE.expandingLayers = [];
+        STATE.expandingTerritoriesData = null;
     }
-}
-
-// Called when expansion animation completes - merges layers and cleans up
-function finalizeExpansion() {
-    if (!STATE.expandingTerritoriesData) return;
-    
-    const { data, currentTerritorySet } = STATE.expandingTerritoriesData;
-    
-    // Move expanding layers to established
-    STATE.establishedLayers = STATE.establishedLayers.concat(STATE.expandingLayers);
-    STATE.expandingLayers = [];
-    
-    // Clear the cached data
-    STATE.expandingTerritoriesData = null;
 }
 
 // Start expansion animation for new territories
 function startExpansionAnimation() {
     if (!STATE.map || !historicalData[STATE.currentIndex]) return;
-    
-    STATE.expansionProgress = 0;
-    STATE.expansionStartTime = performance.now();
-    STATE.expansionAnimating = true;
-    
-    // Adjust duration based on animation speed
-    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
-    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
     
     const data = historicalData[STATE.currentIndex];
     const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
@@ -2060,28 +2039,56 @@ function startExpansionAnimation() {
         })
     ) : new Set();
     
-    // Create set of current territory keys
-    const currentTerritorySet = new Set(
-        data.territories.map(t => {
-            if (t.type === 'polygon') {
-                return t.name || JSON.stringify(t.coords);
-            }
-            return `${t[0]},${t[1]},${t[2]}`;
-        })
-    );
-    
-    // Find territories that are ONLY new (didn't exist before)
-    const newTerritories = [];
+    // Separate current territories into existing (from prev period) and new
+    const existingNow = [];  // Territories that existed before AND exist now
+    const newTerritories = [];  // Territories that are NEW this period
     
     data.territories.forEach(territory => {
         const key = territory.type === 'polygon' 
             ? (territory.name || JSON.stringify(territory.coords))
             : `${territory[0]},${territory[1]},${territory[2]}`;
         
-        if (!previousTerritorySet.has(key)) {
+        if (previousTerritorySet.has(key)) {
+            existingNow.push(territory);
+        } else {
             newTerritories.push(territory);
         }
     });
+    
+    // Store old layers to remove AFTER new ones are drawn
+    const oldTerritoryLayers = STATE.territoryLayers.slice();
+    const oldEstablishedLayers = STATE.establishedLayers.slice();
+    const oldExpandingLayers = STATE.expandingLayers.slice();
+    
+    // Reset layer arrays (but don't remove from map yet)
+    STATE.territoryLayers = [];
+    STATE.establishedLayers = [];
+    STATE.expandingLayers = [];
+    STATE.expandingTerritoriesData = null;
+    
+    // Draw existing territories FIRST (before removing old ones)
+    // These are drawn instantly at full opacity - no animation
+    existingNow.forEach(territory => {
+        drawSingleTerritory(territory, data, false, 1, null, 'territory');
+    });
+    
+    // NOW remove the old layers (after new base is drawn)
+    oldTerritoryLayers.forEach(layer => {
+        if (STATE.map.hasLayer(layer)) STATE.map.removeLayer(layer);
+    });
+    oldEstablishedLayers.forEach(layer => {
+        if (STATE.map.hasLayer(layer)) STATE.map.removeLayer(layer);
+    });
+    oldExpandingLayers.forEach(layer => {
+        if (STATE.map.hasLayer(layer)) STATE.map.removeLayer(layer);
+    });
+    
+    // If no new territories, we're done - no animation needed
+    if (newTerritories.length === 0) {
+        STATE.expansionAnimating = false;
+        STATE.expansionProgress = 1;
+        return;
+    }
     
     // Sort new territories by distance from nearest existing territory
     const newTerritoriesWithOrigin = newTerritories.map(territory => {
@@ -2097,16 +2104,19 @@ function startExpansionAnimation() {
     STATE.expandingTerritoriesData = {
         data,
         newTerritoriesWithOrigin,
-        maxDistance,
-        currentTerritorySet,
-        previousTerritorySet
+        maxDistance
     };
     
-    // DON'T clear existing territories - keep them visible during animation
-    // Only clear the expanding layers from any previous animation
-    clearExpandingLayers();
+    // Set up animation state
+    STATE.expansionProgress = 0;
+    STATE.expansionStartTime = performance.now();
+    STATE.expansionAnimating = true;
     
-    // Start animation loop - new territories will animate in on top of existing
+    // Adjust duration based on animation speed
+    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
+    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
+    
+    // Start animation loop for new territories
     animateExpansion();
 }
 
@@ -2291,11 +2301,12 @@ function drawTerritories() {
     // Update time-based markers (cities, forts, walls)
     updateTimeBasedMarkers();
     
-    // If playing, start expansion animation for new territories
+    // If playing and not the first period, animate only the new territories
+    // Keep existing territories on the map
     if (STATE.isPlaying && STATE.currentIndex > 0) {
         startExpansionAnimation();
     } else {
-        // Instant draw when not animating
+        // Instant draw - clear and redraw everything
         drawTerritoriesWithProgress(1);
     }
 }
