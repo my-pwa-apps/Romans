@@ -6,8 +6,7 @@
     <meta name="description" content="Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE with detailed historical information">
     <meta name="keywords" content="Roman Empire, History, Interactive Map, Ancient Rome, Historical Timeline, Roman Republic">
     <meta name="author" content="Roman Empire Historical Visualization">
-    <meta name="theme-color" content="#8B0000" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#A52A2A" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#8B0000">
     <title>IMPERIVM ROMANVM - The Rise and Fall of Rome</title>
     
     <!-- PWA Manifest -->
@@ -37,16 +36,36 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Noscript fallback -->
+    <noscript>
+        <style>
+            .loading-overlay { display: none !important; }
+            .noscript-warning { display: flex !important; }
+        </style>
+    </noscript>
 </head>
 <body>
+    <!-- Noscript Warning -->
+    <div class="noscript-warning">
+        <div>
+            <h1>⚠️ JavaScript Required</h1>
+            <p>This interactive map requires JavaScript to function.<br>Please enable JavaScript in your browser settings.</p>
+        </div>
+    </div>
+    
     <!-- Loading State -->
     <div class="loading-overlay" id="loadingOverlay" aria-live="polite" aria-busy="true">
         <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>Loading Roman Empire...</p>
+            <div class="loading-spinner" role="status"></div>
+            <p>Initializing Roman Empire...</p>
+            <small class="loading-subtext">Loading map data</small>
         </div>
     </div>
 
+    <!-- Skip to main content link for accessibility -->
+    <a href="#map" class="skip-link">Skip to map</a>
+    
     <div class="container" role="main">
         <header role="banner">
             <h1>IMPERIVM ROMANVM</h1>
@@ -83,12 +102,13 @@
                 </section>
 
                 <nav class="controls" aria-label="Animation controls">
-                    <div class="button-group">
-                        <button id="playBtn" class="btn btn-primary" aria-label="Play animation" aria-pressed="false" title="Play/Pause (Space)">
+                    <div class="button-group" role="group" aria-label="Playback controls">
+                        <button id="playBtn" class="btn btn-primary" aria-label="Play animation" aria-pressed="false" title="Play/Pause (Spacebar)" type="button">
                             <span class="play-icon" aria-hidden="true">▶</span>
                             <span class="pause-icon" aria-hidden="true">⏸</span>
+                            <span class="visually-hidden">Play</span>
                         </button>
-                        <button id="resetBtn" class="btn btn-secondary" aria-label="Reset to beginning" title="Reset to start (R)">Reset</button>
+                        <button id="resetBtn" class="btn btn-secondary" aria-label="Reset timeline to beginning" title="Reset (R)" type="button">Reset</button>
                     </div>
                     <div class="speed-control">
                         <label for="speedSlider">Animation Speed:</label>

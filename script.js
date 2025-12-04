@@ -787,6 +787,8 @@ const utils = {
 // INITIALIZATION
 // ============================================
 function init() {
+    const startTime = performance.now();
+    
     try {
         showLoading();
         detectMobile();
@@ -811,18 +813,28 @@ function init() {
             }
         });
         
-        console.log('✅ IMPERIVM ROMANVM initialized successfully');
+        const loadTime = (performance.now() - startTime).toFixed(0);
+        console.log(`✅ IMPERIVM ROMANVM initialized in ${loadTime}ms`);
     } catch (error) {
         console.error('❌ Initialization error:', error);
-        showError('Failed to initialize the application. Please refresh the page.');
+        console.error('Stack:', error.stack);
+        showError('Failed to initialize. Please check your connection and refresh.');
         hideLoading();
     }
 }
 
-// Detect mobile device
+// Detect mobile device with better accuracy
 function detectMobile() {
-    STATE.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                     || window.innerWidth <= 768;
+    const touchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const narrowScreen = window.matchMedia('(max-width: 768px)').matches;
+    const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    STATE.isMobile = (touchDevice && narrowScreen) || mobileUA;
+    STATE.isTouch = touchDevice;
+    
+    // Add class to body for CSS targeting
+    document.body.classList.toggle('is-mobile', STATE.isMobile);
+    document.body.classList.toggle('is-touch', STATE.isTouch);
 }
 
 function showMobileHint() {

@@ -1,4 +1,74 @@
 /* ============================================
+   ACCESSIBILITY UTILITIES
+   ============================================ */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--roman-gold, #D4AF37);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 0 0 8px 8px;
+    font-weight: bold;
+    text-decoration: none;
+    z-index: 10002;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   NOSCRIPT WARNING
+   ============================================ */
+.noscript-warning {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #1a1208;
+    color: #D4AF37;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 10001;
+    font-family: var(--font-primary);
+}
+
+.noscript-warning h1 {
+    font-size: 2em;
+    margin-bottom: 1rem;
+}
+
+.noscript-warning p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.loading-subtext {
+    opacity: 0.7;
+    margin-top: 8px;
+    display: block;
+    font-size: 0.9em;
+}
+
+/* ============================================
    ROMAN EMPIRE THEME - COLOR PALETTE & VARS
    ============================================ */
 :root {
@@ -225,6 +295,7 @@ h1::after {
 .loading-content {
     text-align: center;
     color: var(--roman-gold);
+    position: relative;
 }
 
 .loading-spinner {
@@ -234,9 +305,25 @@ h1::after {
     border-top-color: var(--roman-gold);
     border-right-color: var(--roman-gold-light);
     border-radius: 50%;
-    animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    animation: spin 1s linear infinite;
     margin: 0 auto 20px;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.loading-spinner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid transparent;
+    border-top-color: var(--roman-gold-light);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite reverse;
 }
 
 @keyframes spin {
@@ -252,6 +339,22 @@ h1::after {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
+}
+
+/* Body states for JS-controlled styling */
+body.is-mobile .year-display {
+    font-size: clamp(1em, 4vw, 1.3em);
+    padding: 8px 14px;
+}
+
+body.is-touch .btn:hover::before {
+    /* Disable ripple effect on touch devices */
+    display: none;
+}
+
+body.is-touch .city-marker:hover,
+body.is-touch .fort-marker:hover {
+    transform: none;
 }
 
 /* Main Content Area */
@@ -552,10 +655,8 @@ h1::after {
         0 6px 25px rgba(0, 0, 0, 0.6),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
-    transition: var(--transition-smooth);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     max-width: calc(100vw - 30px);
@@ -563,7 +664,7 @@ h1::after {
     overflow: hidden;
     text-overflow: ellipsis;
     will-change: transform;
-    touch-action: none; /* Better drag experience */
+    touch-action: none;
 }
 
 .year-display:hover,
@@ -681,7 +782,14 @@ h1::after {
 #timeline:focus {
     box-shadow: 
         inset 0 2px 4px rgba(0, 0, 0, 0.6),
-        0 0 0 3px rgba(212, 175, 55, 0.3);
+        0 0 0 3px rgba(212, 175, 55, 0.5);
+    outline: none;
+}
+
+#timeline:focus-visible {
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 0 4px rgba(212, 175, 55, 0.7);
 }
 
 #timeline::-webkit-slider-thumb {
@@ -872,8 +980,14 @@ h1::after {
 }
 
 .btn:active {
-    transform: translateY(2px);
+    transform: translateY(1px) scale(0.98);
     box-shadow: var(--shadow-sm);
+    transition-duration: 0.05s;
+}
+
+.btn:focus-visible {
+    outline: 3px solid var(--roman-gold-light);
+    outline-offset: 3px;
 }
 
 .btn:focus {
@@ -943,9 +1057,11 @@ h1::after {
         var(--shadow-md),
         inset 0 0 30px rgba(0, 0, 0, 0.3);
     transition: var(--transition-smooth);
-    /* Custom scrollbar */
+    /* Custom scrollbar - Firefox */
     scrollbar-width: thin;
     scrollbar-color: var(--roman-gold) var(--roman-brown-dark);
+    /* Ensure smooth scrolling */
+    scroll-behavior: smooth;
 }
 
 .info-panel::-webkit-scrollbar {
@@ -1347,21 +1463,34 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 10px 20px;
+    padding: 12px 20px;
     background: linear-gradient(135deg, rgba(42, 35, 25, 0.98), rgba(32, 25, 18, 0.98));
     border-top: 2px solid var(--roman-gold);
     z-index: 999;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    animation: slideUpFooter 0.5s ease-out;
+}
+
+@keyframes slideUpFooter {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .legend {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: center;
 }
 
 .legend-item {
@@ -1908,6 +2037,28 @@ footer {
     
     header {
         padding-top: max(1rem, env(safe-area-inset-top));
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================ */
+@media (prefers-contrast: high) {
+    :root {
+        --roman-gold: #FFD700;
+        --roman-cream: #FFFFFF;
+        --roman-red: #FF0000;
+    }
+    
+    .btn,
+    .info-panel,
+    .year-display {
+        border-width: 3px;
+    }
+    
+    .timeline-labels,
+    .legend-item span {
+        color: #FFFFFF;
     }
 }
 
