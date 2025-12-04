@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'imperivm-v1.0.3';
+const CACHE_VERSION = 'imperivm-v1.0.6';
 const CACHE_NAME = `${CACHE_VERSION}-core`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -9,6 +9,7 @@ const CORE_ASSETS = [
     './index.html',
     './styles.css',
     './script.js',
+    './territories.js',
     './manifest.json',
     './icons/icon-192x192.png',
     './icons/icon-512x512.png'

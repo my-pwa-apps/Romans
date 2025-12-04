@@ -669,6 +669,12 @@ const STATE = {
     animationSpeed: 3,
     updateInterval: 600,
     
+    // Territory expansion animation
+    expansionProgress: 1.0,  // 0 to 1, how much of current territories are revealed
+    expansionAnimating: false,
+    expansionStartTime: 0,
+    expansionDuration: 2000,  // ms to fully expand territories
+    
     // UI State
     isInitialized: false,
     isMobile: false,
@@ -1337,6 +1343,175 @@ const CITIES = [
         founded: '79 CE', 
         year: 79,
         description: 'Major Roman fortress in northwest England, established under Governor Agricola. Headquarters of Legio XX Valeria Victrix. Largest legionary fortress in Britain. Strategic base for campaigns into Wales and northern England. Well-preserved Roman walls still visible.'
+    },
+    // MAJOR EASTERN CITIES - Previously missing
+    { 
+        name: 'Byzantium/Constantinople', 
+        lat: 41.01, 
+        lon: 28.98, 
+        founded: 'Refounded 330 CE', 
+        year: -667,
+        description: 'Originally founded as Byzantium by Greek colonists around 667 BCE. Refounded by Constantine the Great in 330 CE as Constantinople ("City of Constantine"). Became the capital of the Eastern Roman (Byzantine) Empire and one of the largest and wealthiest cities in the world for over 1000 years.'
+    },
+    { 
+        name: 'Antioch (Antakya)', 
+        lat: 36.20, 
+        lon: 36.16, 
+        founded: '300 BCE', 
+        year: -64,
+        description: 'Founded by Seleucus I Nicator. Conquered by Rome in 64 BCE. Third largest city in the Roman Empire after Rome and Alexandria. Major center of early Christianity - where followers were first called "Christians". Capital of the Diocese of the East.'
+    },
+    { 
+        name: 'Alexandria', 
+        lat: 31.20, 
+        lon: 29.92, 
+        founded: '331 BCE (Greek)', 
+        year: -30,
+        description: 'Founded by Alexander the Great. Became Roman after Cleopatra\'s death in 30 BCE. Second largest city of the Empire, famous for its Great Library and Lighthouse (one of the Seven Wonders). Major center of learning, commerce, and early Christian theology.'
+    },
+    { 
+        name: 'Carthage (Roman)', 
+        lat: 36.85, 
+        lon: 10.32, 
+        founded: 'Refounded 44 BCE', 
+        year: -44,
+        description: 'Originally Punic city destroyed by Rome in 146 BCE. Julius Caesar founded a new Roman colony here in 44 BCE, which became one of the largest cities of the Western Empire. Capital of Africa Proconsularis and a major grain-exporting port.'
+    },
+    { 
+        name: 'Ephesus (Efes)', 
+        lat: 37.95, 
+        lon: 27.36, 
+        founded: 'Ancient Greek', 
+        year: -133,
+        description: 'One of the largest cities of the ancient world. Temple of Artemis was one of the Seven Wonders. Became Roman in 133 BCE. Capital of Asia province. Important early Christian site - home of St. Paul and allegedly Virgin Mary. Famous for its well-preserved theater and library.'
+    },
+    { 
+        name: 'Athens', 
+        lat: 37.98, 
+        lon: 23.73, 
+        founded: 'Ancient Greek', 
+        year: -146,
+        description: 'The cradle of Western civilization and democracy. Came under Roman control in 146 BCE but retained significant cultural prestige. Romans admired Greek culture and many studied philosophy here. Home of Plato\'s Academy and Aristotle\'s Lyceum.'
+    },
+    { 
+        name: 'Jerusalem (Aelia Capitolina)', 
+        lat: 31.78, 
+        lon: 35.23, 
+        founded: 'Ancient', 
+        year: -63,
+        description: 'Captured by Pompey in 63 BCE. Destroyed after Jewish revolt in 70 CE and rebuilt as Aelia Capitolina by Hadrian in 130 CE. Holy city for Jews and Christians. Site of the Second Temple and Jesus\' crucifixion.'
+    },
+    { 
+        name: 'Damascus', 
+        lat: 33.51, 
+        lon: 36.29, 
+        founded: 'Ancient', 
+        year: -64,
+        description: 'One of the oldest continuously inhabited cities in the world. Incorporated into Roman Syria in 64 BCE. Important trading hub on caravan routes. Site of St. Paul\'s conversion to Christianity on the "Road to Damascus".'
+    },
+    { 
+        name: 'Pergamon (Bergama)', 
+        lat: 39.12, 
+        lon: 27.18, 
+        founded: 'Ancient Greek', 
+        year: -133,
+        description: 'Capital of the wealthy Kingdom of Pergamon, bequeathed to Rome in 133 BCE. Famous for its library (second only to Alexandria), Asclepion healing center, and dramatic acropolis. Gave its name to "parchment" (pergamena).'
+    },
+    { 
+        name: 'Thessalonica (Thessaloniki)', 
+        lat: 40.64, 
+        lon: 22.94, 
+        founded: '315 BCE (Greek)', 
+        year: -148,
+        description: 'Named after Alexander\'s half-sister. Became Roman in 148 BCE. Capital of the province of Macedonia and one of the largest cities in the Balkans. Important early Christian center - St. Paul wrote two epistles to the Thessalonians.'
+    },
+    { 
+        name: 'Corinth', 
+        lat: 37.91, 
+        lon: 22.88, 
+        founded: 'Refounded 44 BCE', 
+        year: -44,
+        description: 'Ancient Greek city destroyed by Rome in 146 BCE for leading resistance. Julius Caesar refounded it as a Roman colony in 44 BCE. Strategically located controlling the Isthmus. Major trading port and early Christian community visited by St. Paul.'
+    },
+    { 
+        name: 'Nicomedia (İzmit)', 
+        lat: 40.76, 
+        lon: 29.94, 
+        founded: '264 BCE (Greek)', 
+        year: -74,
+        description: 'Capital of Bithynia, bequeathed to Rome in 74 BCE. Diocletian made it the eastern capital during the Tetrarchy (284-305 CE). Constantine lived here before founding Constantinople. Major administrative and military center.'
+    },
+    { 
+        name: 'Nicaea (İznik)', 
+        lat: 40.43, 
+        lon: 29.72, 
+        founded: '316 BCE (Greek)', 
+        year: -74,
+        description: 'Founded by Antigonus I, renamed by Lysimachus. Part of Roman Bithynia from 74 BCE. Site of the First Council of Nicaea (325 CE) which established the Nicene Creed, defining orthodox Christian doctrine.'
+    },
+    { 
+        name: 'Cyrene', 
+        lat: 32.82, 
+        lon: 21.86, 
+        founded: 'Greek Colony 630 BCE', 
+        year: -96,
+        description: 'Founded by Greek colonists. Bequeathed to Rome in 96 BCE. Capital of Cyrenaica province (eastern Libya). Birthplace of the philosopher Aristippus and Simon of Cyrene who carried Jesus\' cross.'
+    },
+    { 
+        name: 'Leptis Magna', 
+        lat: 32.64, 
+        lon: 14.29, 
+        founded: 'Phoenician', 
+        year: -146,
+        description: 'Phoenician trading post that became one of the most beautiful cities of the Roman world. Birthplace of Emperor Septimius Severus who embellished it lavishly. Exceptionally well-preserved ruins including theater, forum, and arch.'
+    },
+    { 
+        name: 'Palmyra (Tadmor)', 
+        lat: 34.55, 
+        lon: 38.27, 
+        founded: 'Ancient', 
+        year: 14,
+        description: 'Oasis city that became fabulously wealthy from caravan trade. Formally annexed under Tiberius. Briefly broke from Rome under Queen Zenobia (267-272 CE) who conquered Egypt and much of the East before being defeated by Aurelian.'
+    },
+    { 
+        name: 'Petra', 
+        lat: 30.33, 
+        lon: 35.44, 
+        founded: 'Nabataean', 
+        year: 106,
+        description: 'Capital of the Nabataean Kingdom, annexed as capital of Arabia Petraea by Trajan in 106 CE. Famous "rose-red city half as old as time" carved into sandstone cliffs. Major trading center on incense routes.'
+    },
+    { 
+        name: 'Eboracum (York)', 
+        lat: 53.96, 
+        lon: -1.08, 
+        founded: '71 CE', 
+        year: 71,
+        description: 'Major legionary fortress and later capital of Britannia Inferior. Emperor Septimius Severus died here in 211 CE. Constantine was proclaimed emperor here in 306 CE. One of the most important cities in Roman Britain.'
+    },
+    { 
+        name: 'Aquileia', 
+        lat: 45.77, 
+        lon: 13.37, 
+        founded: '181 BCE', 
+        year: -181,
+        description: 'Founded as a Roman colony to guard against Celtic and Illyrian incursions. Became the fourth largest city in Italy and a major trading hub. Gateway between Rome and the Danube. Devastated by Attila the Hun in 452 CE.'
+    },
+    { 
+        name: 'Syracuse (Siracusa)', 
+        lat: 37.07, 
+        lon: 15.29, 
+        founded: 'Greek 734 BCE', 
+        year: -212,
+        description: 'One of the greatest Greek cities, conquered by Rome in 212 BCE after a famous siege. Home of Archimedes. Became capital of Sicily province. Major grain-exporting port and cultural center connecting Greece and Rome.'
+    },
+    { 
+        name: 'Tingis (Tangier)', 
+        lat: 35.78, 
+        lon: -5.81, 
+        founded: 'Phoenician', 
+        year: -38,
+        description: 'Ancient Phoenician and Carthaginian city. Became Roman under Augustus. Capital of Mauretania Tingitana province. Strategic location at the western entrance to the Mediterranean (Pillars of Hercules).'
     }
 ];
     
@@ -1653,47 +1828,234 @@ function clearTerritories() {
     STATE.territoryLayers = utils.removeLayers(STATE.territoryLayers, STATE.map);
 }
 
-function drawTerritories() {
+// Get detailed coordinates for a territory if available
+function getDetailedCoords(territory) {
+    if (!territory.type || territory.type !== 'polygon') return territory.coords;
+    
+    const name = (territory.name || '').toLowerCase().replace(/\s+/g, '');
+    
+    // Check if we have detailed shapes loaded
+    if (typeof TERRITORY_SHAPES !== 'undefined') {
+        // Map territory names to detailed shape keys
+        const shapeMap = {
+            // Core Italy
+            'italia': 'italia',
+            'italy': 'italia',
+            'sicilia': 'sicilia',
+            'sicily': 'sicilia',
+            'sardinia': 'sardinia',
+            'corsica': 'corsica',
+            // Early Rome
+            'latium': 'latium',
+            'greaterlatium': 'greaterlatium',
+            'centralitaly': 'centralitaly',
+            // Western provinces
+            'hispania': 'hispania',
+            'spain': 'hispania',
+            'hispaniaciterior': 'hispania',
+            'gallia': 'gallia',
+            'gaul': 'gallia',
+            'britannia': 'britannia',
+            'britain': 'britannia',
+            'mauretania': 'mauretania',
+            // Central Europe
+            'germaniasuperior': 'germaniasuperior',
+            'germania': 'germaniasuperior',
+            'germaniainferior': 'germaniasuperior',
+            'raetia': 'raetia',
+            'noricum': 'noricum',
+            // Balkans
+            'macedonia': 'macedoniaGreece',
+            'greece': 'macedoniaGreece',
+            'illyricum': 'illyricum',
+            'dalmatia': 'illyricum',
+            'pannonia': 'pannonia',
+            'dacia': 'dacia',
+            'romania': 'dacia',
+            'thracia': 'thracia',
+            'thrace': 'thracia',
+            'moesia': 'moesia',
+            // Eastern provinces
+            'asiaminor': 'asiaMinor',
+            'asia': 'asiaMinor',
+            'anatolia': 'asiaMinor',
+            'syria': 'syria',
+            'mesopotamia': 'mesopotamia',
+            'armenia': 'armenia',
+            'judaea': 'judaea',
+            'judea': 'judaea',
+            'arabia': 'arabia',
+            // Africa
+            'aegyptus': 'aegyptus',
+            'egypt': 'aegyptus',
+            'africa': 'africa',
+            'africaproconsularis': 'africa'
+        };
+        
+        const shapeKey = shapeMap[name];
+        if (shapeKey && TERRITORY_SHAPES[shapeKey]) {
+            return TERRITORY_SHAPES[shapeKey];
+        }
+    }
+    
+    // If no detailed shape, interpolate the existing coords for smoother rendering
+    if (typeof interpolateCoords === 'function' && territory.coords.length < 20) {
+        return interpolateCoords(territory.coords, 2);
+    }
+    
+    return territory.coords;
+}
+
+// Rome's location - the center of expansion
+const ROME_COORDS = [41.9, 12.5];
+
+// Calculate distance from Rome to a territory's center
+function getDistanceFromRome(territory) {
+    let centerLat, centerLon;
+    
+    if (territory.type === 'polygon') {
+        centerLat = territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length;
+        centerLon = territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length;
+    } else {
+        centerLat = territory[0];
+        centerLon = territory[1];
+    }
+    
+    // Simple Euclidean distance (good enough for relative ordering)
+    const dLat = centerLat - ROME_COORDS[0];
+    const dLon = centerLon - ROME_COORDS[1];
+    return Math.sqrt(dLat * dLat + dLon * dLon);
+}
+
+// Scale polygon coordinates from Rome outward based on progress (0 to 1)
+function scalePolygonFromRome(coords, progress) {
+    if (progress >= 1) return coords;
+    if (progress <= 0) return [[ROME_COORDS[0], ROME_COORDS[1]]];
+    
+    return coords.map(coord => {
+        const lat = ROME_COORDS[0] + (coord[0] - ROME_COORDS[0]) * progress;
+        const lon = ROME_COORDS[1] + (coord[1] - ROME_COORDS[1]) * progress;
+        return [lat, lon];
+    });
+}
+
+// Animate territory expansion from Rome
+function animateExpansion() {
+    if (!STATE.expansionAnimating) return;
+    
+    const now = performance.now();
+    const elapsed = now - STATE.expansionStartTime;
+    STATE.expansionProgress = Math.min(1, elapsed / STATE.expansionDuration);
+    
+    // Redraw with current progress
+    drawTerritoriesWithProgress(STATE.expansionProgress);
+    
+    if (STATE.expansionProgress < 1) {
+        requestAnimationFrame(animateExpansion);
+    } else {
+        STATE.expansionAnimating = false;
+        STATE.expansionProgress = 1;
+    }
+}
+
+// Start expansion animation for new territories
+function startExpansionAnimation() {
+    STATE.expansionProgress = 0;
+    STATE.expansionStartTime = performance.now();
+    STATE.expansionAnimating = true;
+    
+    // Adjust duration based on animation speed
+    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
+    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
+    
+    animateExpansion();
+}
+
+// Draw territories with expansion progress
+function drawTerritoriesWithProgress(progress = 1) {
     if (!STATE.map || !historicalData[STATE.currentIndex]) return;
     
     clearTerritories();
     
-    // Update time-based markers (cities, forts, walls)
-    updateTimeBasedMarkers();
-    
     const data = historicalData[STATE.currentIndex];
+    const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
     
-    // Only draw current period's territories (not accumulated)
-    // This allows the map to show contraction as well as expansion
+    // Create set of previous territory keys
+    const previousTerritorySet = previousData ? new Set(
+        previousData.territories.map(t => {
+            if (t.type === 'polygon') {
+                return t.name || JSON.stringify(t.coords);
+            }
+            return `${t[0]},${t[1]},${t[2]}`;
+        })
+    ) : new Set();
     
-    // Draw all current territories with base layer
-    data.territories.forEach(territory => {
+    // Sort territories by distance from Rome (closest first)
+    const sortedTerritories = [...data.territories].sort((a, b) => {
+        return getDistanceFromRome(a) - getDistanceFromRome(b);
+    });
+    
+    // Draw all territories
+    sortedTerritories.forEach((territory, index) => {
+        const key = territory.type === 'polygon' 
+            ? (territory.name || JSON.stringify(territory.coords))
+            : `${territory[0]},${territory[1]},${territory[2]}`;
+        
+        const isNewTerritory = !previousTerritorySet.has(key);
+        
+        // Calculate individual territory progress based on distance from Rome
+        let territoryProgress = 1;
+        if (isNewTerritory && progress < 1) {
+            const distance = getDistanceFromRome(territory);
+            const maxDistance = 50; // Approximate max distance in degrees
+            const normalizedDistance = Math.min(distance / maxDistance, 1);
+            
+            // Stagger the animation - closer territories expand first
+            const staggerDelay = normalizedDistance * 0.6; // 60% of animation for staggering
+            const adjustedProgress = Math.max(0, (progress - staggerDelay) / (1 - staggerDelay));
+            territoryProgress = Math.min(1, adjustedProgress * 1.2); // Slight overshoot for smooth finish
+        }
+        
         let shape;
         
-        // Handle polygon territories (realistic shapes)
         if (territory.type === 'polygon') {
-            shape = L.polygon(territory.coords, {
-                fillColor: '#8B0000',
-                fillOpacity: 0.3,
-                color: '#8B0000',
-                weight: 1,
-                opacity: 0.5,
-                className: 'territory-established'
+            let coords = getDetailedCoords(territory);
+            
+            // Scale coordinates if this is a new expanding territory
+            if (isNewTerritory && territoryProgress < 1) {
+                coords = scalePolygonFromRome(coords, territoryProgress);
+            }
+            
+            const fillOpacity = isNewTerritory ? 
+                0.35 + (0.15 * territoryProgress) : 0.35;
+            
+            shape = L.polygon(coords, {
+                fillColor: isNewTerritory ? '#DC143C' : '#8B0000',
+                fillOpacity: fillOpacity,
+                color: isNewTerritory ? '#FFD700' : '#D4AF37',
+                weight: isNewTerritory ? 2.5 : 2,
+                opacity: isNewTerritory ? 0.5 + (0.4 * territoryProgress) : 0.7,
+                smoothFactor: 2.0,
+                className: isNewTerritory ? 'territory-expansion' : 'territory-established'
             }).addTo(STATE.map);
-        } 
-        // Handle circle territories (legacy simple representation)
-        else {
+        } else {
+            // Circle territories
+            let radius = territory[2] * 100000;
+            if (isNewTerritory && territoryProgress < 1) {
+                radius *= territoryProgress;
+            }
+            
             shape = L.circle([territory[0], territory[1]], {
-                radius: territory[2] * 100000,
-                fillColor: '#8B0000',
-                fillOpacity: 0.3,
-                color: '#8B0000',
-                weight: 0,
-                className: 'territory-established'
+                radius: radius,
+                fillColor: isNewTerritory ? '#DC143C' : '#8B0000',
+                fillOpacity: isNewTerritory ? 0.45 : 0.35,
+                color: isNewTerritory ? '#FFD700' : '#D4AF37',
+                weight: isNewTerritory ? 2.5 : 2,
+                className: isNewTerritory ? 'territory-expansion' : 'territory-established'
             }).addTo(STATE.map);
         }
         
-        // Get center point for info display
+        // Add interaction events
         const centerLat = territory.type === 'polygon' 
             ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
             : territory[0];
@@ -1701,10 +2063,9 @@ function drawTerritories() {
             ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
             : territory[1];
         
-        // Add hover and click event for territory info
         shape.on('mouseover', () => {
             if (!STATE.infoLocked) {
-                showTerritoryInfo(data, false, centerLat, centerLon, false);
+                showTerritoryInfo(data, isNewTerritory, centerLat, centerLon, false);
             }
         });
         
@@ -1715,115 +2076,25 @@ function drawTerritories() {
         });
         
         shape.on('click', () => {
-            showTerritoryInfo(data, false, centerLat, centerLon, true);
+            showTerritoryInfo(data, isNewTerritory, centerLat, centerLon, true);
         });
         
         STATE.territoryLayers.push(shape);
     });
+}
+
+function drawTerritories() {
+    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
     
-    // Highlight recently added territories (not in previous period)
-    if (STATE.currentIndex > 0) {
-        const previousData = historicalData[STATE.currentIndex - 1];
-        
-        // Create set of previous territory keys (handle both polygon and circle formats)
-        const previousTerritorySet = new Set(
-            previousData.territories.map(t => {
-                if (t.type === 'polygon') {
-                    return t.name || JSON.stringify(t.coords);
-                }
-                return `${t[0]},${t[1]},${t[2]}`;
-            })
-        );
-        
-        data.territories.forEach((territory, index) => {
-            // Generate unique key for this territory
-            const key = territory.type === 'polygon' 
-                ? (territory.name || JSON.stringify(territory.coords))
-                : `${territory[0]},${territory[1]},${territory[2]}`;
-            
-            // If this territory wasn't in the previous period, it's new expansion
-            if (!previousTerritorySet.has(key)) {
-                let expansionShape;
-                
-                // Draw expansion highlight based on territory type
-                if (territory.type === 'polygon') {
-                    expansionShape = L.polygon(territory.coords, {
-                        fillColor: '#DC143C',
-                        fillOpacity: 0.4,
-                        color: '#FFD700',
-                        weight: 2,
-                        opacity: 0.8,
-                        className: 'territory-expansion'
-                    }).addTo(STATE.map);
-                } else {
-                    expansionShape = L.circle([territory[0], territory[1]], {
-                        radius: territory[2] * 100000,
-                        fillColor: '#DC143C',
-                        fillOpacity: 0.4,
-                        color: '#FFD700',
-                        weight: 2,
-                        opacity: 0.8,
-                        className: 'territory-expansion'
-                    }).addTo(STATE.map);
-                }
-                
-                // Get center point for info display
-                const centerLat = territory.type === 'polygon' 
-                    ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
-                    : territory[0];
-                const centerLon = territory.type === 'polygon'
-                    ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
-                    : territory[1];
-                
-                // Add hover and click events for new expansion territories
-                expansionShape.on('mouseover', () => {
-                    if (!STATE.infoLocked) {
-                        showTerritoryInfo(data, true, centerLat, centerLon, false);
-                    }
-                });
-                
-                expansionShape.on('mouseout', () => {
-                    if (!STATE.infoLocked) {
-                        updateDisplay();
-                    }
-                });
-                
-                expansionShape.on('click', () => {
-                    showTerritoryInfo(data, true, centerLat, centerLon, true);
-                });
-                
-                STATE.territoryLayers.push(expansionShape);
-                
-                // Add outer glow for newest territories during animation
-                if (STATE.isPlaying) {
-                    let glowShape;
-                    if (territory.type === 'polygon') {
-                        // For polygons, add a slightly larger border effect
-                        glowShape = L.polygon(territory.coords, {
-                            fillColor: 'transparent',
-                            fillOpacity: 0,
-                            color: '#FFD700',
-                            weight: 4,
-                            opacity: 0.6,
-                            className: 'territory-glow'
-                        }).addTo(STATE.map);
-                    } else {
-                        // For circles, add a larger radius glow
-                        glowShape = L.circle([territory[0], territory[1]], {
-                            radius: territory[2] * 100000 * 1.2,
-                            fillColor: 'transparent',
-                            fillOpacity: 0,
-                            color: '#FFD700',
-                            weight: 3,
-                            opacity: 0.6,
-                            className: 'territory-glow'
-                        }).addTo(STATE.map);
-                    }
-                    
-                    STATE.territoryLayers.push(glowShape);
-                }
-            }
-        });
+    // Update time-based markers (cities, forts, walls)
+    updateTimeBasedMarkers();
+    
+    // If playing, start expansion animation for new territories
+    if (STATE.isPlaying && STATE.currentIndex > 0) {
+        startExpansionAnimation();
+    } else {
+        // Instant draw when not animating
+        drawTerritoriesWithProgress(1);
     }
 }
 
@@ -2332,10 +2603,19 @@ function togglePlay() {
 function animate(timestamp = 0) {
     if (!STATE.isPlaying) return;
     
+    // Wait for expansion animation to complete before advancing
+    if (STATE.expansionAnimating) {
+        STATE.animationId = requestAnimationFrame(animate);
+        return;
+    }
+    
     // Calculate elapsed time for smooth frame-independent animation
     const elapsed = timestamp - STATE.lastUpdateTime;
     
-    if (elapsed >= STATE.updateInterval) {
+    // Add expansion duration to the update interval
+    const totalInterval = STATE.updateInterval + STATE.expansionDuration;
+    
+    if (elapsed >= totalInterval) {
         STATE.currentIndex++;
         
         // Check if we've reached the end
