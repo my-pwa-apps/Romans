@@ -658,6 +658,8 @@ const STATE = {
     // Map & Rendering
     map: null,
     territoryLayers: [],
+    establishedLayers: [],  // Layers for existing territories (don't redraw during animation)
+    expandingLayers: [],    // Layers for new territories being animated
     cityMarkers: [],
     wallLayers: [],
     
@@ -674,6 +676,7 @@ const STATE = {
     expansionAnimating: false,
     expansionStartTime: 0,
     expansionDuration: 2000,  // ms to fully expand territories
+    expandingTerritoriesData: null,  // Cached data for expanding territories
     
     // UI State
     isInitialized: false,
@@ -1826,6 +1829,15 @@ function updateDefensiveWalls(currentYear) {
 function clearTerritories() {
     if (!STATE.map) return;
     STATE.territoryLayers = utils.removeLayers(STATE.territoryLayers, STATE.map);
+    STATE.establishedLayers = utils.removeLayers(STATE.establishedLayers, STATE.map);
+    STATE.expandingLayers = utils.removeLayers(STATE.expandingLayers, STATE.map);
+    STATE.expandingTerritoriesData = null;
+}
+
+// Clear only the expanding layers (used during animation)
+function clearExpandingLayers() {
+    if (!STATE.map) return;
+    STATE.expandingLayers = utils.removeLayers(STATE.expandingLayers, STATE.map);
 }
 
 // Get detailed coordinates for a territory if available
@@ -1906,40 +1918,84 @@ function getDetailedCoords(territory) {
     return territory.coords;
 }
 
-// Rome's location - the center of expansion
+// Rome's location - used as fallback
 const ROME_COORDS = [41.9, 12.5];
 
-// Calculate distance from Rome to a territory's center
-function getDistanceFromRome(territory) {
-    let centerLat, centerLon;
-    
+// Get the center of a territory
+function getTerritoryCenter(territory) {
     if (territory.type === 'polygon') {
-        centerLat = territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length;
-        centerLon = territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length;
-    } else {
-        centerLat = territory[0];
-        centerLon = territory[1];
+        const lat = territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length;
+        const lon = territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length;
+        return [lat, lon];
     }
-    
-    // Simple Euclidean distance (good enough for relative ordering)
-    const dLat = centerLat - ROME_COORDS[0];
-    const dLon = centerLon - ROME_COORDS[1];
+    return [territory[0], territory[1]];
+}
+
+// Calculate Euclidean distance between two points
+function getDistance(point1, point2) {
+    const dLat = point1[0] - point2[0];
+    const dLon = point1[1] - point2[1];
     return Math.sqrt(dLat * dLat + dLon * dLon);
 }
 
-// Scale polygon coordinates from Rome outward based on progress (0 to 1)
-function scalePolygonFromRome(coords, progress) {
+// Find the closest point on existing territories to a new territory
+function findExpansionOrigin(newTerritory, existingTerritories) {
+    const newCenter = getTerritoryCenter(newTerritory);
+    let closestPoint = ROME_COORDS;
+    let minDistance = Infinity;
+    
+    // If no existing territories, expand from Rome
+    if (!existingTerritories || existingTerritories.length === 0) {
+        return ROME_COORDS;
+    }
+    
+    // Find the closest point from any existing territory
+    existingTerritories.forEach(territory => {
+        if (territory.type === 'polygon') {
+            // Check each vertex of the polygon
+            const coords = getDetailedCoords(territory);
+            coords.forEach(coord => {
+                const distance = getDistance(coord, newCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestPoint = coord;
+                }
+            });
+        } else {
+            // For circles, use center
+            const center = [territory[0], territory[1]];
+            const distance = getDistance(center, newCenter);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestPoint = center;
+            }
+        }
+    });
+    
+    return closestPoint;
+}
+
+// Scale polygon coordinates from an origin point outward based on progress (0 to 1)
+function scalePolygonFromOrigin(coords, origin, progress) {
     if (progress >= 1) return coords;
-    if (progress <= 0) return [[ROME_COORDS[0], ROME_COORDS[1]]];
+    if (progress <= 0) return [[origin[0], origin[1]]];
+    
+    // Use easing for smoother animation
+    const easedProgress = easeOutCubic(progress);
     
     return coords.map(coord => {
-        const lat = ROME_COORDS[0] + (coord[0] - ROME_COORDS[0]) * progress;
-        const lon = ROME_COORDS[1] + (coord[1] - ROME_COORDS[1]) * progress;
+        const lat = origin[0] + (coord[0] - origin[0]) * easedProgress;
+        const lon = origin[1] + (coord[1] - origin[1]) * easedProgress;
         return [lat, lon];
     });
 }
 
-// Animate territory expansion from Rome
+// Easing function for smoother animation
+function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+}
+
+// Animate territory expansion - only updates expanding territories, keeps established ones static
 function animateExpansion() {
     if (!STATE.expansionAnimating) return;
     
@@ -1947,14 +2003,17 @@ function animateExpansion() {
     const elapsed = now - STATE.expansionStartTime;
     STATE.expansionProgress = Math.min(1, elapsed / STATE.expansionDuration);
     
-    // Redraw with current progress
-    drawTerritoriesWithProgress(STATE.expansionProgress);
+    // Only redraw the expanding territories (established ones stay static)
+    drawExpandingTerritories(STATE.expansionProgress);
     
     if (STATE.expansionProgress < 1) {
         requestAnimationFrame(animateExpansion);
     } else {
         STATE.expansionAnimating = false;
         STATE.expansionProgress = 1;
+        // Move all expanding layers to established layers now that animation is complete
+        STATE.establishedLayers = STATE.establishedLayers.concat(STATE.expandingLayers);
+        STATE.expandingLayers = [];
     }
 }
 
@@ -1971,14 +2030,26 @@ function startExpansionAnimation() {
     animateExpansion();
 }
 
-// Draw territories with expansion progress
-function drawTerritoriesWithProgress(progress = 1) {
+// Start expansion animation for new territories
+function startExpansionAnimation() {
     if (!STATE.map || !historicalData[STATE.currentIndex]) return;
     
+    // Clear all previous territory layers before starting new animation
     clearTerritories();
+    
+    STATE.expansionProgress = 0;
+    STATE.expansionStartTime = performance.now();
+    STATE.expansionAnimating = true;
+    
+    // Adjust duration based on animation speed
+    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
+    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
     
     const data = historicalData[STATE.currentIndex];
     const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
+    
+    // Get existing territories (from previous period)
+    const existingTerritories = previousData ? previousData.territories : [];
     
     // Create set of previous territory keys
     const previousTerritorySet = previousData ? new Set(
@@ -1990,97 +2061,221 @@ function drawTerritoriesWithProgress(progress = 1) {
         })
     ) : new Set();
     
-    // Sort territories by distance from Rome (closest first)
-    const sortedTerritories = [...data.territories].sort((a, b) => {
-        return getDistanceFromRome(a) - getDistanceFromRome(b);
-    });
+    // Separate existing and new territories
+    const existingNow = [];
+    const newTerritories = [];
     
-    // Draw all territories
-    sortedTerritories.forEach((territory, index) => {
+    data.territories.forEach(territory => {
         const key = territory.type === 'polygon' 
             ? (territory.name || JSON.stringify(territory.coords))
             : `${territory[0]},${territory[1]},${territory[2]}`;
         
-        const isNewTerritory = !previousTerritorySet.has(key);
-        
-        // Calculate individual territory progress based on distance from Rome
+        if (previousTerritorySet.has(key)) {
+            existingNow.push(territory);
+        } else {
+            newTerritories.push(territory);
+        }
+    });
+    
+    // Sort new territories by distance from nearest existing territory
+    const newTerritoriesWithOrigin = newTerritories.map(territory => {
+        const origin = findExpansionOrigin(territory, existingTerritories);
+        const center = getTerritoryCenter(territory);
+        const distance = getDistance(origin, center);
+        return { territory, origin, distance };
+    }).sort((a, b) => a.distance - b.distance);
+    
+    const maxDistance = Math.max(...newTerritoriesWithOrigin.map(t => t.distance), 1);
+    
+    // Cache data for expanding territories animation
+    STATE.expandingTerritoriesData = {
+        data,
+        newTerritoriesWithOrigin,
+        maxDistance
+    };
+    
+    // Draw existing territories once (they stay static during animation)
+    existingNow.forEach(territory => {
+        drawSingleTerritory(territory, data, false, 1, null, 'established');
+    });
+    
+    // Start animation loop
+    animateExpansion();
+}
+
+// Draw only the expanding territories (called each animation frame)
+function drawExpandingTerritories(progress) {
+    if (!STATE.map || !STATE.expandingTerritoriesData) return;
+    
+    // Clear only the expanding layers, keep established ones
+    clearExpandingLayers();
+    
+    const { data, newTerritoriesWithOrigin, maxDistance } = STATE.expandingTerritoriesData;
+    
+    newTerritoriesWithOrigin.forEach(({ territory, origin, distance }) => {
+        // Calculate individual territory progress based on distance
         let territoryProgress = 1;
-        if (isNewTerritory && progress < 1) {
-            const distance = getDistanceFromRome(territory);
-            const maxDistance = 50; // Approximate max distance in degrees
-            const normalizedDistance = Math.min(distance / maxDistance, 1);
+        
+        if (progress < 1) {
+            // Normalize distance for staggering (0 = closest, 1 = farthest)
+            const normalizedDistance = distance / maxDistance;
             
             // Stagger the animation - closer territories expand first
-            const staggerDelay = normalizedDistance * 0.6; // 60% of animation for staggering
+            const staggerDelay = normalizedDistance * 0.5; // 50% of animation for staggering
             const adjustedProgress = Math.max(0, (progress - staggerDelay) / (1 - staggerDelay));
-            territoryProgress = Math.min(1, adjustedProgress * 1.2); // Slight overshoot for smooth finish
+            territoryProgress = Math.min(1, adjustedProgress * 1.1); // Slight overshoot for smooth finish
         }
         
-        let shape;
-        
-        if (territory.type === 'polygon') {
-            let coords = getDetailedCoords(territory);
-            
-            // Scale coordinates if this is a new expanding territory
-            if (isNewTerritory && territoryProgress < 1) {
-                coords = scalePolygonFromRome(coords, territoryProgress);
-            }
-            
-            const fillOpacity = isNewTerritory ? 
-                0.35 + (0.15 * territoryProgress) : 0.35;
-            
-            shape = L.polygon(coords, {
-                fillColor: isNewTerritory ? '#DC143C' : '#8B0000',
-                fillOpacity: fillOpacity,
-                color: isNewTerritory ? '#FFD700' : '#D4AF37',
-                weight: isNewTerritory ? 2.5 : 2,
-                opacity: isNewTerritory ? 0.5 + (0.4 * territoryProgress) : 0.7,
-                smoothFactor: 2.0,
-                className: isNewTerritory ? 'territory-expansion' : 'territory-established'
-            }).addTo(STATE.map);
-        } else {
-            // Circle territories
-            let radius = territory[2] * 100000;
-            if (isNewTerritory && territoryProgress < 1) {
-                radius *= territoryProgress;
-            }
-            
-            shape = L.circle([territory[0], territory[1]], {
-                radius: radius,
-                fillColor: isNewTerritory ? '#DC143C' : '#8B0000',
-                fillOpacity: isNewTerritory ? 0.45 : 0.35,
-                color: isNewTerritory ? '#FFD700' : '#D4AF37',
-                weight: isNewTerritory ? 2.5 : 2,
-                className: isNewTerritory ? 'territory-expansion' : 'territory-established'
-            }).addTo(STATE.map);
-        }
-        
-        // Add interaction events
-        const centerLat = territory.type === 'polygon' 
-            ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
-            : territory[0];
-        const centerLon = territory.type === 'polygon'
-            ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
-            : territory[1];
-        
-        shape.on('mouseover', () => {
-            if (!STATE.infoLocked) {
-                showTerritoryInfo(data, isNewTerritory, centerLat, centerLon, false);
-            }
-        });
-        
-        shape.on('mouseout', () => {
-            if (!STATE.infoLocked) {
-                updateDisplay();
-            }
-        });
-        
-        shape.on('click', () => {
-            showTerritoryInfo(data, isNewTerritory, centerLat, centerLon, true);
-        });
-        
-        STATE.territoryLayers.push(shape);
+        drawSingleTerritory(territory, data, true, territoryProgress, origin, 'expanding');
     });
+}
+
+// Draw territories with expansion progress (used for instant draw without animation)
+function drawTerritoriesWithProgress(progress = 1) {
+    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
+    
+    clearTerritories();
+    
+    const data = historicalData[STATE.currentIndex];
+    const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
+    
+    // Get existing territories (from previous period)
+    const existingTerritories = previousData ? previousData.territories : [];
+    
+    // Create set of previous territory keys
+    const previousTerritorySet = previousData ? new Set(
+        previousData.territories.map(t => {
+            if (t.type === 'polygon') {
+                return t.name || JSON.stringify(t.coords);
+            }
+            return `${t[0]},${t[1]},${t[2]}`;
+        })
+    ) : new Set();
+    
+    // Separate existing and new territories
+    const existingNow = [];
+    const newTerritories = [];
+    
+    data.territories.forEach(territory => {
+        const key = territory.type === 'polygon' 
+            ? (territory.name || JSON.stringify(territory.coords))
+            : `${territory[0]},${territory[1]},${territory[2]}`;
+        
+        if (previousTerritorySet.has(key)) {
+            existingNow.push(territory);
+        } else {
+            newTerritories.push(territory);
+        }
+    });
+    
+    // Sort new territories by distance from nearest existing territory
+    const newTerritoriesWithOrigin = newTerritories.map(territory => {
+        const origin = findExpansionOrigin(territory, existingTerritories);
+        const center = getTerritoryCenter(territory);
+        const distance = getDistance(origin, center);
+        return { territory, origin, distance };
+    }).sort((a, b) => a.distance - b.distance);
+    
+    // Draw existing territories first (fully visible)
+    existingNow.forEach(territory => {
+        drawSingleTerritory(territory, data, false, 1, null, 'established');
+    });
+    
+    // Draw new territories with staggered expansion animation
+    const maxDistance = Math.max(...newTerritoriesWithOrigin.map(t => t.distance), 1);
+    
+    newTerritoriesWithOrigin.forEach(({ territory, origin, distance }) => {
+        // Calculate individual territory progress based on distance
+        let territoryProgress = 1;
+        
+        if (progress < 1) {
+            // Normalize distance for staggering (0 = closest, 1 = farthest)
+            const normalizedDistance = distance / maxDistance;
+            
+            // Stagger the animation - closer territories expand first
+            const staggerDelay = normalizedDistance * 0.5; // 50% of animation for staggering
+            const adjustedProgress = Math.max(0, (progress - staggerDelay) / (1 - staggerDelay));
+            territoryProgress = Math.min(1, adjustedProgress * 1.1); // Slight overshoot for smooth finish
+        }
+        
+        drawSingleTerritory(territory, data, true, territoryProgress, origin, 'established');
+    });
+}
+
+// Draw a single territory with optional expansion animation
+// layerType: 'established' (static), 'expanding' (animated), or 'territory' (legacy)
+function drawSingleTerritory(territory, data, isNew, progress, expansionOrigin, layerType = 'territory') {
+    let shape;
+    
+    if (territory.type === 'polygon') {
+        let coords = getDetailedCoords(territory);
+        
+        // Scale coordinates if this is a new expanding territory
+        if (isNew && progress < 1 && expansionOrigin) {
+            coords = scalePolygonFromOrigin(coords, expansionOrigin, progress);
+        }
+        
+        const fillOpacity = isNew ? 
+            0.25 + (0.25 * progress) : 0.35;
+        
+        shape = L.polygon(coords, {
+            fillColor: isNew ? '#DC143C' : '#8B0000',
+            fillOpacity: fillOpacity,
+            color: isNew ? '#FFD700' : '#D4AF37',
+            weight: isNew ? 2.5 : 2,
+            opacity: isNew ? 0.4 + (0.5 * progress) : 0.7,
+            smoothFactor: 2.0,
+            className: isNew ? 'territory-expansion' : 'territory-established'
+        }).addTo(STATE.map);
+    } else {
+        // Circle territories
+        let radius = territory[2] * 100000;
+        if (isNew && progress < 1) {
+            radius *= easeOutCubic(progress);
+        }
+        
+        shape = L.circle([territory[0], territory[1]], {
+            radius: radius,
+            fillColor: isNew ? '#DC143C' : '#8B0000',
+            fillOpacity: isNew ? 0.25 + (0.2 * progress) : 0.35,
+            color: isNew ? '#FFD700' : '#D4AF37',
+            weight: isNew ? 2.5 : 2,
+            className: isNew ? 'territory-expansion' : 'territory-established'
+        }).addTo(STATE.map);
+    }
+    
+    // Add interaction events
+    const centerLat = territory.type === 'polygon' 
+        ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
+        : territory[0];
+    const centerLon = territory.type === 'polygon'
+        ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
+        : territory[1];
+    
+    shape.on('mouseover', () => {
+        if (!STATE.infoLocked) {
+            showTerritoryInfo(data, isNew, centerLat, centerLon, false);
+        }
+    });
+    
+    shape.on('mouseout', () => {
+        if (!STATE.infoLocked) {
+            updateDisplay();
+        }
+    });
+    
+    shape.on('click', () => {
+        showTerritoryInfo(data, isNew, centerLat, centerLon, true);
+    });
+    
+    // Add to appropriate layer array based on layerType
+    if (layerType === 'expanding') {
+        STATE.expandingLayers.push(shape);
+    } else if (layerType === 'established') {
+        STATE.establishedLayers.push(shape);
+    } else {
+        STATE.territoryLayers.push(shape);
+    }
 }
 
 function drawTerritories() {

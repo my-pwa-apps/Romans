@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'imperivm-v1.0.6';
+const CACHE_VERSION = 'imperivm-v1.0.8';
 const CACHE_NAME = `${CACHE_VERSION}-core`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
