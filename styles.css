@@ -615,7 +615,21 @@ body.is-touch .fort-marker:hover {
     transition: stroke-width 0.3s ease, stroke-opacity 0.3s ease, fill-opacity 0.3s ease;
 }
 
-.leaflet-interactive:hover {
+/* Territory layers should have NO stroke/border */
+.territory-layer {
+    stroke: none !important;
+    stroke-width: 0 !important;
+    stroke-opacity: 0 !important;
+}
+
+.territory-layer:hover {
+    stroke: none !important;
+    stroke-width: 0 !important;
+    stroke-opacity: 0 !important;
+}
+
+/* Only add hover effects to non-territory interactive elements */
+.leaflet-interactive:not(.territory-layer):hover {
     stroke-width: 3 !important;
     stroke-opacity: 1 !important;
 }

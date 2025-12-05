@@ -387,6 +387,8 @@ const historicalData = [
             { type: 'polygon', name: 'Gallia', id: 'gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
             { type: 'polygon', name: 'Hispania', id: 'hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
             { type: 'polygon', name: 'Britannia', id: 'britannia', coords: [[55.0, -3.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -5.5], [54.0, -4.5]] },
+            // Germania provinces
+            { type: 'polygon', name: 'Germania Inferior', id: 'germania_inferior', coords: [[53.0, 5.0], [52.5, 6.5], [51.5, 6.5], [50.5, 6.0], [50.5, 4.0], [51.0, 3.5], [52.0, 4.0]] },
             // Central provinces
             { type: 'polygon', name: 'Illyricum', id: 'illyricum', coords: [[45.5, 13.5], [44.5, 17.5], [42.5, 19.5], [41.0, 19.5], [42.0, 16.0], [43.5, 14.0], [45.0, 13.0]] },
             { type: 'polygon', name: 'Macedonia', id: 'macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
@@ -411,7 +413,8 @@ const historicalData = [
             { type: 'polygon', name: 'Gallia', id: 'gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
             { type: 'polygon', name: 'Hispania', id: 'hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
             { type: 'polygon', name: 'Britannia', id: 'britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
-            // Central Europe
+            // Central Europe - Germania provinces
+            { type: 'polygon', name: 'Germania Inferior', id: 'germania_inferior', coords: [[53.0, 5.0], [52.5, 6.5], [51.5, 6.5], [50.5, 6.0], [50.5, 4.0], [51.0, 3.5], [52.0, 4.0]] },
             { type: 'polygon', name: 'Germania Superior', id: 'germania_superior', coords: [[50.5, 7.0], [49.5, 9.5], [48.0, 10.0], [47.5, 8.0], [48.5, 6.5]] },
             { type: 'polygon', name: 'Raetia', id: 'raetia', coords: [[48.0, 10.0], [47.0, 12.0], [46.5, 11.0], [47.0, 9.5]] },
             { type: 'polygon', name: 'Noricum', id: 'noricum', coords: [[48.5, 13.0], [47.5, 15.0], [46.5, 14.0], [47.0, 12.5]] },
@@ -421,6 +424,8 @@ const historicalData = [
             { type: 'polygon', name: 'Moesia', id: 'moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
             { type: 'polygon', name: 'Thracia', id: 'thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
             { type: 'polygon', name: 'Macedonia', id: 'macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Illyricum/Dalmatia - connecting Italy to Balkans
+            { type: 'polygon', name: 'Illyricum', id: 'illyricum', coords: [[45.5, 14.0], [44.5, 16.0], [43.0, 17.5], [42.0, 19.0], [41.5, 18.5], [42.5, 16.5], [44.0, 14.5]] },
             // Asia Minor (full control)
             { type: 'polygon', name: 'Asia Minor', id: 'asia', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
             // Eastern provinces at peak
@@ -448,12 +453,18 @@ const historicalData = [
             { type: 'polygon', name: 'Gallia', id: 'gallia', coords: [[51.0, 2.5], [50.5, 4.5], [49.5, 6.0], [48.5, 7.5], [46.0, 6.5], [44.5, 5.0], [43.0, 2.0], [43.5, -1.5], [46.0, -4.0], [48.5, -4.5], [49.5, -1.5], [50.5, 1.5]] },
             { type: 'polygon', name: 'Hispania', id: 'hispania', coords: [[43.5, -1.5], [42.5, 3.0], [40.5, 3.5], [38.5, 1.0], [37.0, -2.0], [36.0, -5.5], [36.5, -6.5], [37.5, -8.5], [39.5, -9.0], [41.5, -8.5], [43.0, -7.0], [43.5, -5.0]] },
             { type: 'polygon', name: 'Britannia', id: 'britannia', coords: [[56.0, -4.0], [55.5, -2.0], [54.5, -0.5], [52.5, 1.5], [51.0, 1.0], [50.0, -5.0], [52.0, -6.0], [54.5, -5.5]] },
+            // Central Europe - Germania provinces
+            { type: 'polygon', name: 'Germania Inferior', id: 'germania_inferior', coords: [[53.0, 5.0], [52.5, 6.5], [51.5, 6.5], [50.5, 6.0], [50.5, 4.0], [51.0, 3.5], [52.0, 4.0]] },
             { type: 'polygon', name: 'Germania Superior', id: 'germania_superior', coords: [[50.5, 7.0], [49.5, 9.5], [48.0, 10.0], [47.5, 8.0], [48.5, 6.5]] },
+            { type: 'polygon', name: 'Raetia', id: 'raetia', coords: [[48.0, 10.0], [47.0, 12.0], [46.5, 11.0], [47.0, 9.5]] },
+            { type: 'polygon', name: 'Noricum', id: 'noricum', coords: [[48.5, 13.0], [47.5, 15.0], [46.5, 14.0], [47.0, 12.5]] },
             { type: 'polygon', name: 'Pannonia', id: 'pannonia', coords: [[48.5, 16.0], [47.5, 19.0], [46.0, 20.0], [45.0, 18.5], [46.0, 15.5], [47.5, 15.0]] },
             { type: 'polygon', name: 'Dacia', id: 'dacia', coords: [[47.5, 23.0], [46.5, 26.5], [45.0, 27.5], [44.0, 26.0], [44.5, 23.0], [46.0, 22.5]] },
             { type: 'polygon', name: 'Moesia', id: 'moesia', coords: [[45.0, 20.0], [44.0, 23.5], [43.0, 27.0], [42.0, 26.5], [42.5, 22.5], [43.5, 20.5]] },
             { type: 'polygon', name: 'Thracia', id: 'thracia', coords: [[43.0, 23.0], [42.0, 26.5], [41.0, 27.5], [40.5, 25.5], [41.5, 23.5]] },
             { type: 'polygon', name: 'Macedonia', id: 'macedonia', coords: [[41.5, 20.0], [40.5, 23.5], [39.5, 24.5], [38.0, 24.0], [37.0, 22.5], [36.5, 21.0], [37.5, 20.0], [39.0, 19.5], [40.5, 20.0]] },
+            // Illyricum/Dalmatia - connecting Italy to Balkans
+            { type: 'polygon', name: 'Illyricum', id: 'illyricum', coords: [[45.5, 14.0], [44.5, 16.0], [43.0, 17.5], [42.0, 19.0], [41.5, 18.5], [42.5, 16.5], [44.0, 14.5]] },
             { type: 'polygon', name: 'Asia Minor', id: 'asia', coords: [[42.0, 26.5], [41.0, 30.0], [40.0, 33.5], [39.0, 36.5], [37.5, 37.5], [36.5, 35.5], [36.0, 32.0], [36.5, 28.5], [38.0, 26.5], [40.0, 26.0]] },
             { type: 'polygon', name: 'Syria', id: 'syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
             { type: 'polygon', name: 'Mesopotamia', id: 'mesopotamia', coords: [[37.0, 40.0], [36.0, 43.5], [34.0, 45.5], [33.0, 44.5], [32.5, 41.0], [34.0, 39.5]] },
@@ -661,9 +672,8 @@ function getRegionName(lat, lon) {
 const STATE = {
     // Map & Rendering
     map: null,
-    territoryLayers: [],
-    establishedLayers: [],  // Layers for existing territories (don't redraw during animation)
-    expandingLayers: [],    // Layers for new territories being animated
+    territoryLayerGroup: null,  // Single layer group for all territories
+    activeTerritories: new Map(), // Map of territoryId -> {layer, data}
     cityMarkers: [],
     wallLayers: [],
     
@@ -675,12 +685,11 @@ const STATE = {
     animationSpeed: 3,
     updateInterval: 600,
     
-    // Territory expansion animation
-    expansionProgress: 1.0,  // 0 to 1, how much of current territories are revealed
-    expansionAnimating: false,
-    expansionStartTime: 0,
-    expansionDuration: 2000,  // ms to fully expand territories
-    expandingTerritoriesData: null,  // Cached data for expanding territories
+    // Territory transition animation
+    transitionInProgress: false,
+    transitionStartTime: 0,
+    transitionDuration: 1500,
+    pendingTerritories: null,  // Territories to transition to
     
     // UI State
     isInitialized: false,
@@ -806,6 +815,7 @@ function init() {
         showLoading();
         detectMobile();
         initializeMap();
+        initTerritorySystem(); // Initialize territory layer group
         setupEventListeners();
         setupKeyboardShortcuts();
         setupTouchGestures();
@@ -1828,20 +1838,14 @@ function updateDefensiveWalls(currentYear) {
 }
 
 // ============================================
-// TERRITORY VISUALIZATION
+// TERRITORY VISUALIZATION - NEW IMPLEMENTATION
 // ============================================
-function clearTerritories() {
-    if (!STATE.map) return;
-    STATE.territoryLayers = utils.removeLayers(STATE.territoryLayers, STATE.map);
-    STATE.establishedLayers = utils.removeLayers(STATE.establishedLayers, STATE.map);
-    STATE.expandingLayers = utils.removeLayers(STATE.expandingLayers, STATE.map);
-    STATE.expandingTerritoriesData = null;
-}
 
-// Clear only the expanding layers (used during animation)
-function clearExpandingLayers() {
+// Initialize the territory layer group (called once during map setup)
+function initTerritorySystem() {
     if (!STATE.map) return;
-    STATE.expandingLayers = utils.removeLayers(STATE.expandingLayers, STATE.map);
+    STATE.territoryLayerGroup = L.layerGroup().addTo(STATE.map);
+    STATE.activeTerritories = new Map();
 }
 
 // Get detailed coordinates for a territory if available
@@ -1850,462 +1854,246 @@ function getDetailedCoords(territory) {
     
     const name = (territory.name || '').toLowerCase().replace(/\s+/g, '');
     
-    // Check if we have detailed shapes loaded
-    if (typeof TERRITORY_SHAPES !== 'undefined') {
-        // Map territory names to detailed shape keys
+    // Check if we have detailed shapes loaded (try both global and window)
+    const shapes = (typeof TERRITORY_SHAPES !== 'undefined') ? TERRITORY_SHAPES : 
+                   (typeof window !== 'undefined' && window.TERRITORY_SHAPES) ? window.TERRITORY_SHAPES : null;
+    
+    if (shapes) {
         const shapeMap = {
-            // Core Italy
-            'italia': 'italia',
-            'italy': 'italia',
-            'sicilia': 'sicilia',
-            'sicily': 'sicilia',
-            'sardinia': 'sardinia',
-            'corsica': 'corsica',
-            // Early Rome
-            'latium': 'latium',
-            'greaterlatium': 'greaterlatium',
+            'italia': 'italia', 'italy': 'italia',
+            'sicilia': 'sicilia', 'sicily': 'sicilia',
+            'sardinia': 'sardinia', 'corsica': 'corsica',
+            'latium': 'latium', 'greaterlatium': 'greaterlatium',
             'centralitaly': 'centralitaly',
-            // Western provinces
-            'hispania': 'hispania',
-            'spain': 'hispania',
+            'hispania': 'hispania', 'spain': 'hispania',
             'hispaniaciterior': 'hispania',
-            'gallia': 'gallia',
-            'gaul': 'gallia',
-            'britannia': 'britannia',
-            'britain': 'britannia',
+            'gallia': 'gallia', 'gaul': 'gallia',
+            'britannia': 'britannia', 'britain': 'britannia',
             'mauretania': 'mauretania',
-            // Central Europe
             'germaniasuperior': 'germaniasuperior',
             'germania': 'germaniasuperior',
-            'germaniainferior': 'germaniasuperior',
-            'raetia': 'raetia',
-            'noricum': 'noricum',
-            // Balkans
-            'macedonia': 'macedoniaGreece',
-            'greece': 'macedoniaGreece',
-            'illyricum': 'illyricum',
-            'dalmatia': 'illyricum',
-            'pannonia': 'pannonia',
-            'dacia': 'dacia',
-            'romania': 'dacia',
-            'thracia': 'thracia',
-            'thrace': 'thracia',
+            'germaniainferior': 'germaniainferior',
+            'raetia': 'raetia', 'noricum': 'noricum',
+            'macedonia': 'macedoniaGreece', 'greece': 'macedoniaGreece',
+            'illyricum': 'illyricum', 'dalmatia': 'illyricum',
+            'pannonia': 'pannonia', 'dacia': 'dacia',
+            'thracia': 'thracia', 'thrace': 'thracia',
             'moesia': 'moesia',
-            // Eastern provinces
-            'asiaminor': 'asiaMinor',
-            'asia': 'asiaMinor',
+            'asiaminor': 'asiaMinor', 'asia': 'asiaMinor',
             'anatolia': 'asiaMinor',
-            'syria': 'syria',
-            'mesopotamia': 'mesopotamia',
-            'armenia': 'armenia',
-            'judaea': 'judaea',
-            'judea': 'judaea',
+            'syria': 'syria', 'mesopotamia': 'mesopotamia',
+            'armenia': 'armenia', 'judaea': 'judaea',
             'arabia': 'arabia',
-            // Africa
-            'aegyptus': 'aegyptus',
-            'egypt': 'aegyptus',
-            'africa': 'africa',
-            'africaproconsularis': 'africa'
+            'aegyptus': 'aegyptus', 'egypt': 'aegyptus',
+            'africa': 'africa', 'africaproconsularis': 'africa'
         };
         
         const shapeKey = shapeMap[name];
-        if (shapeKey && TERRITORY_SHAPES[shapeKey]) {
-            return TERRITORY_SHAPES[shapeKey];
+        if (shapeKey && shapes[shapeKey]) {
+            console.log(`✅ Using detailed shape for: ${territory.name} -> ${shapeKey} (${shapes[shapeKey].length} points)`);
+            return shapes[shapeKey];
+        } else {
+            console.warn(`⚠️ No detailed shape for: ${territory.name} (normalized: ${name}, shapeKey: ${shapeKey})`);
         }
-    }
-    
-    // If no detailed shape, interpolate the existing coords for smoother rendering
-    if (typeof interpolateCoords === 'function' && territory.coords.length < 20) {
-        return interpolateCoords(territory.coords, 2);
+    } else {
+        console.error('❌ TERRITORY_SHAPES not loaded!');
     }
     
     return territory.coords;
 }
 
-// Rome's location - used as fallback
-const ROME_COORDS = [41.9, 12.5];
-
-// Get the center of a territory
-function getTerritoryCenter(territory) {
-    if (territory.type === 'polygon') {
-        const lat = territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length;
-        const lon = territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length;
-        return [lat, lon];
-    }
-    return [territory[0], territory[1]];
-}
-
-// Calculate Euclidean distance between two points
-function getDistance(point1, point2) {
-    const dLat = point1[0] - point2[0];
-    const dLon = point1[1] - point2[1];
-    return Math.sqrt(dLat * dLat + dLon * dLon);
-}
-
-// Find the closest point on existing territories to a new territory
-function findExpansionOrigin(newTerritory, existingTerritories) {
-    const newCenter = getTerritoryCenter(newTerritory);
-    let closestPoint = ROME_COORDS;
-    let minDistance = Infinity;
+// Create a unified multi-polygon layer for all territories in a period
+function createUnifiedTerritoryLayer(territories, isNew = false) {
+    // Collect all polygon coordinates as an array of arrays (multi-polygon)
+    const allPolygons = [];
     
-    // If no existing territories, expand from Rome
-    if (!existingTerritories || existingTerritories.length === 0) {
-        return ROME_COORDS;
-    }
-    
-    // Find the closest point from any existing territory
-    existingTerritories.forEach(territory => {
+    territories.forEach(territory => {
         if (territory.type === 'polygon') {
-            // Check each vertex of the polygon
             const coords = getDetailedCoords(territory);
-            coords.forEach(coord => {
-                const distance = getDistance(coord, newCenter);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestPoint = coord;
-                }
-            });
-        } else {
-            // For circles, use center
-            const center = [territory[0], territory[1]];
-            const distance = getDistance(center, newCenter);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestPoint = center;
-            }
+            allPolygons.push(coords);
         }
     });
     
-    return closestPoint;
+    if (allPolygons.length === 0) return null;
+    
+    // Create a single multi-polygon layer WITHOUT stroke borders
+    // This prevents internal yellow lines between overlapping territories
+    const layer = L.polygon(allPolygons, {
+        fillColor: isNew ? '#DC143C' : '#8B0000',
+        fillOpacity: 0,  // Start invisible, will animate in
+        stroke: false,   // NO BORDER - this removes internal yellow lines
+        weight: 0,       // Ensure no stroke weight
+        color: 'transparent', // Backup: make stroke color transparent
+        smoothFactor: 1.5,
+        className: 'territory-layer',
+        fillRule: 'nonzero'
+    });
+    
+    return layer;
 }
 
-// Scale polygon coordinates from an origin point outward based on progress (0 to 1)
-function scalePolygonFromOrigin(coords, origin, progress) {
-    if (progress >= 1) return coords;
-    if (progress <= 0) return [[origin[0], origin[1]]];
-    
-    // Use easing for smoother animation
-    const easedProgress = easeOutCubic(progress);
-    
-    return coords.map(coord => {
-        const lat = origin[0] + (coord[0] - origin[0]) * easedProgress;
-        const lon = origin[1] + (coord[1] - origin[1]) * easedProgress;
-        return [lat, lon];
+// Smoothly update a territory layer's opacity
+function setTerritoryOpacity(layer, fillOpacity) {
+    if (!layer) return;
+    layer.setStyle({
+        fillOpacity: fillOpacity
     });
 }
 
-// Easing function for smoother animation
-function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
+// Easing function for smooth animation
+function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-// Animate territory expansion - only updates expanding territories, keeps established ones static
-function animateExpansion() {
-    if (!STATE.expansionAnimating) return;
+// Update territories for a new time period - the main function
+function updateTerritories(animate = true) {
+    if (!STATE.map || !STATE.territoryLayerGroup) return;
+    if (!historicalData[STATE.currentIndex]) return;
     
-    const now = performance.now();
-    const elapsed = now - STATE.expansionStartTime;
-    STATE.expansionProgress = Math.min(1, elapsed / STATE.expansionDuration);
+    const currentData = historicalData[STATE.currentIndex];
+    const territories = currentData.territories || [];
     
-    // Only redraw the expanding territories (previous territories stay untouched)
-    drawExpandingTerritories(STATE.expansionProgress);
+    // Create a unique key for this period's territory set
+    const periodKey = `period_${STATE.currentIndex}`;
     
-    if (STATE.expansionProgress < 1) {
-        requestAnimationFrame(animateExpansion);
-    } else {
-        STATE.expansionAnimating = false;
-        STATE.expansionProgress = 1;
-        
-        // Animation complete - merge expanding layers into the main layer array
-        STATE.territoryLayers = STATE.territoryLayers.concat(STATE.expandingLayers);
-        STATE.expandingLayers = [];
-        STATE.expandingTerritoriesData = null;
-    }
-}
-
-// Start expansion animation for new territories
-function startExpansionAnimation() {
-    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
-    
-    const data = historicalData[STATE.currentIndex];
-    const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
-    
-    // Get existing territories (from previous period)
-    const existingTerritories = previousData ? previousData.territories : [];
-    
-    // Collect all potential reusable layers from previous state
-    const reusableLayers = new Map();
-    [...STATE.establishedLayers, ...STATE.territoryLayers, ...STATE.expandingLayers].forEach(layer => {
-        if (layer.territoryKey) {
-            reusableLayers.set(layer.territoryKey, layer);
-        } else {
-            // If no key (legacy), we can't reuse safely, so let it be removed
-             if (STATE.map.hasLayer(layer)) STATE.map.removeLayer(layer);
-        }
-    });
-    
-    // Reset layer arrays
-    STATE.establishedLayers = [];
-    STATE.territoryLayers = [];
-    STATE.expandingLayers = [];
-    STATE.expandingTerritoriesData = null;
-    
-    // Identify new territories vs existing ones
-    const newTerritories = [];
-    
-    data.territories.forEach(territory => {
-        const key = territory.type === 'polygon' 
-            ? (territory.id || territory.name || JSON.stringify(territory.coords))
-            : `${territory[0]},${territory[1]},${territory[2]}`;
-        
-        if (reusableLayers.has(key)) {
-            // REUSE EXISTING LAYER - No redraw, no flash!
-            const layer = reusableLayers.get(key);
-            STATE.establishedLayers.push(layer);
-            reusableLayers.delete(key); // Mark as used so it doesn't get deleted
-        } else {
-            // This is a NEW territory to animate
-            newTerritories.push(territory);
-        }
-    });
-    
-    // Remove any layers that are no longer present in the new period
-    reusableLayers.forEach(layer => {
-        if (STATE.map.hasLayer(layer)) STATE.map.removeLayer(layer);
-    });
-    
-    // If no new territories, we're done - no animation needed
-    if (newTerritories.length === 0) {
-        STATE.expansionAnimating = false;
-        STATE.expansionProgress = 1;
+    // Check if we already have this period's territories displayed
+    if (STATE.activeTerritories.has(periodKey)) {
+        // Already showing this period, nothing to do
         return;
     }
     
-    // Sort new territories by distance from nearest existing territory
-    const newTerritoriesWithOrigin = newTerritories.map(territory => {
-        const origin = findExpansionOrigin(territory, existingTerritories);
-        const center = getTerritoryCenter(territory);
-        const distance = getDistance(origin, center);
-        return { territory, origin, distance };
-    }).sort((a, b) => a.distance - b.distance);
+    // Get previous period key if exists
+    const previousKey = STATE.currentIndex > 0 ? `period_${STATE.currentIndex - 1}` : null;
+    const previousData = previousKey ? STATE.activeTerritories.get(previousKey) : null;
     
-    const maxDistance = Math.max(...newTerritoriesWithOrigin.map(t => t.distance), 1);
-    
-    // Cache data for expanding territories animation
-    STATE.expandingTerritoriesData = {
-        data,
-        newTerritoriesWithOrigin,
-        maxDistance
-    };
-    
-    // Set up animation state
-    STATE.expansionProgress = 0;
-    STATE.expansionStartTime = performance.now();
-    STATE.expansionAnimating = true;
-    
-    // Adjust duration based on animation speed
-    const speedMultiplier = {1: 2.5, 2: 2.0, 3: 1.5, 4: 1.0, 5: 0.7};
-    STATE.expansionDuration = 2000 * (speedMultiplier[STATE.animationSpeed] || 1.5);
-    
-    // Start animation loop for new territories
-    animateExpansion();
-}
-
-// Draw only the expanding territories (called each animation frame)
-function drawExpandingTerritories(progress) {
-    if (!STATE.map || !STATE.expandingTerritoriesData) return;
-    
-    // Clear only the expanding layers, keep established ones
-    clearExpandingLayers();
-    
-    const { data, newTerritoriesWithOrigin, maxDistance } = STATE.expandingTerritoriesData;
-    
-    newTerritoriesWithOrigin.forEach(({ territory, origin, distance }) => {
-        // Calculate individual territory progress based on distance
-        let territoryProgress = 1;
-        
-        if (progress < 1) {
-            // Normalize distance for staggering (0 = closest, 1 = farthest)
-            const normalizedDistance = distance / maxDistance;
-            
-            // Stagger the animation - closer territories expand first
-            const staggerDelay = normalizedDistance * 0.5; // 50% of animation for staggering
-            const adjustedProgress = Math.max(0, (progress - staggerDelay) / (1 - staggerDelay));
-            territoryProgress = Math.min(1, adjustedProgress * 1.1); // Slight overshoot for smooth finish
-        }
-        
-        drawSingleTerritory(territory, data, true, territoryProgress, origin, 'expanding');
-    });
-}
-
-// Draw territories with expansion progress (used for instant draw without animation)
-function drawTerritoriesWithProgress(progress = 1) {
-    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
-    
-    clearTerritories();
-    
-    const data = historicalData[STATE.currentIndex];
-    const previousData = STATE.currentIndex > 0 ? historicalData[STATE.currentIndex - 1] : null;
-    
-    // Get existing territories (from previous period)
-    const existingTerritories = previousData ? previousData.territories : [];
-    
-    // Create set of previous territory keys
-    const previousTerritorySet = previousData ? new Set(
-        previousData.territories.map(t => {
-            if (t.type === 'polygon') {
-                return t.name || JSON.stringify(t.coords);
-            }
-            return `${t[0]},${t[1]},${t[2]}`;
-        })
-    ) : new Set();
-    
-    // Separate existing and new territories
-    const existingNow = [];
-    const newTerritories = [];
-    
-    data.territories.forEach(territory => {
-        const key = territory.type === 'polygon' 
-            ? (territory.name || JSON.stringify(territory.coords))
-            : `${territory[0]},${territory[1]},${territory[2]}`;
-        
-        if (previousTerritorySet.has(key)) {
-            existingNow.push(territory);
-        } else {
-            newTerritories.push(territory);
-        }
-    });
-    
-    // Sort new territories by distance from nearest existing territory
-    const newTerritoriesWithOrigin = newTerritories.map(territory => {
-        const origin = findExpansionOrigin(territory, existingTerritories);
-        const center = getTerritoryCenter(territory);
-        const distance = getDistance(origin, center);
-        return { territory, origin, distance };
-    }).sort((a, b) => a.distance - b.distance);
-    
-    // Draw existing territories first (fully visible)
-    existingNow.forEach(territory => {
-        drawSingleTerritory(territory, data, false, 1, null, 'established');
-    });
-    
-    // Draw new territories with staggered expansion animation
-    const maxDistance = Math.max(...newTerritoriesWithOrigin.map(t => t.distance), 1);
-    
-    newTerritoriesWithOrigin.forEach(({ territory, origin, distance }) => {
-        // Calculate individual territory progress based on distance
-        let territoryProgress = 1;
-        
-        if (progress < 1) {
-            // Normalize distance for staggering (0 = closest, 1 = farthest)
-            const normalizedDistance = distance / maxDistance;
-            
-            // Stagger the animation - closer territories expand first
-            const staggerDelay = normalizedDistance * 0.5; // 50% of animation for staggering
-            const adjustedProgress = Math.max(0, (progress - staggerDelay) / (1 - staggerDelay));
-            territoryProgress = Math.min(1, adjustedProgress * 1.1); // Slight overshoot for smooth finish
-        }
-        
-        drawSingleTerritory(territory, data, true, territoryProgress, origin, 'established');
-    });
-}
-
-// Draw a single territory with optional expansion animation
-// layerType: 'established' (static), 'expanding' (animated), or 'territory' (legacy)
-function drawSingleTerritory(territory, data, isNew, progress, expansionOrigin, layerType = 'territory') {
-    let shape;
-    
-    if (territory.type === 'polygon') {
-        let coords = getDetailedCoords(territory);
-        
-        // Scale coordinates if this is a new expanding territory
-        if (isNew && progress < 1 && expansionOrigin) {
-            coords = scalePolygonFromOrigin(coords, expansionOrigin, progress);
-        }
-        
-        const fillOpacity = isNew ? 
-            0.25 + (0.25 * progress) : 0.35;
-        
-        shape = L.polygon(coords, {
-            fillColor: isNew ? '#DC143C' : '#8B0000',
-            fillOpacity: fillOpacity,
-            color: isNew ? '#FFD700' : '#D4AF37',
-            weight: isNew ? 2.5 : 2,
-            opacity: isNew ? 0.4 + (0.5 * progress) : 0.7,
-            smoothFactor: 2.0,
-            className: isNew ? 'territory-expansion' : 'territory-established'
-        }).addTo(STATE.map);
+    if (animate && previousData) {
+        // Animate transition from previous to current
+        animateUnifiedTransition(previousData, territories, currentData, periodKey, previousKey);
     } else {
-        // Circle territories
-        let radius = territory[2] * 100000;
-        if (isNew && progress < 1) {
-            radius *= easeOutCubic(progress);
-        }
-        
-        shape = L.circle([territory[0], territory[1]], {
-            radius: radius,
-            fillColor: isNew ? '#DC143C' : '#8B0000',
-            fillOpacity: isNew ? 0.25 + (0.2 * progress) : 0.35,
-            color: isNew ? '#FFD700' : '#D4AF37',
-            weight: isNew ? 2.5 : 2,
-            className: isNew ? 'territory-expansion' : 'territory-established'
-        }).addTo(STATE.map);
+        // Instant update - clear old and show new
+        clearAllTerritories();
+        showTerritoriesInstant(territories, currentData, periodKey);
+    }
+}
+
+// Show territories instantly without animation
+function showTerritoriesInstant(territories, periodData, periodKey) {
+    const layer = createUnifiedTerritoryLayer(territories, false);
+    if (layer) {
+        layer.addTo(STATE.territoryLayerGroup);
+        setTerritoryOpacity(layer, 0.45);
+        addUnifiedTerritoryInteraction(layer, periodData);
+        STATE.activeTerritories.set(periodKey, { layer, territories });
+    }
+}
+
+// Animate transition between periods using unified layers
+function animateUnifiedTransition(previousData, newTerritories, currentData, newKey, previousKey) {
+    const duration = getTransitionDuration();
+    const startTime = performance.now();
+    
+    // Create new unified layer (starts invisible)
+    const newLayer = createUnifiedTerritoryLayer(newTerritories, true);
+    if (newLayer) {
+        newLayer.addTo(STATE.territoryLayerGroup);
+        addUnifiedTerritoryInteraction(newLayer, currentData);
     }
     
-    // Add interaction events
-    const centerLat = territory.type === 'polygon' 
-        ? territory.coords.reduce((sum, coord) => sum + coord[0], 0) / territory.coords.length
-        : territory[0];
-    const centerLon = territory.type === 'polygon'
-        ? territory.coords.reduce((sum, coord) => sum + coord[1], 0) / territory.coords.length
-        : territory[1];
+    const oldLayer = previousData ? previousData.layer : null;
     
-    shape.on('mouseover', () => {
-        if (!STATE.infoLocked) {
-            showTerritoryInfo(data, isNew, centerLat, centerLon, false);
+    STATE.transitionInProgress = true;
+    
+    function animationFrame(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const easedProgress = easeInOutCubic(progress);
+        
+        // Cross-fade: fade in new, fade out old
+        if (newLayer) {
+            setTerritoryOpacity(newLayer, 0.45 * easedProgress);
         }
+        
+        if (oldLayer) {
+            const fadeOut = 1 - easedProgress;
+            setTerritoryOpacity(oldLayer, 0.45 * fadeOut);
+        }
+        
+        if (progress < 1) {
+            requestAnimationFrame(animationFrame);
+        } else {
+            // Animation complete
+            STATE.transitionInProgress = false;
+            
+            // Finalize new layer
+            if (newLayer) {
+                newLayer.setStyle({
+                    fillColor: '#8B0000'
+                });
+                setTerritoryOpacity(newLayer, 0.45);
+                STATE.activeTerritories.set(newKey, { layer: newLayer, territories: newTerritories });
+            }
+            
+            // Remove old layer
+            if (oldLayer) {
+                STATE.territoryLayerGroup.removeLayer(oldLayer);
+            }
+            if (previousKey) {
+                STATE.activeTerritories.delete(previousKey);
+            }
+        }
+    }
+    
+    requestAnimationFrame(animationFrame);
+}
+
+// Get transition duration based on speed setting
+function getTransitionDuration() {
+    const durations = { 1: 2500, 2: 2000, 3: 1500, 4: 1000, 5: 600 };
+    return durations[STATE.animationSpeed] || 1500;
+}
+
+// Add mouse/touch interaction to unified territory layer
+function addUnifiedTerritoryInteraction(layer, periodData) {
+    layer.on('mouseover', (e) => {
+        if (!STATE.infoLocked) {
+            const latlng = e.latlng;
+            showTerritoryInfo(periodData, false, latlng.lat, latlng.lng, false);
+        }
+        // Highlight on hover - slightly increase opacity
+        layer.setStyle({ fillOpacity: 0.55 });
     });
     
-    shape.on('mouseout', () => {
+    layer.on('mouseout', () => {
         if (!STATE.infoLocked) {
             updateDisplay();
         }
+        layer.setStyle({ fillOpacity: 0.45 });
     });
     
-    shape.on('click', () => {
-        showTerritoryInfo(data, isNew, centerLat, centerLon, true);
+    layer.on('click', (e) => {
+        const latlng = e.latlng;
+        showTerritoryInfo(periodData, false, latlng.lat, latlng.lng, true);
     });
-    
-    // Attach unique key to layer for reuse
-    const key = territory.type === 'polygon' 
-        ? (territory.id || territory.name || JSON.stringify(territory.coords))
-        : `${territory[0]},${territory[1]},${territory[2]}`;
-    shape.territoryKey = key;
-    
-    // Add to appropriate layer array based on layerType
-    if (layerType === 'expanding') {
-        STATE.expandingLayers.push(shape);
-    } else if (layerType === 'established') {
-        STATE.establishedLayers.push(shape);
-    } else {
-        STATE.territoryLayers.push(shape);
-    }
 }
 
+// Clear all territories (used on reset)
+function clearAllTerritories() {
+    if (STATE.territoryLayerGroup) {
+        STATE.territoryLayerGroup.clearLayers();
+    }
+    STATE.activeTerritories.clear();
+    STATE.transitionInProgress = false;
+}
+
+// Main draw function called when period changes
 function drawTerritories() {
     if (!STATE.map || !historicalData[STATE.currentIndex]) return;
     
     // Update time-based markers (cities, forts, walls)
     updateTimeBasedMarkers();
     
-    // If playing and not the first period, animate only the new territories
-    // Keep existing territories on the map
-    if (STATE.isPlaying && STATE.currentIndex > 0) {
-        startExpansionAnimation();
-    } else {
-        // Instant draw - clear and redraw everything
-        drawTerritoriesWithProgress(1);
-    }
+    // Update territories with animation if playing
+    updateTerritories(STATE.isPlaying);
 }
 
 // ============================================
@@ -2768,6 +2556,9 @@ function handleTimelineChange(e) {
     const value = parseInt(e.target.value);
     STATE.currentIndex = Math.floor((value / 100) * (historicalData.length - 1));
     e.target.setAttribute('aria-valuenow', value);
+    
+    // For manual timeline changes, clear and redraw instantly
+    clearAllTerritories();
     updateDisplay();
     drawTerritories();
 }
@@ -2813,8 +2604,8 @@ function togglePlay() {
 function animate(timestamp = 0) {
     if (!STATE.isPlaying) return;
     
-    // Wait for expansion animation to complete before advancing
-    if (STATE.expansionAnimating) {
+    // Wait for territory transition to complete before advancing
+    if (STATE.transitionInProgress) {
         STATE.animationId = requestAnimationFrame(animate);
         return;
     }
@@ -2822,8 +2613,8 @@ function animate(timestamp = 0) {
     // Calculate elapsed time for smooth frame-independent animation
     const elapsed = timestamp - STATE.lastUpdateTime;
     
-    // Add expansion duration to the update interval
-    const totalInterval = STATE.updateInterval + STATE.expansionDuration;
+    // Add transition duration to the update interval
+    const totalInterval = STATE.updateInterval + STATE.transitionDuration;
     
     if (elapsed >= totalInterval) {
         STATE.currentIndex++;
@@ -2851,6 +2642,7 @@ function reset() {
         togglePlay();
     }
     STATE.currentIndex = 0;
+    clearAllTerritories();  // Clear all territories before redrawing
     updateDisplay();
     drawTerritories();
     updateTimelineSlider();
