@@ -437,7 +437,10 @@ const historicalData = [
             { type: 'polygon', name: 'Aegyptus', id: 'aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
             // North Africa
             { type: 'polygon', name: 'Africa', id: 'africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] },
-            { type: 'polygon', name: 'Mauretania', id: 'mauretania', coords: [[36.0, -5.0], [35.0, 0.0], [33.0, 2.0], [31.5, 0.0], [32.0, -5.0], [34.0, -7.0]] }
+            { type: 'polygon', name: 'Mauretania', id: 'mauretania', coords: [[36.0, -5.0], [35.0, 0.0], [33.0, 2.0], [31.5, 0.0], [32.0, -5.0], [34.0, -7.0]] },
+            // Mediterranean Islands
+            { type: 'polygon', name: 'Crete', id: 'crete', coords: [[35.6, 23.5], [35.2, 25.5], [35.0, 26.0], [35.2, 24.0], [35.4, 23.5]] },
+            { type: 'polygon', name: 'Cyprus', id: 'cyprus', coords: [[35.5, 32.5], [35.2, 33.5], [34.7, 34.0], [34.6, 33.0], [35.0, 32.5]] }
         ]
     },
     { 
@@ -469,7 +472,10 @@ const historicalData = [
             { type: 'polygon', name: 'Syria', id: 'syria', coords: [[37.0, 36.0], [36.0, 39.0], [34.5, 41.5], [33.0, 40.0], [32.0, 35.5], [33.5, 34.0], [35.5, 35.0]] },
             { type: 'polygon', name: 'Mesopotamia', id: 'mesopotamia', coords: [[37.0, 40.0], [36.0, 43.5], [34.0, 45.5], [33.0, 44.5], [32.5, 41.0], [34.0, 39.5]] },
             { type: 'polygon', name: 'Aegyptus', id: 'aegyptus', coords: [[31.5, 32.0], [31.0, 29.5], [27.0, 30.5], [24.0, 32.5], [26.0, 33.5], [29.0, 31.5]] },
-            { type: 'polygon', name: 'Africa', id: 'africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] }
+            { type: 'polygon', name: 'Africa', id: 'africa', coords: [[37.5, 10.0], [37.0, 11.5], [35.5, 13.0], [33.0, 13.5], [31.0, 11.5], [30.5, 10.0], [32.0, 8.5], [35.0, 8.5], [37.0, 9.0]] },
+            // Mediterranean Islands
+            { type: 'polygon', name: 'Crete', id: 'crete', coords: [[35.6, 23.5], [35.2, 25.5], [35.0, 26.0], [35.2, 24.0], [35.4, 23.5]] },
+            { type: 'polygon', name: 'Cyprus', id: 'cyprus', coords: [[35.5, 32.5], [35.2, 33.5], [34.7, 34.0], [34.6, 33.0], [35.0, 32.5]] }
         ]
     },
     { 
@@ -1879,6 +1885,7 @@ function getDetailedCoords(territory) {
             'pannonia': 'pannonia', 'dacia': 'dacia',
             'thracia': 'thracia', 'thrace': 'thracia',
             'moesia': 'moesia',
+            'crete': 'crete', 'cyprus': 'cyprus',
             'asiaminor': 'asiaMinor', 'asia': 'asiaMinor',
             'anatolia': 'asiaMinor',
             'syria': 'syria', 'mesopotamia': 'mesopotamia',
@@ -1890,13 +1897,8 @@ function getDetailedCoords(territory) {
         
         const shapeKey = shapeMap[name];
         if (shapeKey && shapes[shapeKey]) {
-            console.log(`✅ Using detailed shape for: ${territory.name} -> ${shapeKey} (${shapes[shapeKey].length} points)`);
             return shapes[shapeKey];
-        } else {
-            console.warn(`⚠️ No detailed shape for: ${territory.name} (normalized: ${name}, shapeKey: ${shapeKey})`);
         }
-    } else {
-        console.error('❌ TERRITORY_SHAPES not loaded!');
     }
     
     return territory.coords;
