@@ -227,6 +227,12 @@
         // Register service worker for PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
+                // Check if protocol is supported
+                if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+                    console.log('⚠️ ServiceWorker skipped: Not supported on file:// protocol');
+                    return;
+                }
+
                 // Use relative path for GitHub Pages compatibility
                 const swPath = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
                     ? '/service-worker.js'

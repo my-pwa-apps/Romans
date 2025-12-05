@@ -991,8 +991,6 @@ function init() {
         setupEducationalFeatures();
         addReferenceCities();
         updateDisplay();
-        updateEducationalContent();
-        drawTerritories();
         STATE.isInitialized = true;
         
         // Use requestAnimationFrame for smooth loading completion
@@ -2438,14 +2436,9 @@ function clearAllTerritories() {
 }
 
 // Main draw function called when period changes
+// DEPRECATED - Use updateDisplay() instead
 function drawTerritories() {
-    if (!STATE.map || !historicalData[STATE.currentIndex]) return;
-    
-    // Update time-based markers (cities, forts, walls)
-    updateTimeBasedMarkers();
-    
-    // Update territories with animation if playing
-    updateTerritories(STATE.isPlaying);
+    // Legacy function removed to prevent errors
 }
 
 // ============================================
@@ -2508,9 +2501,19 @@ function setupEducationalFeatures() {
 }
 
 function updateEducationalContent() {
-    const currentYear = historicalData[STATE.currentIndex].year;
-    const yearKey = String(currentYear);
-    const eduData = EDUCATIONAL_DATA[yearKey];
+    const currentYear = STATE.currentYear;
+    
+    // Find closest educational data
+    let closestYear = -Infinity;
+    let eduData = null;
+    
+    for (const dataYearStr in EDUCATIONAL_DATA) {
+        const dataYear = parseInt(dataYearStr);
+        if (dataYear <= currentYear && dataYear > closestYear) {
+            closestYear = dataYear;
+            eduData = EDUCATIONAL_DATA[dataYearStr];
+        }
+    }
     
     const factsElement = document.getElementById('eduFacts');
     const figuresElement = document.getElementById('figuresText');
@@ -2530,9 +2533,19 @@ function updateEducationalContent() {
 }
 
 function showRandomFact() {
-    const currentYear = historicalData[STATE.currentIndex].year;
-    const yearKey = String(currentYear);
-    const eduData = EDUCATIONAL_DATA[yearKey];
+    const currentYear = STATE.currentYear;
+    
+    // Find closest educational data
+    let closestYear = -Infinity;
+    let eduData = null;
+    
+    for (const dataYearStr in EDUCATIONAL_DATA) {
+        const dataYear = parseInt(dataYearStr);
+        if (dataYear <= currentYear && dataYear > closestYear) {
+            closestYear = dataYear;
+            eduData = EDUCATIONAL_DATA[dataYearStr];
+        }
+    }
     
     if (eduData && eduData.facts && eduData.facts.length > 0) {
         const randomFact = eduData.facts[Math.floor(Math.random() * eduData.facts.length)];
