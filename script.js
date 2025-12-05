@@ -1,3 +1,58 @@
+// ============================================
+// CHRONOS - WORLD HISTORY ATLAS
+// ============================================
+
+// Configuration
+const MIN_YEAR = -3000;
+const MAX_YEAR = 2025;
+const DEFAULT_YEAR = -753;
+
+// Civilization Definitions
+const CIVILIZATIONS = {
+    rome: {
+        id: 'rome',
+        name: 'Roman Empire',
+        color: '#DC143C', // Crimson
+        textColor: '#FFFFFF'
+    },
+    egypt: {
+        id: 'egypt',
+        name: 'Ancient Egypt',
+        color: '#FFD700', // Gold
+        textColor: '#000000'
+    },
+    sumer: {
+        id: 'sumer',
+        name: 'Sumer',
+        color: '#87CEEB', // Sky Blue
+        textColor: '#000000'
+    },
+    babylon: {
+        id: 'babylon',
+        name: 'Babylonian Empire',
+        color: '#4B0082', // Indigo
+        textColor: '#FFFFFF'
+    },
+    persia: {
+        id: 'persia',
+        name: 'Persian Empire',
+        color: '#228B22', // Forest Green
+        textColor: '#FFFFFF'
+    },
+    macedon: {
+        id: 'macedon',
+        name: 'Macedonian Empire',
+        color: '#FF8C00', // Dark Orange
+        textColor: '#000000'
+    },
+    carthage: {
+        id: 'carthage',
+        name: 'Carthaginian Empire',
+        color: '#800080', // Purple
+        textColor: '#FFFFFF'
+    }
+};
+
 // Historical conquest entry points - where Roman armies entered each territory
 // Used for water-flow animation effect - maps territory name -> entry point data
 const CONQUEST_DIRECTIONS = {
@@ -80,6 +135,34 @@ const CONQUEST_DIRECTIONS = {
 
 // Educational Data - Historical Facts and Context
 const EDUCATIONAL_DATA = {
+    "-3000": {
+        facts: [
+            "The unification of Upper and Lower Egypt under King Narmer (Menes).",
+            "Development of hieroglyphic writing in Egypt.",
+            "Rise of Sumerian city-states in Mesopotamia (Uruk, Ur, Eridu).",
+            "Invention of the wheel and cuneiform writing in Sumer."
+        ],
+        figures: ["Narmer - First Pharaoh of unified Egypt", "Gilgamesh - Legendary King of Uruk"],
+        significance: "Dawn of civilization and written history"
+    },
+    "-2500": {
+        facts: [
+            "Construction of the Great Pyramid of Giza (c. 2560 BCE).",
+            "Old Kingdom Egypt reaches its peak.",
+            "Standard of Ur created in Sumer."
+        ],
+        figures: ["Khufu - Builder of the Great Pyramid", "Imhotep - Architect and Physician"],
+        significance: "Age of the Pyramids"
+    },
+    "-1750": {
+        facts: [
+            "Hammurabi establishes the Babylonian Empire.",
+            "Code of Hammurabi - one of the earliest and most complete written legal codes.",
+            "Middle Kingdom Egypt."
+        ],
+        figures: ["Hammurabi - King of Babylon"],
+        significance: "First great legal codes"
+    },
     "-509": {
         facts: [
             "The Roman Republic was founded in 509 BCE after overthrowing King Tarquin the Proud.",
@@ -1972,7 +2055,8 @@ function getDetailedCoords(territory) {
             'armenia': 'armenia', 'judaea': 'judaea',
             'arabia': 'arabia',
             'aegyptus': 'aegyptus', 'egypt': 'aegyptus',
-            'africa': 'africa', 'africaproconsularis': 'africa'
+            'africa': 'africa', 'africaproconsularis': 'africa',
+            'cyrenaica': 'cyrenaica'
         };
         
         const shapeKey = shapeMap[name];
@@ -1985,7 +2069,7 @@ function getDetailedCoords(territory) {
 }
 
 // Create a unified multi-polygon layer for all territories in a period
-function createUnifiedTerritoryLayer(territories, isNew = false) {
+function createUnifiedTerritoryLayer(territories, isNew = false, color = '#DC143C') {
     // Collect all polygon coordinates as an array of arrays (multi-polygon)
     const allPolygons = [];
     
@@ -2001,8 +2085,8 @@ function createUnifiedTerritoryLayer(territories, isNew = false) {
     // Create a single multi-polygon layer WITHOUT stroke borders
     // This prevents internal yellow lines between overlapping territories
     const layer = L.polygon(allPolygons, {
-        fillColor: isNew ? '#DC143C' : '#8B0000',
-        fillOpacity: 0,  // Start invisible, will animate in
+        fillColor: color,
+        fillOpacity: 0.6,
         stroke: false,   // NO BORDER - this removes internal yellow lines
         weight: 0,       // Ensure no stroke weight
         color: 'transparent', // Backup: make stroke color transparent
@@ -2121,44 +2205,41 @@ function easeInOutCubic(t) {
 }
 
 // Update territories for a new time period - the main function
-function updateTerritories(animate = true) {
+function updateTerritories(territories, year) {
     if (!STATE.map || !STATE.territoryLayerGroup) return;
-    if (!historicalData[STATE.currentIndex]) return;
     
-    const currentData = historicalData[STATE.currentIndex];
-    const territories = currentData.territories || [];
-    
-    // Create a unique key for this period's territory set
-    const periodKey = `period_${STATE.currentIndex}`;
-    
-    // Check if we already have this period's territories displayed
-    if (STATE.activeTerritories.has(periodKey)) {
-        // Already showing this period, nothing to do
-        return;
-    }
-    
-    // Get previous period key if exists
-    const previousKey = STATE.currentIndex > 0 ? `period_${STATE.currentIndex - 1}` : null;
-    const previousData = previousKey ? STATE.activeTerritories.get(previousKey) : null;
-    
-    if (animate && previousData) {
-        // Animate transition from previous to current
-        animateUnifiedTransition(previousData, territories, currentData, periodKey, previousKey);
-    } else {
-        // Instant update - clear old and show new
-        clearAllTerritories();
-        showTerritoriesInstant(territories, currentData, periodKey);
-    }
+    // For now, we'll treat all territories as "Rome"
+    // In the future, we'll split this by empire ID
+    updateEmpireTerritories('rome', territories, year);
 }
 
-// Show territories instantly without animation
-function showTerritoriesInstant(territories, periodData, periodKey) {
-    const layer = createUnifiedTerritoryLayer(territories, false);
+// Update territories for a specific empire
+function updateEmpireTerritories(empireId, territories, year) {
+    const empire = CIVILIZATIONS[empireId];
+    if (!empire) return;
+    
+    // Clear existing layer for this empire if it exists
+    // Note: In a more advanced version, we would diff and animate
+    // For now, we'll use the existing unified layer approach but scoped to the empire
+    
+    // Create unified layer
+    const layer = createUnifiedTerritoryLayer(territories, false, empire.color);
+    
+    // Remove old layer
+    if (STATE.empireLayers[empireId]) {
+        STATE.territoryLayerGroup.removeLayer(STATE.empireLayers[empireId]);
+    }
+    
+    // Add new layer
     if (layer) {
-        layer.addTo(STATE.territoryLayerGroup);
-        setTerritoryOpacity(layer, 0.45);
-        addUnifiedTerritoryInteraction(layer, periodData);
-        STATE.activeTerritories.set(periodKey, { layer, territories });
+        STATE.empireLayers[empireId] = layer;
+        STATE.territoryLayerGroup.addLayer(layer);
+        
+        // Add interaction
+        layer.bindTooltip(`${empire.name} (${formatYear(year)})`, {
+            className: 'territory-label',
+            sticky: true
+        });
     }
 }
 
