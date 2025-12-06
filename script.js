@@ -9,23 +9,18 @@ const DEFAULT_YEAR = -753;
 
 // Civilization Definitions
 const CIVILIZATIONS = {
-    rome: {
-        id: 'rome',
-        name: 'Roman Empire',
-        color: '#DC143C', // Crimson
-        textColor: '#FFFFFF'
-    },
-    egypt: {
-        id: 'egypt',
-        name: 'Ancient Egypt',
-        color: '#FFD700', // Gold
-        textColor: '#000000'
-    },
+    // Ancient Near East
     sumer: {
         id: 'sumer',
-        name: 'Sumer',
+        name: 'Sumerian City-States',
         color: '#87CEEB', // Sky Blue
         textColor: '#000000'
+    },
+    akkad: {
+        id: 'akkad',
+        name: 'Akkadian Empire',
+        color: '#8B4513', // Saddle Brown
+        textColor: '#FFFFFF'
     },
     babylon: {
         id: 'babylon',
@@ -33,10 +28,52 @@ const CIVILIZATIONS = {
         color: '#4B0082', // Indigo
         textColor: '#FFFFFF'
     },
+    assyria: {
+        id: 'assyria',
+        name: 'Assyrian Empire',
+        color: '#800000', // Maroon
+        textColor: '#FFFFFF'
+    },
+    hittites: {
+        id: 'hittites',
+        name: 'Hittite Empire',
+        color: '#CD853F', // Peru
+        textColor: '#000000'
+    },
+    
+    // Egypt
+    egypt: {
+        id: 'egypt',
+        name: 'Ancient Egypt',
+        color: '#FFD700', // Gold
+        textColor: '#000000'
+    },
+    
+    // Persia & Successors
     persia: {
         id: 'persia',
-        name: 'Persian Empire',
+        name: 'Achaemenid Persian Empire',
         color: '#228B22', // Forest Green
+        textColor: '#FFFFFF'
+    },
+    parthia: {
+        id: 'parthia',
+        name: 'Parthian Empire',
+        color: '#2E8B57', // Sea Green
+        textColor: '#FFFFFF'
+    },
+    sassanid: {
+        id: 'sassanid',
+        name: 'Sassanid Persian Empire',
+        color: '#006400', // Dark Green
+        textColor: '#FFFFFF'
+    },
+    
+    // Greek World
+    greece: {
+        id: 'greece',
+        name: 'Greek City-States',
+        color: '#4169E1', // Royal Blue
         textColor: '#FFFFFF'
     },
     macedon: {
@@ -45,10 +82,208 @@ const CIVILIZATIONS = {
         color: '#FF8C00', // Dark Orange
         textColor: '#000000'
     },
+    seleucid: {
+        id: 'seleucid',
+        name: 'Seleucid Empire',
+        color: '#9ACD32', // Yellow Green
+        textColor: '#000000'
+    },
+    ptolemaic: {
+        id: 'ptolemaic',
+        name: 'Ptolemaic Kingdom',
+        color: '#DAA520', // Goldenrod
+        textColor: '#000000'
+    },
+    
+    // Mediterranean
     carthage: {
         id: 'carthage',
         name: 'Carthaginian Empire',
         color: '#800080', // Purple
+        textColor: '#FFFFFF'
+    },
+    rome: {
+        id: 'rome',
+        name: 'Roman Empire',
+        color: '#DC143C', // Crimson
+        textColor: '#FFFFFF'
+    },
+    byzantine: {
+        id: 'byzantine',
+        name: 'Byzantine Empire',
+        color: '#9400D3', // Dark Violet
+        textColor: '#FFFFFF'
+    },
+    
+    // Medieval & Early Modern
+    vikings: {
+        id: 'vikings',
+        name: 'Viking Age Scandinavia',
+        color: '#2F4F4F', // Dark Slate Gray
+        textColor: '#FFFFFF'
+    },
+    frankish: {
+        id: 'frankish',
+        name: 'Frankish/Carolingian Empire',
+        color: '#9932CC', // Dark Orchid - more visible
+        textColor: '#FFFFFF'
+    },
+    west_francia: {
+        id: 'west_francia',
+        name: 'West Francia (France)',
+        color: '#0055A4', // French Blue
+        textColor: '#FFFFFF'
+    },
+    east_francia: {
+        id: 'east_francia',
+        name: 'East Francia (Germany)',
+        color: '#FFCC00', // German Gold
+        textColor: '#000000'
+    },
+    lotharingia: {
+        id: 'lotharingia',
+        name: 'Middle Francia/Lotharingia',
+        color: '#FF6B6B', // Coral
+        textColor: '#000000'
+    },
+    hre: {
+        id: 'hre',
+        name: 'Holy Roman Empire',
+        color: '#FFD700', // Gold
+        textColor: '#000000'
+    },
+    ottoman: {
+        id: 'ottoman',
+        name: 'Ottoman Empire',
+        color: '#FF4500', // Orange Red
+        textColor: '#FFFFFF'
+    },
+    mongol: {
+        id: 'mongol',
+        name: 'Mongol Empire',
+        color: '#708090', // Slate Gray
+        textColor: '#FFFFFF'
+    },
+    habsburg: {
+        id: 'habsburg',
+        name: 'Austrian Habsburg Empire',
+        color: '#FFD700', // Gold (Austrian)
+        textColor: '#000000'
+    },
+    
+    // Asian Empires
+    han: {
+        id: 'han',
+        name: 'Han Dynasty',
+        color: '#FF6347', // Tomato
+        textColor: '#FFFFFF'
+    },
+    tang: {
+        id: 'tang',
+        name: 'Tang Dynasty',
+        color: '#FF4500', // Orange Red
+        textColor: '#FFFFFF'
+    },
+    ming: {
+        id: 'ming',
+        name: 'Ming Dynasty',
+        color: '#B22222', // Fire Brick
+        textColor: '#FFFFFF'
+    },
+    qing: {
+        id: 'qing',
+        name: 'Qing Dynasty',
+        color: '#8B0000', // Dark Red
+        textColor: '#FFFFFF'
+    },
+    mughal: {
+        id: 'mughal',
+        name: 'Mughal Empire',
+        color: '#32CD32', // Lime Green
+        textColor: '#000000'
+    },
+    
+    // Pre-Columbian Americas
+    maya: {
+        id: 'maya',
+        name: 'Maya Civilization',
+        color: '#228B22', // Forest Green
+        textColor: '#FFFFFF'
+    },
+    aztec: {
+        id: 'aztec',
+        name: 'Aztec Empire',
+        color: '#8B4513', // Saddle Brown
+        textColor: '#FFFFFF'
+    },
+    inca: {
+        id: 'inca',
+        name: 'Inca Empire',
+        color: '#DAA520', // Goldenrod
+        textColor: '#000000'
+    },
+    
+    // Islamic Caliphates
+    umayyad: {
+        id: 'umayyad',
+        name: 'Umayyad Caliphate',
+        color: '#006633', // Islamic Green
+        textColor: '#FFFFFF'
+    },
+    abbasid: {
+        id: 'abbasid',
+        name: 'Abbasid Caliphate',
+        color: '#000000', // Black (Abbasid color)
+        textColor: '#FFFFFF'
+    },
+    
+    // African Empires
+    mali: {
+        id: 'mali',
+        name: 'Mali Empire',
+        color: '#FFA500', // Orange
+        textColor: '#000000'
+    },
+    
+    // Southeast Asian
+    khmer: {
+        id: 'khmer',
+        name: 'Khmer Empire',
+        color: '#800020', // Burgundy
+        textColor: '#FFFFFF'
+    },
+    
+    // United Habsburg (before 1556 split)
+    habsburg_united: {
+        id: 'habsburg_united',
+        name: 'Habsburg Empire (United)',
+        color: '#FFD700', // Gold
+        textColor: '#000000'
+    },
+    
+    // Colonial & Modern
+    spanish: {
+        id: 'spanish',
+        name: 'Spanish Empire',
+        color: '#FF0000', // Red
+        textColor: '#FFFFFF'
+    },
+    british: {
+        id: 'british',
+        name: 'British Empire',
+        color: '#C41E3A', // Cardinal
+        textColor: '#FFFFFF'
+    },
+    french: {
+        id: 'french',
+        name: 'French Empire',
+        color: '#0055A4', // French Blue
+        textColor: '#FFFFFF'
+    },
+    russian: {
+        id: 'russian',
+        name: 'Russian Empire',
+        color: '#1E90FF', // Dodger Blue
         textColor: '#FFFFFF'
     }
 };
@@ -836,6 +1071,1065 @@ function getRegionName(lat, lon) {
 }
 
 // ============================================
+// WORLD EMPIRES DATA
+// ============================================
+// Each empire has time periods with territory polygons
+const WORLD_EMPIRES = {
+    // Ancient Egypt - 3100 BCE to 30 BCE
+    egypt: {
+        name: 'Ancient Egypt',
+        periods: [
+            {
+                startYear: -3100,
+                endYear: -2181,
+                name: 'Old Kingdom Egypt',
+                territories: [[
+                    [31.5, 29.5], [31.2, 32.5], [30.0, 32.8], [29.5, 32.5],
+                    [27.0, 33.5], [24.0, 33.0], [22.0, 31.5], [24.0, 31.0],
+                    [27.0, 30.5], [29.5, 30.0], [30.5, 29.0], [31.5, 29.5]
+                ]]
+            },
+            {
+                startYear: -2055,
+                endYear: -1650,
+                name: 'Middle Kingdom Egypt',
+                territories: [[
+                    [31.5, 29.5], [31.2, 32.5], [30.0, 33.0], [29.0, 33.5],
+                    [26.0, 34.0], [22.0, 33.0], [20.0, 31.0], [22.0, 30.0],
+                    [26.0, 30.0], [29.5, 29.5], [30.5, 28.5], [31.5, 29.5]
+                ]]
+            },
+            {
+                startYear: -1550,
+                endYear: -1077,
+                name: 'New Kingdom Egypt',
+                territories: [[
+                    [31.8, 28.0], [31.5, 34.0], [33.0, 35.5], [35.0, 36.0],
+                    [33.5, 38.0], [31.0, 35.0], [29.0, 34.5], [26.0, 35.0],
+                    [22.0, 34.0], [18.0, 32.0], [20.0, 30.0], [24.0, 29.0],
+                    [28.0, 28.0], [30.5, 27.5], [31.8, 28.0]
+                ]]
+            },
+            {
+                startYear: -1076,
+                endYear: -30,
+                name: 'Late Period Egypt',
+                territories: [[
+                    [31.5, 29.0], [31.2, 32.5], [30.0, 33.0], [28.0, 33.5],
+                    [24.0, 33.0], [22.0, 32.0], [24.0, 30.5], [28.0, 29.5],
+                    [30.5, 28.5], [31.5, 29.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Sumerian City-States - 3500 BCE to 2004 BCE
+    sumer: {
+        name: 'Sumerian City-States',
+        periods: [
+            {
+                startYear: -3500,
+                endYear: -2334,
+                name: 'Sumerian City-States',
+                territories: [[
+                    [33.5, 44.0], [33.0, 46.5], [31.5, 47.5], [30.5, 47.0],
+                    [30.0, 45.5], [31.0, 44.0], [32.5, 43.5], [33.5, 44.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Akkadian Empire - 2334 BCE to 2154 BCE
+    akkad: {
+        name: 'Akkadian Empire',
+        periods: [
+            {
+                startYear: -2334,
+                endYear: -2154,
+                name: 'Akkadian Empire of Sargon',
+                territories: [[
+                    [37.0, 42.0], [36.5, 44.0], [35.0, 46.0], [33.5, 47.5],
+                    [31.0, 48.0], [29.5, 47.0], [29.0, 45.0], [30.0, 43.0],
+                    [32.0, 41.0], [34.0, 40.0], [36.0, 40.5], [37.0, 42.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Babylonian Empires
+    babylon: {
+        name: 'Babylonian Empire',
+        periods: [
+            {
+                startYear: -1894,
+                endYear: -1595,
+                name: 'Old Babylonian Empire (Hammurabi)',
+                territories: [[
+                    [35.5, 42.0], [35.0, 45.0], [33.5, 46.5], [32.0, 47.5],
+                    [30.5, 47.0], [30.0, 45.0], [31.0, 43.0], [33.0, 41.5],
+                    [35.5, 42.0]
+                ]]
+            },
+            {
+                startYear: -626,
+                endYear: -539,
+                name: 'Neo-Babylonian Empire',
+                territories: [[
+                    [37.0, 40.0], [36.0, 44.0], [35.0, 46.5], [33.0, 48.0],
+                    [30.5, 48.5], [29.0, 47.0], [28.5, 44.0], [30.0, 41.0],
+                    [32.0, 38.5], [34.5, 36.0], [36.0, 36.0], [37.5, 38.0],
+                    [37.0, 40.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Assyrian Empire
+    assyria: {
+        name: 'Assyrian Empire',
+        periods: [
+            {
+                startYear: -911,
+                endYear: -609,
+                name: 'Neo-Assyrian Empire',
+                territories: [[
+                    [40.0, 38.0], [39.0, 44.0], [37.0, 46.0], [35.0, 48.0],
+                    [33.0, 48.5], [31.0, 48.0], [29.5, 46.0], [29.0, 43.0],
+                    [30.0, 40.0], [31.5, 35.0], [33.0, 32.0], [31.0, 30.0],
+                    [32.5, 34.0], [35.0, 36.0], [37.5, 36.5], [40.0, 38.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Hittite Empire
+    hittites: {
+        name: 'Hittite Empire',
+        periods: [
+            {
+                startYear: -1600,
+                endYear: -1178,
+                name: 'Hittite Empire',
+                territories: [[
+                    [42.0, 32.0], [41.0, 35.0], [39.5, 37.0], [38.0, 38.5],
+                    [36.5, 38.0], [35.5, 36.0], [36.0, 33.0], [37.5, 30.0],
+                    [39.0, 29.0], [41.0, 30.0], [42.0, 32.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Achaemenid Persian Empire - 550 BCE to 330 BCE
+    persia: {
+        name: 'Achaemenid Persian Empire',
+        periods: [
+            {
+                startYear: -550,
+                endYear: -330,
+                name: 'Achaemenid Persian Empire',
+                territories: [[
+                    [42.0, 28.0], [41.0, 35.0], [40.0, 44.0], [38.0, 52.0],
+                    [35.0, 60.0], [32.0, 66.0], [28.0, 68.0], [25.0, 62.0],
+                    [24.0, 55.0], [26.0, 50.0], [28.0, 46.0], [31.5, 48.0],
+                    [29.0, 44.0], [27.0, 36.0], [30.0, 32.0], [31.5, 30.0],
+                    [36.0, 28.0], [38.0, 26.0], [40.0, 27.0], [42.0, 28.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Greek City-States
+    greece: {
+        name: 'Greek City-States',
+        periods: [
+            {
+                startYear: -800,
+                endYear: -338,
+                name: 'Classical Greek City-States',
+                territories: [[
+                    [41.5, 19.5], [40.5, 23.0], [39.0, 26.0], [37.5, 27.0],
+                    [36.0, 28.0], [35.0, 26.0], [36.5, 23.0], [37.0, 21.0],
+                    [38.5, 20.0], [40.0, 19.5], [41.5, 19.5]
+                ]]
+            }
+        ]
+    },
+    
+    // Macedonian Empire (Alexander the Great)
+    macedon: {
+        name: 'Macedonian Empire',
+        periods: [
+            {
+                startYear: -336,
+                endYear: -323,
+                name: "Alexander's Empire",
+                territories: [[
+                    [43.0, 20.0], [42.0, 28.0], [40.0, 35.0], [38.0, 44.0],
+                    [35.0, 52.0], [32.0, 62.0], [30.0, 70.0], [28.0, 72.0],
+                    [25.0, 68.0], [24.0, 60.0], [26.0, 52.0], [28.0, 46.0],
+                    [30.0, 44.0], [28.0, 36.0], [30.0, 32.0], [31.5, 30.0],
+                    [36.0, 28.0], [38.0, 26.0], [40.0, 22.0], [43.0, 20.0]
+                ]]
+            },
+            {
+                startYear: -322,
+                endYear: -281,
+                name: 'Successor Kingdoms (Diadochi)',
+                territories: [[
+                    [43.0, 20.0], [42.0, 28.0], [40.0, 35.0], [38.0, 44.0],
+                    [35.0, 52.0], [32.0, 62.0], [28.0, 68.0], [25.0, 62.0],
+                    [26.0, 52.0], [28.0, 46.0], [30.0, 44.0], [28.0, 36.0],
+                    [30.0, 32.0], [31.5, 30.0], [36.0, 28.0], [38.0, 26.0],
+                    [40.0, 22.0], [43.0, 20.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Seleucid Empire
+    seleucid: {
+        name: 'Seleucid Empire',
+        periods: [
+            {
+                startYear: -312,
+                endYear: -63,
+                name: 'Seleucid Empire',
+                territories: [[
+                    [40.0, 35.0], [38.0, 44.0], [35.0, 52.0], [32.0, 58.0],
+                    [30.0, 55.0], [28.0, 50.0], [30.0, 44.0], [32.0, 38.0],
+                    [34.0, 35.0], [36.0, 34.0], [38.0, 34.0], [40.0, 35.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Ptolemaic Egypt
+    ptolemaic: {
+        name: 'Ptolemaic Kingdom',
+        periods: [
+            {
+                startYear: -305,
+                endYear: -30,
+                name: 'Ptolemaic Egypt',
+                territories: [[
+                    [31.8, 28.0], [31.5, 34.0], [32.5, 35.5], [31.0, 35.0],
+                    [29.0, 34.5], [26.0, 34.0], [22.0, 33.0], [20.0, 31.0],
+                    [22.0, 30.0], [26.0, 29.0], [28.0, 28.0], [30.5, 27.0],
+                    [31.8, 28.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Carthaginian Empire
+    carthage: {
+        name: 'Carthaginian Empire',
+        periods: [
+            {
+                startYear: -650,
+                endYear: -146,
+                name: 'Carthaginian Empire',
+                territories: [[
+                    [37.5, 10.0], [37.0, 9.0], [36.5, 8.0], [35.0, 0.0],
+                    [36.5, -6.0], [38.0, -5.0], [40.0, -1.0], [39.5, 3.0],
+                    [38.5, 8.0], [37.5, 10.0]
+                ], [
+                    [39.5, 9.0], [38.5, 9.5], [38.0, 8.5], [39.0, 8.0], [39.5, 9.0]
+                ], [
+                    [38.0, 15.5], [37.0, 15.0], [37.5, 13.5], [38.5, 14.0], [38.0, 15.5]
+                ]]
+            }
+        ]
+    },
+    
+    // Parthian Empire
+    parthia: {
+        name: 'Parthian Empire',
+        periods: [
+            {
+                startYear: -247,
+                endYear: 224,
+                name: 'Parthian Empire',
+                territories: [[
+                    [40.0, 44.0], [38.0, 52.0], [35.0, 60.0], [32.0, 62.0],
+                    [28.0, 58.0], [26.0, 52.0], [28.0, 46.0], [30.0, 44.0],
+                    [32.0, 42.0], [35.0, 44.0], [38.0, 44.0], [40.0, 44.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // ISLAMIC CALIPHATES
+    // ============================================
+    
+    // Umayyad Caliphate
+    umayyad: {
+        name: 'Umayyad Caliphate',
+        periods: [
+            {
+                startYear: 661,
+                endYear: 750,
+                name: 'Umayyad Caliphate',
+                territories: [[
+                    [43.0, -8.0], [37.0, -10.0], [32.0, -5.0], [25.0, -15.0],
+                    [20.0, -10.0], [25.0, 0.0], [32.0, 10.0], [37.0, 10.0],
+                    [37.0, 35.0], [40.0, 45.0], [38.0, 55.0], [35.0, 65.0],
+                    [30.0, 70.0], [25.0, 68.0], [22.0, 60.0], [25.0, 50.0],
+                    [28.0, 45.0], [30.0, 40.0], [25.0, 38.0], [20.0, 45.0],
+                    [15.0, 50.0], [12.0, 45.0], [18.0, 38.0], [25.0, 35.0],
+                    [30.0, 32.0], [35.0, 35.0], [37.0, 35.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Abbasid Caliphate
+    abbasid: {
+        name: 'Abbasid Caliphate',
+        periods: [
+            {
+                startYear: 750,
+                endYear: 1258,
+                name: 'Abbasid Caliphate',
+                territories: [[
+                    [40.0, 35.0], [38.0, 48.0], [35.0, 60.0], [32.0, 65.0],
+                    [28.0, 62.0], [25.0, 55.0], [28.0, 48.0], [30.0, 44.0],
+                    [28.0, 38.0], [25.0, 35.0], [30.0, 32.0], [33.0, 35.0],
+                    [35.0, 38.0], [38.0, 38.0], [40.0, 35.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // AFRICAN EMPIRES
+    // ============================================
+    
+    // Mali Empire
+    mali: {
+        name: 'Mali Empire',
+        periods: [
+            {
+                startYear: 1235,
+                endYear: 1600,
+                name: 'Mali Empire',
+                territories: [[
+                    [18.0, -16.0], [16.0, -12.0], [14.0, -8.0], [12.0, -5.0],
+                    [10.0, -5.0], [10.0, -10.0], [12.0, -14.0], [14.0, -16.0],
+                    [18.0, -16.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // SOUTHEAST ASIAN EMPIRES
+    // ============================================
+    
+    // Khmer Empire
+    khmer: {
+        name: 'Khmer Empire',
+        periods: [
+            {
+                startYear: 802,
+                endYear: 1431,
+                name: 'Khmer Empire (Angkor)',
+                territories: [[
+                    [15.5, 102.0], [15.0, 105.0], [13.5, 106.0], [11.0, 105.5],
+                    [10.0, 104.0], [10.5, 102.0], [12.0, 100.0], [14.0, 100.5],
+                    [15.5, 102.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // BYZANTINE EMPIRE
+    // ============================================
+    
+    // Byzantine Empire
+    byzantine: {
+        name: 'Byzantine Empire',
+        periods: [
+            {
+                startYear: 395,
+                endYear: 565,
+                name: 'Early Byzantine Empire',
+                territories: [[
+                    [45.0, 14.0], [44.0, 22.0], [42.0, 28.0], [40.0, 35.0],
+                    [38.0, 38.0], [35.0, 36.0], [33.0, 35.0], [31.5, 32.0],
+                    [30.0, 32.0], [31.0, 30.0], [33.0, 25.0], [32.0, 20.0],
+                    [35.0, 12.0], [37.0, 10.0], [40.0, 12.0], [43.0, 13.0],
+                    [45.0, 14.0]
+                ]]
+            },
+            {
+                startYear: 566,
+                endYear: 1000,
+                name: 'Middle Byzantine Empire',
+                territories: [[
+                    [43.0, 20.0], [42.0, 28.0], [40.0, 35.0], [38.0, 38.0],
+                    [36.0, 36.0], [35.0, 33.0], [37.0, 28.0], [38.0, 24.0],
+                    [40.0, 20.0], [43.0, 20.0]
+                ]]
+            },
+            {
+                startYear: 1001,
+                endYear: 1453,
+                name: 'Late Byzantine Empire',
+                territories: [[
+                    [42.0, 26.0], [41.0, 29.0], [40.0, 30.0], [39.0, 29.0],
+                    [40.0, 27.0], [41.0, 26.0], [42.0, 26.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Viking Age
+    vikings: {
+        name: 'Viking Age Scandinavia',
+        periods: [
+            {
+                startYear: 793,
+                endYear: 1066,
+                name: 'Viking Age',
+                territories: [
+                    // Scandinavia (Norway, Sweden, Denmark)
+                    [
+                        [71.0, 25.0], [70.0, 30.0], [65.0, 25.0], [62.0, 18.0],
+                        [60.0, 12.0], [58.0, 8.0], [56.0, 8.0], [54.5, 10.0],
+                        [55.5, 12.5], [56.0, 15.0], [58.0, 18.0], [60.0, 20.0],
+                        [63.0, 20.0], [66.0, 15.0], [69.0, 18.0], [71.0, 25.0]
+                    ],
+                    // Danelaw (England)
+                    [
+                        [54.5, -2.0], [53.5, 0.0], [52.5, 1.0], [52.0, 0.0],
+                        [52.5, -1.5], [54.0, -3.0], [54.5, -2.0]
+                    ],
+                    // Normandy
+                    [
+                        [49.5, -2.0], [49.5, 0.5], [48.5, 0.5], [48.5, -1.5],
+                        [49.5, -2.0]
+                    ],
+                    // Iceland
+                    [
+                        [66.5, -23.0], [66.0, -14.0], [64.0, -14.0], [63.5, -20.0],
+                        [64.5, -24.0], [66.5, -23.0]
+                    ]
+                ]
+            }
+        ]
+    },
+    
+    // Frankish Empire / Carolingian (unified until 843 Treaty of Verdun)
+    frankish: {
+        name: 'Carolingian Empire',
+        periods: [
+            {
+                startYear: 768,
+                endYear: 843,
+                name: 'Carolingian Empire (Charlemagne)',
+                territories: [[
+                    [54.0, 2.0], [53.0, 10.0], [50.0, 15.0], [47.0, 16.0],
+                    [45.0, 14.0], [44.0, 12.0], [43.0, 7.0], [42.0, 3.0],
+                    [43.0, -1.0], [45.0, -2.0], [48.0, -4.0], [51.0, 0.0],
+                    [54.0, 2.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Post-843 Treaty of Verdun - Carolingian Split
+    west_francia: {
+        name: 'West Francia',
+        periods: [
+            {
+                startYear: 843,
+                endYear: 987,
+                name: 'West Francia (becomes France)',
+                territories: [[
+                    [51.0, 0.0], [50.0, 4.0], [48.0, 5.0], [46.0, 5.0],
+                    [44.0, 4.0], [43.0, 3.0], [42.5, 0.0], [43.0, -1.5],
+                    [45.0, -2.0], [48.0, -4.5], [51.0, 0.0]
+                ]]
+            }
+        ]
+    },
+    
+    east_francia: {
+        name: 'East Francia',
+        periods: [
+            {
+                startYear: 843,
+                endYear: 962,
+                name: 'East Francia (becomes Germany)',
+                territories: [[
+                    [54.0, 8.0], [53.0, 14.0], [50.0, 15.0], [47.0, 15.0],
+                    [46.0, 13.0], [47.0, 10.0], [48.0, 8.0], [50.0, 6.0],
+                    [52.0, 6.0], [54.0, 8.0]
+                ]]
+            }
+        ]
+    },
+    
+    lotharingia: {
+        name: 'Middle Francia/Lotharingia',
+        periods: [
+            {
+                startYear: 843,
+                endYear: 870,
+                name: 'Middle Francia (Lotharingia)',
+                territories: [[
+                    [52.0, 4.0], [51.0, 7.0], [49.0, 8.0], [47.0, 10.0],
+                    [46.0, 10.0], [44.0, 12.0], [43.0, 11.0], [43.5, 8.0],
+                    [45.0, 5.0], [47.0, 5.0], [50.0, 4.0], [52.0, 4.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Holy Roman Empire
+    hre: {
+        name: 'Holy Roman Empire',
+        periods: [
+            {
+                startYear: 962,
+                endYear: 1250,
+                name: 'Holy Roman Empire (High Medieval)',
+                territories: [[
+                    [54.0, 8.0], [53.0, 14.0], [50.0, 17.0], [47.0, 16.0],
+                    [45.0, 14.0], [44.0, 11.0], [45.0, 7.0], [47.0, 6.0],
+                    [49.0, 5.0], [52.0, 6.0], [54.0, 8.0]
+                ]]
+            },
+            {
+                startYear: 1251,
+                endYear: 1648,
+                name: 'Holy Roman Empire (Late Medieval)',
+                territories: [[
+                    [55.0, 8.0], [54.0, 14.0], [51.0, 18.0], [48.0, 17.0],
+                    [46.0, 15.0], [45.0, 11.0], [46.0, 7.0], [48.0, 5.0],
+                    [51.0, 5.0], [55.0, 8.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Mongol Empire
+    mongol: {
+        name: 'Mongol Empire',
+        periods: [
+            {
+                startYear: 1206,
+                endYear: 1294,
+                name: 'Mongol Empire',
+                territories: [[
+                    [55.0, 40.0], [55.0, 60.0], [50.0, 90.0], [45.0, 120.0],
+                    [40.0, 125.0], [35.0, 120.0], [30.0, 110.0], [25.0, 100.0],
+                    [28.0, 85.0], [30.0, 70.0], [35.0, 55.0], [40.0, 45.0],
+                    [45.0, 38.0], [50.0, 35.0], [55.0, 40.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Ottoman Empire
+    ottoman: {
+        name: 'Ottoman Empire',
+        periods: [
+            {
+                startYear: 1299,
+                endYear: 1453,
+                name: 'Early Ottoman Empire',
+                territories: [[
+                    [42.0, 28.0], [41.0, 32.0], [40.0, 33.0], [39.0, 32.0],
+                    [39.5, 29.0], [41.0, 27.0], [42.0, 28.0]
+                ]]
+            },
+            {
+                startYear: 1453,
+                endYear: 1683,
+                name: 'Ottoman Empire (Golden Age)',
+                territories: [[
+                    [48.0, 16.0], [46.0, 22.0], [44.0, 28.0], [42.0, 35.0],
+                    [38.0, 42.0], [35.0, 44.0], [32.0, 44.0], [30.0, 40.0],
+                    [28.0, 35.0], [31.0, 32.0], [33.0, 28.0], [32.0, 22.0],
+                    [35.0, 12.0], [38.0, 10.0], [40.0, 14.0], [43.0, 15.0],
+                    [46.0, 15.0], [48.0, 16.0]
+                ]]
+            },
+            {
+                startYear: 1684,
+                endYear: 1922,
+                name: 'Ottoman Empire (Decline)',
+                territories: [[
+                    [43.0, 20.0], [42.0, 28.0], [40.0, 35.0], [38.0, 42.0],
+                    [35.0, 44.0], [32.0, 44.0], [30.0, 40.0], [28.0, 35.0],
+                    [31.0, 32.0], [33.0, 28.0], [35.0, 26.0], [37.0, 22.0],
+                    [40.0, 20.0], [43.0, 20.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Habsburg Empire (Austrian branch - after 1556 split from Spanish Habsburgs)
+    habsburg: {
+        name: 'Austrian Habsburg Empire',
+        periods: [
+            {
+                startYear: 1556,
+                endYear: 1804,
+                name: 'Austrian Habsburg Monarchy',
+                territories: [[
+                    [51.0, 12.0], [50.0, 17.0], [48.0, 20.0], [47.0, 22.0],
+                    [46.0, 20.0], [45.0, 16.0], [46.0, 13.0], [47.0, 10.0],
+                    [48.5, 9.0], [50.0, 10.0], [51.0, 12.0]
+                ]]
+            },
+            {
+                startYear: 1804,
+                endYear: 1918,
+                name: 'Austrian Empire / Austria-Hungary',
+                territories: [[
+                    [51.5, 12.0], [51.0, 18.0], [49.0, 23.0], [47.0, 26.0],
+                    [45.5, 22.0], [44.5, 19.0], [45.0, 15.0], [46.0, 13.0],
+                    [47.0, 9.5], [48.5, 9.0], [50.5, 10.0], [51.5, 12.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Han Dynasty China
+    han: {
+        name: 'Han Dynasty',
+        periods: [
+            {
+                startYear: -206,
+                endYear: 220,
+                name: 'Han Dynasty',
+                territories: [[
+                    [42.0, 100.0], [40.0, 115.0], [38.0, 120.0], [35.0, 122.0],
+                    [30.0, 122.0], [25.0, 118.0], [22.0, 110.0], [22.0, 105.0],
+                    [25.0, 100.0], [30.0, 98.0], [35.0, 95.0], [40.0, 95.0],
+                    [42.0, 100.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Tang Dynasty China
+    tang: {
+        name: 'Tang Dynasty',
+        periods: [
+            {
+                startYear: 618,
+                endYear: 907,
+                name: 'Tang Dynasty',
+                territories: [[
+                    [45.0, 80.0], [42.0, 100.0], [40.0, 115.0], [38.0, 122.0],
+                    [30.0, 122.0], [22.0, 110.0], [20.0, 100.0], [22.0, 95.0],
+                    [28.0, 90.0], [35.0, 75.0], [40.0, 75.0], [45.0, 80.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Ming Dynasty
+    ming: {
+        name: 'Ming Dynasty',
+        periods: [
+            {
+                startYear: 1368,
+                endYear: 1644,
+                name: 'Ming Dynasty',
+                territories: [[
+                    [45.0, 100.0], [42.0, 115.0], [40.0, 122.0], [35.0, 122.0],
+                    [28.0, 120.0], [22.0, 112.0], [20.0, 108.0], [22.0, 100.0],
+                    [28.0, 98.0], [35.0, 95.0], [40.0, 98.0], [45.0, 100.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Qing Dynasty
+    qing: {
+        name: 'Qing Dynasty',
+        periods: [
+            {
+                startYear: 1644,
+                endYear: 1912,
+                name: 'Qing Dynasty',
+                territories: [[
+                    [53.0, 90.0], [52.0, 120.0], [48.0, 135.0], [42.0, 130.0],
+                    [35.0, 122.0], [25.0, 120.0], [20.0, 110.0], [18.0, 108.0],
+                    [22.0, 98.0], [28.0, 85.0], [35.0, 75.0], [42.0, 80.0],
+                    [48.0, 85.0], [53.0, 90.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Mughal Empire
+    mughal: {
+        name: 'Mughal Empire',
+        periods: [
+            {
+                startYear: 1526,
+                endYear: 1707,
+                name: 'Mughal Empire',
+                territories: [[
+                    [35.0, 70.0], [34.0, 78.0], [30.0, 85.0], [25.0, 88.0],
+                    [20.0, 85.0], [15.0, 78.0], [15.0, 72.0], [18.0, 68.0],
+                    [22.0, 68.0], [28.0, 65.0], [32.0, 68.0], [35.0, 70.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // PRE-COLUMBIAN AMERICAS
+    // ============================================
+    
+    // Maya Civilization
+    maya: {
+        name: 'Maya Civilization',
+        periods: [
+            {
+                startYear: -2000,
+                endYear: 250,
+                name: 'Maya Preclassic Period',
+                territories: [[
+                    [21.5, -90.5], [21.0, -87.0], [18.0, -88.0], [15.0, -89.5],
+                    [14.0, -91.5], [15.5, -92.0], [18.0, -91.0], [21.5, -90.5]
+                ]]
+            },
+            {
+                startYear: 250,
+                endYear: 900,
+                name: 'Maya Classic Period',
+                territories: [[
+                    [22.0, -90.0], [21.5, -86.5], [19.0, -87.0], [17.0, -88.5],
+                    [14.5, -89.0], [13.5, -91.0], [14.5, -92.5], [17.0, -92.0],
+                    [19.5, -91.0], [22.0, -90.0]
+                ]]
+            },
+            {
+                startYear: 900,
+                endYear: 1500,
+                name: 'Maya Postclassic Period',
+                territories: [[
+                    [21.5, -90.0], [21.0, -87.5], [19.5, -87.5], [18.0, -88.5],
+                    [17.0, -89.5], [17.5, -91.0], [19.0, -90.5], [21.5, -90.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Aztec Empire
+    aztec: {
+        name: 'Aztec Empire',
+        periods: [
+            {
+                startYear: 1428,
+                endYear: 1521,
+                name: 'Aztec Triple Alliance',
+                territories: [[
+                    [21.5, -99.5], [21.0, -97.0], [19.5, -96.0], [18.0, -96.5],
+                    [16.5, -97.5], [15.5, -97.0], [16.0, -99.0], [17.0, -100.5],
+                    [18.5, -101.0], [20.0, -100.5], [21.5, -99.5]
+                ]]
+            }
+        ]
+    },
+    
+    // Inca Empire
+    inca: {
+        name: 'Inca Empire',
+        periods: [
+            {
+                startYear: 1438,
+                endYear: 1533,
+                name: 'Inca Empire (Tawantinsuyu)',
+                territories: [[
+                    [-2.0, -80.0], [0.0, -78.0], [-3.0, -75.0], [-8.0, -74.0],
+                    [-12.0, -75.0], [-16.0, -69.0], [-22.0, -67.0], [-30.0, -70.0],
+                    [-35.0, -71.0], [-33.0, -73.0], [-28.0, -72.0], [-22.0, -70.0],
+                    [-15.0, -76.0], [-10.0, -78.0], [-5.0, -81.0], [-2.0, -80.0]
+                ]]
+            }
+        ]
+    },
+    
+    // ============================================
+    // HABSBURG EMPIRE (UNIFIED & SPLIT)
+    // ============================================
+    
+    // United Habsburg Empire under Charles V (before 1556 split)
+    habsburg_united: {
+        name: 'Habsburg Empire (United)',
+        periods: [
+            {
+                startYear: 1519,
+                endYear: 1556,
+                name: 'Habsburg Empire under Charles V',
+                territories: [
+                    // Spain & Portugal area
+                    [
+                        [44.0, -9.0], [43.5, -1.0], [42.5, 3.0], [40.0, 4.0],
+                        [38.0, 0.0], [36.0, -6.0], [37.0, -9.0], [40.0, -9.0],
+                        [44.0, -9.0]
+                    ],
+                    // Netherlands & Burgundy
+                    [
+                        [53.5, 3.0], [53.0, 7.0], [51.0, 6.0], [49.5, 6.5],
+                        [48.5, 6.0], [47.5, 5.0], [47.0, 4.0], [49.0, 2.0],
+                        [51.0, 2.5], [53.5, 3.0]
+                    ],
+                    // Austrian territories
+                    [
+                        [51.0, 12.0], [50.0, 17.0], [48.0, 20.0], [47.0, 22.0],
+                        [46.0, 20.0], [45.0, 16.0], [46.0, 13.0], [47.0, 10.0],
+                        [48.5, 9.0], [50.0, 10.0], [51.0, 12.0]
+                    ],
+                    // Southern Italy, Sicily, Sardinia
+                    [
+                        [42.0, 12.0], [41.0, 16.0], [40.0, 18.5], [38.0, 16.0],
+                        [37.5, 13.0], [38.5, 12.5], [40.0, 14.0], [42.0, 12.0]
+                    ],
+                    // Americas (New Spain)
+                    [
+                        [25.0, -110.0], [30.0, -100.0], [25.0, -80.0], [10.0, -75.0],
+                        [-5.0, -80.0], [-20.0, -70.0], [-15.0, -76.0], [-5.0, -81.0],
+                        [10.0, -85.0], [20.0, -95.0], [25.0, -110.0]
+                    ]
+                ]
+            }
+        ]
+    },
+    
+    // Spanish Empire (after 1556 split - colonial focus)
+    spanish: {
+        name: 'Spanish Empire',
+        periods: [
+            {
+                startYear: 1556,
+                endYear: 1800,
+                name: 'Spanish Colonial Empire',
+                territories: [[
+                    [44.0, -9.0], [43.5, -1.0], [42.0, 3.0], [40.0, 4.0],
+                    [38.0, 0.0], [36.0, -6.0], [37.0, -9.0], [40.0, -9.0],
+                    [44.0, -9.0]
+                ], [
+                    [25.0, -110.0], [30.0, -100.0], [25.0, -80.0], [10.0, -75.0],
+                    [-5.0, -80.0], [-35.0, -70.0], [-40.0, -72.0], [-35.0, -60.0],
+                    [-20.0, -45.0], [0.0, -50.0], [10.0, -65.0], [20.0, -90.0],
+                    [25.0, -110.0]
+                ]]
+            }
+        ]
+    },
+    
+    // British Empire
+    british: {
+        name: 'British Empire',
+        periods: [
+            {
+                startYear: 1707,
+                endYear: 1947,
+                name: 'British Empire',
+                territories: [[
+                    [58.0, -8.0], [58.0, 2.0], [52.0, 2.0], [50.0, -5.0],
+                    [52.0, -10.0], [56.0, -10.0], [58.0, -8.0]
+                ], [
+                    [35.0, 68.0], [35.0, 90.0], [25.0, 92.0], [8.0, 80.0],
+                    [8.0, 70.0], [20.0, 68.0], [35.0, 68.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Russian Empire
+    russian: {
+        name: 'Russian Empire',
+        periods: [
+            {
+                startYear: 1721,
+                endYear: 1917,
+                name: 'Russian Empire',
+                territories: [[
+                    [70.0, 30.0], [70.0, 60.0], [65.0, 100.0], [60.0, 140.0],
+                    [50.0, 135.0], [45.0, 90.0], [42.0, 60.0], [45.0, 45.0],
+                    [50.0, 30.0], [55.0, 22.0], [60.0, 25.0], [70.0, 30.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Sassanid Persian Empire
+    sassanid: {
+        name: 'Sassanid Empire',
+        periods: [
+            {
+                startYear: 224,
+                endYear: 651,
+                name: 'Sassanid Persian Empire',
+                territories: [[
+                    [40.0, 44.0], [38.0, 52.0], [35.0, 60.0], [32.0, 62.0],
+                    [28.0, 58.0], [24.0, 55.0], [26.0, 50.0], [28.0, 46.0],
+                    [30.0, 44.0], [32.0, 42.0], [35.0, 44.0], [38.0, 44.0],
+                    [40.0, 44.0]
+                ]]
+            }
+        ]
+    }
+};
+
+// ============================================
+// HISTORICAL SEA ROUTES
+// ============================================
+const SEA_ROUTES = {
+    // Viking Routes
+    viking_iceland: {
+        name: 'Vikings to Iceland',
+        startYear: 870,
+        endYear: 1066,
+        color: '#2F4F4F',
+        points: [
+            [61.0, 5.0],      // Norway
+            [62.0, -5.0],     // Faroe Islands
+            [65.0, -18.0]     // Iceland
+        ],
+        icon: '⛵'
+    },
+    viking_greenland: {
+        name: 'Vikings to Greenland',
+        startYear: 985,
+        endYear: 1066,
+        color: '#2F4F4F',
+        points: [
+            [65.0, -18.0],    // Iceland
+            [64.0, -35.0],    // Mid-Atlantic
+            [61.0, -45.0]     // Greenland
+        ],
+        icon: '⛵'
+    },
+    viking_vinland: {
+        name: 'Vikings to Vinland (Americas)',
+        startYear: 1000,
+        endYear: 1020,
+        color: '#2F4F4F',
+        points: [
+            [61.0, -45.0],    // Greenland
+            [55.0, -55.0],    // Labrador Sea
+            [51.0, -56.0]     // Newfoundland (L'Anse aux Meadows)
+        ],
+        icon: '⛵'
+    },
+    
+    // Columbus Voyages
+    columbus_1492: {
+        name: "Columbus's First Voyage (1492)",
+        startYear: 1492,
+        endYear: 1493,
+        color: '#FF0000',
+        points: [
+            [37.0, -7.0],     // Palos, Spain
+            [28.0, -17.0],    // Canary Islands
+            [24.0, -74.0],    // Bahamas (San Salvador)
+            [20.0, -75.0]     // Cuba
+        ],
+        icon: '🚢'
+    },
+    columbus_return: {
+        name: "Columbus's Return (1493)",
+        startYear: 1493,
+        endYear: 1493,
+        color: '#FF4500',
+        points: [
+            [20.0, -75.0],    // Cuba
+            [30.0, -70.0],    // Gulf Stream
+            [38.0, -25.0],    // Azores
+            [37.0, -7.0]      // Palos, Spain
+        ],
+        icon: '🚢'
+    },
+    
+    // Vasco da Gama - Route to India
+    dagama_india: {
+        name: "Vasco da Gama to India (1497-98)",
+        startYear: 1497,
+        endYear: 1499,
+        color: '#00FF00',
+        points: [
+            [38.7, -9.1],     // Lisbon
+            [15.0, -24.0],    // Cape Verde
+            [-34.0, 18.5],    // Cape of Good Hope
+            [-4.0, 40.0],     // Mombasa
+            [15.4, 73.8]      // Goa, India
+        ],
+        icon: '🚢'
+    },
+    
+    // Magellan's Circumnavigation
+    magellan: {
+        name: "Magellan's Circumnavigation (1519-22)",
+        startYear: 1519,
+        endYear: 1522,
+        color: '#FF00FF',
+        points: [
+            [36.5, -6.3],     // Seville
+            [-34.9, -56.2],   // Rio de la Plata
+            [-52.5, -70.0],   // Strait of Magellan
+            [13.4, 144.8],    // Guam
+            [10.3, 123.9],    // Philippines
+            [-6.1, 106.8],    // Indonesia
+            [-34.0, 18.5],    // Cape of Good Hope
+            [36.5, -6.3]      // Return to Spain
+        ],
+        icon: '🚢'
+    },
+    
+    // Phoenician Trade Routes
+    phoenician_med: {
+        name: 'Phoenician Mediterranean Trade',
+        startYear: -1200,
+        endYear: -300,
+        color: '#800080',
+        points: [
+            [33.9, 35.5],     // Tyre
+            [35.5, 24.0],     // Crete
+            [37.0, 15.3],     // Sicily
+            [36.8, 10.2],     // Carthage
+            [36.7, -4.4],     // Strait of Gibraltar
+            [37.0, -7.0]      // Tartessus (Spain)
+        ],
+        icon: '⛵'
+    },
+    
+    // Zheng He's Voyages
+    zheng_he: {
+        name: "Zheng He's Voyages (1405-33)",
+        startYear: 1405,
+        endYear: 1433,
+        color: '#FF6347',
+        points: [
+            [31.2, 121.5],    // Nanjing
+            [10.0, 107.0],    // Vietnam
+            [1.3, 103.8],     // Singapore/Malacca
+            [6.9, 79.9],      // Sri Lanka
+            [15.4, 73.8],     // Goa
+            [-4.0, 40.0],     // East Africa (Mombasa)
+            [-6.1, 39.2]      // Zanzibar
+        ],
+        icon: '🚢'
+    }
+};
+
+// State for sea routes
+let seaRouteLayers = [];
+
+// ============================================
 // STATE MANAGEMENT
 // ============================================
 const STATE = {
@@ -843,16 +2137,19 @@ const STATE = {
     map: null,
     territoryLayerGroup: null,  // Single layer group for all territories
     activeTerritories: new Map(), // Map of territoryId -> {layer, data}
+    empireLayers: {}, // Map of empire ID -> layer
     cityMarkers: [],
     wallLayers: [],
     
     // Timeline & Animation
     currentIndex: 0,
+    currentYear: DEFAULT_YEAR, // Year-based timeline
     isPlaying: false,
+    playInterval: null, // For setInterval based animation
     animationId: null,
     lastUpdateTime: 0,
-    animationSpeed: 3,
-    updateInterval: 600,
+    animationSpeed: 2, // Default to slower speed for better visibility
+    updateInterval: 1500, // Slower default
     
     // Territory transition animation
     transitionInProgress: false,
@@ -875,28 +2172,28 @@ const STATE = {
     quizAnswered: 0
 };
 
-// Speed configuration mapping
+// Speed configuration mapping (slower speeds for better visibility)
 const SPEED_MAP = {
-    1: 1000,
-    2: 750,
-    3: 600,
-    4: 400,
-    5: 200
+    1: 2000,  // Very slow - great for studying
+    2: 1500,  // Slow
+    3: 1000,  // Medium (new default)
+    4: 600,   // Fast
+    5: 300    // Very fast
 };
 
-// Map configuration
+// Map configuration - centered for world view
 const MAP_CONFIG = {
-    center: [45, 15],
-    zoom: 4,
-    minZoom: 3,
-    maxZoom: 7,
+    center: [35, 40], // Centered more on Middle East/Mediterranean for ancient history
+    zoom: 3,
+    minZoom: 2,
+    maxZoom: 8,
     // Responsive zoom based on viewport width
     getResponsiveZoom: () => {
         const width = window.innerWidth;
-        if (width < 480) return 3;        // Very small phones
-        if (width < 768) return 3.5;      // Phones
-        if (width < 1024) return 3.75;    // Tablets
-        return 4;                          // Desktop
+        if (width < 480) return 2;        // Very small phones
+        if (width < 768) return 2.5;      // Phones
+        if (width < 1024) return 3;       // Tablets
+        return 3;                          // Desktop
     }
 };
 
@@ -989,6 +2286,11 @@ function init() {
         setupKeyboardShortcuts();
         setupTouchGestures();
         setupEducationalFeatures();
+        
+        // Initialize slider to current year
+        const slider = document.getElementById('year-slider');
+        if (slider) slider.value = STATE.currentYear;
+        
         addReferenceCities();
         updateDisplay();
         STATE.isInitialized = true;
@@ -1004,7 +2306,7 @@ function init() {
         });
         
         const loadTime = (performance.now() - startTime).toFixed(0);
-        console.log(`✅ IMPERIVM ROMANVM initialized in ${loadTime}ms`);
+        console.log(`✅ CHRONOS World History Atlas initialized in ${loadTime}ms`);
     } catch (error) {
         console.error('❌ Initialization error:', error);
         console.error('Stack:', error.stack);
@@ -1089,21 +2391,43 @@ function initializeMap() {
 }
 
 function setupEventListeners() {
-    const timeline = document.getElementById('timeline');
+    const slider = document.getElementById('year-slider');
     const playBtn = document.getElementById('playBtn');
     const resetBtn = document.getElementById('resetBtn');
-    const speedSlider = document.getElementById('speedSlider');
     
-    // Attach event listeners with passive option where appropriate
-    if (timeline) timeline.addEventListener('input', handleTimelineChange);
-    if (playBtn) playBtn.addEventListener('click', togglePlay);
-    if (resetBtn) resetBtn.addEventListener('click', reset);
-    if (speedSlider) {
-        speedSlider.addEventListener('input', handleSpeedChange);
-        speedSlider.addEventListener('change', (e) => {
-            e.target.setAttribute('aria-valuenow', e.target.value);
+    // Slider input
+    if (slider) {
+        slider.addEventListener('input', (e) => {
+            STATE.currentYear = parseInt(e.target.value);
+            updateDisplay();
         });
     }
+    
+    // Play/Pause button
+    if (playBtn) {
+        playBtn.addEventListener('click', togglePlay);
+    }
+
+    // Reset button
+    if (resetBtn) {
+        resetBtn.addEventListener('click', reset);
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            STATE.currentYear = Math.max(MIN_YEAR, STATE.currentYear - 1);
+            if (slider) slider.value = STATE.currentYear;
+            updateDisplay();
+        } else if (e.key === 'ArrowRight') {
+            STATE.currentYear = Math.min(MAX_YEAR, STATE.currentYear + 1);
+            if (slider) slider.value = STATE.currentYear;
+            updateDisplay();
+        } else if (e.key === ' ') {
+            e.preventDefault(); // Prevent scrolling
+            togglePlay();
+        }
+    });
     
     // Handle window resize with throttling for performance
     const throttledResize = utils.throttle(() => {
@@ -1118,36 +2442,11 @@ function setupEventListeners() {
 // TOUCH GESTURES FOR MOBILE
 // ============================================
 function setupTouchGestures() {
-    const timeline = document.getElementById('timeline');
-    if (!timeline) return;
+    // Simplified for new slider
+    const slider = document.getElementById('year-slider');
+    if (!slider) return;
     
-    let touchStartValue = 0;
-    let touchStartTime = 0;
-    
-    // Improved touch handling for timeline
-    timeline.addEventListener('touchstart', (e) => {
-        touchStartValue = parseInt(timeline.value);
-        STATE.touchStartX = e.touches[0].clientX;
-        touchStartTime = Date.now();
-    }, { passive: true });
-    
-    timeline.addEventListener('touchmove', (e) => {
-        const touchDelta = e.touches[0].clientX - STATE.touchStartX;
-        const sensitivity = 0.5;
-        const newValue = Math.max(0, Math.min(100, touchStartValue + (touchDelta * sensitivity)));
-        timeline.value = newValue;
-        handleTimelineChange({ target: timeline });
-        
-        // Add subtle vibration feedback on mobile if available
-        if ('vibrate' in navigator && Math.abs(touchDelta) > 20) {
-            // Vibrate every 50px of movement
-            const vibrationThreshold = Math.floor(Math.abs(touchDelta) / 50);
-            if (vibrationThreshold > STATE.lastVibration || 0) {
-                navigator.vibrate(10); // Very subtle 10ms vibration
-                STATE.lastVibration = vibrationThreshold;
-            }
-        }
-    }, { passive: true });
+    // Standard touch events are handled by the range input natively
     
     // Enhanced swipe navigation on map for mobile
     if (STATE.isMobile) {
@@ -1250,35 +2549,26 @@ function setupKeyboardShortcuts() {
 function navigateTimeline(direction) {
     if (STATE.isPlaying) togglePlay();
     
-    STATE.currentIndex = Math.max(0, Math.min(historicalData.length - 1, STATE.currentIndex + direction));
+    const slider = document.getElementById('year-slider');
+    STATE.currentYear = Math.max(MIN_YEAR, Math.min(MAX_YEAR, STATE.currentYear + direction));
+    if (slider) slider.value = STATE.currentYear;
     updateDisplay();
-    drawTerritories();
-    updateTimelineSlider();
 }
 
 function jumpToStart() {
     if (STATE.isPlaying) togglePlay();
-    STATE.currentIndex = 0;
+    STATE.currentYear = MIN_YEAR;
+    const slider = document.getElementById('year-slider');
+    if (slider) slider.value = STATE.currentYear;
     updateDisplay();
-    drawTerritories();
-    updateTimelineSlider();
 }
 
 function jumpToEnd() {
     if (STATE.isPlaying) togglePlay();
-    STATE.currentIndex = historicalData.length - 1;
+    STATE.currentYear = MAX_YEAR;
+    const slider = document.getElementById('year-slider');
+    if (slider) slider.value = STATE.currentYear;
     updateDisplay();
-    drawTerritories();
-    updateTimelineSlider();
-}
-
-function updateTimelineSlider() {
-    const timeline = document.getElementById('timeline');
-    if (timeline) {
-        const value = (STATE.currentIndex / (historicalData.length - 1)) * 100;
-        timeline.value = value;
-        timeline.setAttribute('aria-valuenow', Math.round(value));
-    }
 }
 
 // ============================================
@@ -1751,7 +3041,7 @@ function addReferenceCities() {
 function updateTimeBasedMarkers() {
     if (!STATE.map) return;
     
-    const currentYear = historicalData[STATE.currentIndex].year;
+    const currentYear = STATE.currentYear;
     
     // Clear existing city and fort markers efficiently
     STATE.cityMarkers = utils.removeLayers(STATE.cityMarkers, STATE.map);
@@ -2234,7 +3524,8 @@ function updateEmpireTerritories(empireId, territories, year) {
         STATE.territoryLayerGroup.addLayer(layer);
         
         // Add interaction
-        layer.bindTooltip(`${empire.name} (${formatYear(year)})`, {
+        const { year: absYear, era } = utils.formatYear(year);
+        layer.bindTooltip(`${empire.name} (${absYear} ${era})`, {
             className: 'territory-label',
             sticky: true
         });
@@ -2433,12 +3724,6 @@ function clearAllTerritories() {
     }
     STATE.activeTerritories.clear();
     STATE.transitionInProgress = false;
-}
-
-// Main draw function called when period changes
-// DEPRECATED - Use updateDisplay() instead
-function drawTerritories() {
-    // Legacy function removed to prevent errors
 }
 
 // ============================================
@@ -2674,36 +3959,206 @@ function updateDisplay(forceUpdate = false) {
     // Don't update if info is locked unless forced
     if (STATE.infoLocked && !forceUpdate) return;
     
-    const data = historicalData[STATE.currentIndex];
-    if (!data) return;
-    
-    const year = Math.abs(data.year);
-    const era = data.year < 0 ? 'BCE' : 'CE';
+    const year = STATE.currentYear;
+    const era = year < 0 ? 'BCE' : 'CE';
+    const absYear = Math.abs(year);
     
     const yearElement = document.getElementById('currentYear');
     const eraElement = document.querySelector('.era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
-    if (!yearElement || !eraElement || !nameElement || !descElement) return;
+    if (yearElement) yearElement.textContent = absYear;
+    if (eraElement) eraElement.textContent = era;
     
-    // Add fade transition
-    nameElement.style.opacity = '0';
-    descElement.style.opacity = '0';
+    // Clear all existing territory layers
+    if (STATE.territoryLayerGroup) {
+        STATE.territoryLayerGroup.clearLayers();
+    }
+    STATE.empireLayers = {};
     
-    setTimeout(() => {
-        yearElement.textContent = year;
-        eraElement.textContent = era;
-        nameElement.textContent = data.name;
-        descElement.textContent = data.description;
-        nameElement.style.opacity = '1';
-        descElement.style.opacity = '1';
-        
-        // Update educational content if expanded
-        if (STATE.eduExpanded) {
-            updateEducationalContent();
+    // Find and display ALL active empires for this year
+    const activeEmpires = [];
+    
+    for (const [empireId, empireData] of Object.entries(WORLD_EMPIRES)) {
+        for (const period of empireData.periods) {
+            if (year >= period.startYear && year <= period.endYear) {
+                activeEmpires.push({
+                    id: empireId,
+                    name: empireData.name,
+                    periodName: period.name,
+                    territories: period.territories,
+                    color: CIVILIZATIONS[empireId]?.color || '#888888'
+                });
+                break; // Only one period per empire at a time
+            }
         }
-    }, 150);
+    }
+    
+    // Also check Roman historical data (more detailed)
+    const isRomanEra = year >= -509 && year <= 476;
+    let romanData = null;
+    
+    if (isRomanEra && typeof historicalData !== 'undefined') {
+        for (const entry of historicalData) {
+            if (entry.year <= year) {
+                romanData = entry;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    // Render all active empires on the map
+    for (const empire of activeEmpires) {
+        // Skip Rome from WORLD_EMPIRES if we have detailed Roman data
+        if (empire.id === 'rome' && romanData) continue;
+        
+        renderEmpireOnMap(empire.id, empire.territories, empire.color, empire.periodName);
+    }
+    
+    // Render detailed Roman data if in Roman era
+    if (isRomanEra && romanData) {
+        updateTerritories(romanData.territories, year);
+        updateTimeBasedMarkers();
+    }
+    
+    // Build display text
+    let displayName = "";
+    let displayDesc = "";
+    
+    if (activeEmpires.length > 0 || romanData) {
+        const empireNames = activeEmpires
+            .filter(e => !(e.id === 'rome' && romanData))
+            .map(e => e.periodName);
+        
+        if (romanData) {
+            empireNames.unshift(romanData.name);
+        }
+        
+        if (empireNames.length === 1) {
+            displayName = empireNames[0];
+        } else if (empireNames.length > 1) {
+            displayName = `${empireNames.length} Active Empires`;
+        }
+        
+        // Build description
+        if (romanData) {
+            displayDesc = romanData.description;
+        } else if (activeEmpires.length > 0) {
+            displayDesc = activeEmpires.map(e => e.periodName).join(' • ');
+        }
+    } else {
+        // No empires active - show educational context
+        const eduYears = Object.keys(EDUCATIONAL_DATA).map(Number).sort((a, b) => a - b);
+        let activeEduYear = eduYears[0];
+        for (const y of eduYears) {
+            if (y <= year) activeEduYear = y;
+            else break;
+        }
+        const eduData = EDUCATIONAL_DATA[activeEduYear?.toString()];
+        
+        if (eduData) {
+            displayName = `World History`;
+            displayDesc = eduData.significance || '';
+            if (eduData.facts && eduData.facts.length > 0) {
+                displayDesc += ". " + eduData.facts[0];
+            }
+        } else {
+            displayName = "World History";
+            displayDesc = `Year ${absYear} ${era}`;
+        }
+    }
+    
+    if (nameElement) nameElement.textContent = displayName;
+    if (descElement) descElement.textContent = displayDesc;
+    
+    // Update sea routes
+    updateSeaRoutes(year);
+    
+    // Update educational content if expanded
+    if (STATE.eduExpanded) {
+        updateEducationalContent();
+    }
+}
+
+// ============================================
+// SEA ROUTES RENDERING
+// ============================================
+function updateSeaRoutes(year) {
+    // Clear existing sea route layers
+    seaRouteLayers.forEach(layer => {
+        if (STATE.map.hasLayer(layer)) {
+            STATE.map.removeLayer(layer);
+        }
+    });
+    seaRouteLayers = [];
+    
+    // Add active sea routes for the current year
+    for (const [routeId, route] of Object.entries(SEA_ROUTES)) {
+        if (year >= route.startYear && year <= route.endYear) {
+            // Create the route line with animation
+            const routeLine = L.polyline(route.points, {
+                color: route.color,
+                weight: 3,
+                opacity: 0.8,
+                dashArray: '10, 10',
+                className: 'sea-route-animated'
+            });
+            
+            // Add popup with route info
+            routeLine.bindPopup(`
+                <strong>${route.icon} ${route.name}</strong><br>
+                <em>${Math.abs(route.startYear)} ${route.startYear < 0 ? 'BCE' : 'CE'} - 
+                    ${Math.abs(route.endYear)} ${route.endYear < 0 ? 'BCE' : 'CE'}</em>
+            `);
+            
+            routeLine.addTo(STATE.map);
+            seaRouteLayers.push(routeLine);
+            
+            // Add ship icon at the end point (or animated along route)
+            const endPoint = route.points[route.points.length - 1];
+            const shipIcon = L.divIcon({
+                className: 'ship-marker',
+                html: `<span class="ship-icon">${route.icon}</span>`,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            });
+            
+            const shipMarker = L.marker(endPoint, { icon: shipIcon });
+            shipMarker.bindPopup(`<strong>${route.name}</strong>`);
+            shipMarker.addTo(STATE.map);
+            seaRouteLayers.push(shipMarker);
+        }
+    }
+}
+
+// Render an empire from WORLD_EMPIRES on the map
+function renderEmpireOnMap(empireId, territories, color, periodName) {
+    if (!STATE.map || !STATE.territoryLayerGroup) return;
+    if (!territories || territories.length === 0) return;
+    
+    // territories is an array of polygon coordinate arrays
+    const layer = L.polygon(territories, {
+        fillColor: color,
+        fillOpacity: 0.5,
+        stroke: true,
+        weight: 1,
+        color: color,
+        opacity: 0.8,
+        smoothFactor: 1.5,
+        className: `empire-layer empire-${empireId}`
+    });
+    
+    // Add tooltip
+    layer.bindTooltip(periodName, {
+        className: 'territory-label',
+        sticky: true
+    });
+    
+    // Store and add to map
+    STATE.empireLayers[empireId] = layer;
+    STATE.territoryLayerGroup.addLayer(layer);
 }
 
 // Helper function to lock info panel content
@@ -2913,104 +4368,69 @@ function showTerritoryInfo(periodData, isNewExpansion, lat, lon, isClick = false
 }
 
 // ============================================
-// EVENT HANDLERS
-// ============================================
-function handleTimelineChange(e) {
-    if (STATE.isPlaying) return; // Don't allow manual changes during playback
-    
-    const value = parseInt(e.target.value);
-    STATE.currentIndex = Math.floor((value / 100) * (historicalData.length - 1));
-    e.target.setAttribute('aria-valuenow', value);
-    
-    // For manual timeline changes, clear and redraw instantly
-    clearAllTerritories();
-    updateDisplay();
-    drawTerritories();
-}
-
-function handleSpeedChange(e) {
-    const speed = parseInt(e.target.value);
-    STATE.animationSpeed = speed;
-    STATE.updateInterval = SPEED_MAP[speed];
-    e.target.setAttribute('aria-valuenow', speed);
-}
-
-// ============================================
 // ANIMATION CONTROL
 // ============================================
 function togglePlay() {
-    STATE.isPlaying = !STATE.isPlaying;
+    const playBtn = document.getElementById('playBtn');
+    const slider = document.getElementById('year-slider');
     const playIcon = document.querySelector('.play-icon');
     const pauseIcon = document.querySelector('.pause-icon');
-    const playBtn = document.getElementById('playBtn');
-    
-    if (!playBtn) return;
     
     if (STATE.isPlaying) {
-        if (playIcon) playIcon.style.display = 'none';
-        if (pauseIcon) pauseIcon.style.display = 'inline';
-        playBtn.classList.add('playing');
-        playBtn.setAttribute('aria-pressed', 'true');
-        playBtn.setAttribute('aria-label', 'Pause animation');
-        animate();
-    } else {
+        // Pause
+        clearInterval(STATE.playInterval);
+        STATE.isPlaying = false;
+        if (playBtn) {
+            playBtn.classList.remove('playing');
+            playBtn.setAttribute('aria-pressed', 'false');
+            playBtn.setAttribute('aria-label', 'Play animation');
+        }
         if (playIcon) playIcon.style.display = 'inline';
         if (pauseIcon) pauseIcon.style.display = 'none';
-        playBtn.classList.remove('playing');
-        playBtn.setAttribute('aria-pressed', 'false');
-        playBtn.setAttribute('aria-label', 'Play animation');
-        if (STATE.animationId) {
-            cancelAnimationFrame(STATE.animationId);
-            STATE.animationId = null;
+    } else {
+        // Play
+        STATE.isPlaying = true;
+        if (playBtn) {
+            playBtn.classList.add('playing');
+            playBtn.setAttribute('aria-pressed', 'true');
+            playBtn.setAttribute('aria-label', 'Pause animation');
         }
+        if (playIcon) playIcon.style.display = 'none';
+        if (pauseIcon) pauseIcon.style.display = 'inline';
+        
+        STATE.playInterval = setInterval(() => {
+            if (STATE.currentYear >= MAX_YEAR) {
+                togglePlay(); // Stop at end
+                return;
+            }
+            
+            STATE.currentYear++;
+            if (slider) slider.value = STATE.currentYear;
+            updateDisplay();
+        }, 100); // 100ms per year
     }
 }
 
 function animate(timestamp = 0) {
-    if (!STATE.isPlaying) return;
-    
-    // Wait for territory transition to complete before advancing
-    if (STATE.transitionInProgress) {
-        STATE.animationId = requestAnimationFrame(animate);
-        return;
-    }
-    
-    // Calculate elapsed time for smooth frame-independent animation
-    const elapsed = timestamp - STATE.lastUpdateTime;
-    
-    // Add transition duration to the update interval
-    const totalInterval = STATE.updateInterval + STATE.transitionDuration;
-    
-    if (elapsed >= totalInterval) {
-        STATE.currentIndex++;
-        
-        // Check if we've reached the end
-        if (STATE.currentIndex >= historicalData.length) {
-            STATE.currentIndex = historicalData.length - 1;
-            togglePlay();
-            return;
-        }
-        
-        // Update display and territories synchronously
-        updateDisplay();
-        drawTerritories();
-        updateTimelineSlider();
-        
-        STATE.lastUpdateTime = timestamp;
-    }
-    
-    STATE.animationId = requestAnimationFrame(animate);
+    // Deprecated - using setInterval in togglePlay instead
 }
 
 function reset() {
     if (STATE.isPlaying) {
         togglePlay();
     }
-    STATE.currentIndex = 0;
-    clearAllTerritories();  // Clear all territories before redrawing
+    STATE.currentYear = DEFAULT_YEAR;
+    const slider = document.getElementById('year-slider');
+    if (slider) slider.value = STATE.currentYear;
+    
     updateDisplay();
-    drawTerritories();
-    updateTimelineSlider();
+}
+
+// ============================================
+// EVENT HANDLERS
+// ============================================
+function handleTimelineChange(e) {
+    // Deprecated - handled by setupEventListeners
 }
 
 // ============================================
@@ -3184,12 +4604,12 @@ function setupPWAFeatures() {
     function saveAppState() {
         try {
             const appState = {
-                currentIndex: STATE.currentIndex,
+                currentYear: STATE.currentYear,
                 quizScore: STATE.quizScore,
                 quizAnswered: STATE.quizAnswered,
                 timestamp: Date.now()
             };
-            localStorage.setItem('romanEmpireState', JSON.stringify(appState));
+            localStorage.setItem('chronosState', JSON.stringify(appState));
         } catch (error) {
             console.warn('Could not save app state:', error);
         }
@@ -3198,12 +4618,12 @@ function setupPWAFeatures() {
     // Restore state on load
     function restoreAppState() {
         try {
-            const savedState = localStorage.getItem('romanEmpireState');
+            const savedState = localStorage.getItem('chronosState');
             if (savedState) {
                 const appState = JSON.parse(savedState);
                 // Only restore if less than 24 hours old
                 if (Date.now() - appState.timestamp < 24 * 60 * 60 * 1000) {
-                    STATE.currentIndex = appState.currentIndex || 0;
+                    STATE.currentYear = appState.currentYear || DEFAULT_YEAR;
                     STATE.quizScore = appState.quizScore || 0;
                     STATE.quizAnswered = appState.quizAnswered || 0;
                     console.log('✅ Restored previous session');

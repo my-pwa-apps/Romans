@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'imperivm-v1.1.1';
+const CACHE_VERSION = 'chronos-v2.0.0';
 const CACHE_NAME = `${CACHE_VERSION}-core`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 

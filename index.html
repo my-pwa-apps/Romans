@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE with detailed historical information">
-    <meta name="keywords" content="Roman Empire, History, Interactive Map, Ancient Rome, Historical Timeline, Roman Republic">
-    <meta name="author" content="Roman Empire Historical Visualization">
-    <meta name="theme-color" content="#8B0000">
-    <title>CHRONOS - World History Atlas</title>
+    <meta name="description" content="Explore 5000 years of world history through an interactive map. Watch empires rise and fall from Ancient Egypt to the modern era.">
+    <meta name="keywords" content="World History, Interactive Map, Ancient Civilizations, Historical Atlas, Roman Empire, Egyptian Empire, Mongol Empire, Ottoman Empire, Timeline">
+    <meta name="author" content="Chronos World History Atlas">
+    <meta name="theme-color" content="#1a5f7a">
+    <title>CHRONOS · World History Atlas</title>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -16,12 +16,18 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="CHRONOS">
+    <meta name="apple-mobile-web-app-title" content="Chronos">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     
     <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileColor" content="#8B0000">
+    <meta name="msapplication-TileColor" content="#1a5f7a">
     <meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="CHRONOS · World History Atlas">
+    <meta property="og:description" content="Explore 5000 years of world history through an interactive map.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="icons/icon-512x512.png">
     
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -58,8 +64,8 @@
     <div class="loading-overlay" id="loadingOverlay" aria-live="polite" aria-busy="true">
         <div class="loading-content">
             <div class="loading-spinner" role="status"></div>
-            <p>Initializing Roman Empire...</p>
-            <small class="loading-subtext">Loading map data</small>
+            <p>Initializing Chronos Atlas...</p>
+            <small class="loading-subtext">Loading historical data</small>
         </div>
     </div>
 
@@ -68,19 +74,19 @@
     
     <div class="container" role="main">
         <header role="banner">
-            <h1>IMPERIVM ROMANVM</h1>
-            <p class="subtitle">The Expansion of the Roman Empire · 509 BCE - 476 CE</p>
+            <h1>CHRONOS</h1>
+            <p class="subtitle">World History Atlas · 3000 BCE - Present</p>
         </header>
 
         <main class="main-content">
-            <section class="map-container" role="region" aria-label="Interactive map showing Roman Empire expansion">
-                <div id="map" role="application" aria-label="Roman Empire territorial map"></div>
+            <section class="map-container" role="region" aria-label="Interactive world history map">
+                <div id="map" role="application" aria-label="Historical empires territorial map"></div>
             </section>
 
             <aside class="sidebar" role="complementary">
                 <section class="info-panel" aria-live="polite" aria-atomic="true">
-                    <h2 id="periodName">Early Roman Republic</h2>
-                    <p id="periodDescription">Rome begins as a city-state in central Italy, having just overthrown its Etruscan kings.</p>
+                    <h2 id="periodName">World History</h2>
+                    <p id="periodDescription">Drag the timeline or press Play to explore 5,000 years of human civilization.</p>
                     
                     <!-- Educational Context -->
                     <div class="educational-section">
@@ -90,8 +96,8 @@
                         <div class="edu-content" id="eduContent" hidden>
                             <h3>Historical Context</h3>
                             <ul id="eduFacts">
-                                <li>The Roman Republic was founded in 509 BCE after overthrowing the last Etruscan king.</li>
-                                <li>Rome's government featured two consuls elected annually, a Senate, and popular assemblies.</li>
+                                <li>Ancient civilizations emerged independently in Mesopotamia, Egypt, the Indus Valley, and China.</li>
+                                <li>The invention of writing around 3200 BCE marked the beginning of recorded history.</li>
                             </ul>
                             <div class="key-figures" id="keyFigures">
                                 <h4>Key Figures</h4>
@@ -131,27 +137,28 @@
                     
                     <div class="timeline-control" role="region" aria-label="Timeline scrubber">
                         <div class="timeline-labels" aria-hidden="true">
-                            <span>509 BCE</span>
-                            <span>27 BCE</span>
-                            <span>117 CE</span>
-                            <span>476 CE</span>
+                            <span>3000 BCE</span>
+                            <span>1000 BCE</span>
+                            <span>1 CE</span>
+                            <span>1000 CE</span>
+                            <span>2000 CE</span>
                         </div>
                         <input type="range" 
-                               id="timeline" 
-                               min="0" 
-                               max="100" 
-                               value="0" 
+                               id="year-slider" 
+                               min="-3000" 
+                               max="2025" 
+                               value="-753" 
                                step="1"
-                               aria-label="Timeline slider from 509 BCE to 476 CE"
-                               aria-valuemin="0"
-                               aria-valuemax="100"
-                               aria-valuenow="0"
+                               aria-label="Timeline slider from 3000 BCE to 2025 CE"
+                               aria-valuemin="-3000"
+                               aria-valuemax="2025"
+                               aria-valuenow="-753"
                                title="Drag to navigate timeline (Arrow keys)">
                         <div class="timeline-markers" aria-hidden="true">
-                            <div class="marker marker-republic" title="Roman Republic"></div>
-                            <div class="marker marker-empire" title="Roman Empire Begins"></div>
-                            <div class="marker marker-peak" title="Greatest Extent"></div>
-                            <div class="marker marker-fall" title="Fall of Western Empire"></div>
+                            <div class="marker marker-ancient" title="Ancient Civilizations"></div>
+                            <div class="marker marker-classical" title="Classical Era"></div>
+                            <div class="marker marker-medieval" title="Medieval Period"></div>
+                            <div class="marker marker-modern" title="Modern Era"></div>
                         </div>
                     </div>
                 </nav>
@@ -188,26 +195,27 @@
         <footer role="contentinfo">
             <div class="legend" role="list" aria-label="Map legend">
                 <div class="legend-item" role="listitem">
-                    <div class="legend-color-established" aria-hidden="true"></div>
-                    <span>Established Territory</span>
+                    <div class="legend-color empire-color-egypt" aria-hidden="true"></div>
+                    <span>Egypt</span>
                 </div>
                 <div class="legend-item" role="listitem">
-                    <div class="legend-color-expansion" aria-hidden="true"></div>
-                    <span>Recent Expansion</span>
+                    <div class="legend-color empire-color-persia" aria-hidden="true"></div>
+                    <span>Persia</span>
                 </div>
                 <div class="legend-item" role="listitem">
-                    <div class="legend-city" aria-hidden="true">●</div>
-                    <span>Roman Cities</span>
+                    <div class="legend-color empire-color-rome" aria-hidden="true"></div>
+                    <span>Rome</span>
                 </div>
                 <div class="legend-item" role="listitem">
-                    <div class="legend-fort" aria-hidden="true">⚔</div>
-                    <span>Forts & Fortresses</span>
+                    <div class="legend-color empire-color-mongol" aria-hidden="true"></div>
+                    <span>Mongol</span>
                 </div>
                 <div class="legend-item" role="listitem">
-                    <div class="legend-wall" aria-hidden="true">- - -</div>
-                    <span>Walls & Limes</span>
+                    <div class="legend-color empire-color-ottoman" aria-hidden="true"></div>
+                    <span>Ottoman</span>
                 </div>
             </div>
+            <p class="footer-credit">© Chronos World History Atlas · Data sources: Historical records & scholarly research</p>
         </footer>
     </div>
 
@@ -283,7 +291,7 @@
             installBanner.className = 'install-banner';
             installBanner.innerHTML = `
                 <div class="install-banner-content">
-                    <span>📱 Install IMPERIVM for offline access!</span>
+                    <span>📱 Install Chronos for offline access!</span>
                     <button id="installBtn">Install</button>
                     <button id="dismissBtn">×</button>
                 </div>

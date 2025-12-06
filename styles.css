@@ -18,7 +18,7 @@
     top: -100%;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--roman-gold, #D4AF37);
+    background: var(--chronos-accent, #c9a227);
     color: #000;
     padding: 12px 24px;
     border-radius: 0 0 8px 8px;
@@ -41,8 +41,8 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: #1a1208;
-    color: #D4AF37;
+    background: var(--chronos-bg-dark, #0d1117);
+    color: var(--chronos-accent, #c9a227);
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -69,40 +69,69 @@
 }
 
 /* ============================================
-   ROMAN EMPIRE THEME - COLOR PALETTE & VARS
+   CHRONOS THEME - COLOR PALETTE & VARS
    ============================================ */
 :root {
-    /* Color Palette */
-    --roman-red: #8B0000;
-    --roman-red-dark: #660000;
-    --roman-gold: #D4AF37;
-    --roman-gold-light: #E5C158;
-    --roman-cream: #F5E6D3;
-    --roman-brown: #4A3728;
-    --roman-brown-dark: #2a2016;
-    --roman-light-red: #CD5C5C;
+    /* Primary Color Palette - Modern Historical Theme */
+    --chronos-primary: #1a5f7a;
+    --chronos-primary-dark: #134b61;
+    --chronos-primary-light: #2980b9;
+    --chronos-accent: #c9a227;
+    --chronos-accent-light: #e0b830;
+    --chronos-text: #e8e6e3;
+    --chronos-text-muted: #a8a29e;
+    --chronos-bg-dark: #0d1117;
+    --chronos-bg-card: #161b22;
+    --chronos-bg-elevated: #21262d;
+    --chronos-border: #30363d;
+    --chronos-success: #238636;
+    --chronos-warning: #d29922;
+    --chronos-error: #da3633;
+    
+    /* Empire Colors */
+    --empire-egypt: #FFD700;
+    --empire-persia: #228B22;
+    --empire-rome: #DC143C;
+    --empire-macedon: #FF8C00;
+    --empire-mongol: #708090;
+    --empire-ottoman: #FF4500;
+    --empire-byzantine: #9400D3;
+    --empire-british: #C41E3A;
+    --empire-han: #FF6347;
+    
+    /* Legacy aliases for compatibility */
+    --roman-red: var(--empire-rome);
+    --roman-red-dark: #8B0000;
+    --roman-gold: var(--chronos-accent);
+    --roman-gold-light: var(--chronos-accent-light);
+    --roman-cream: var(--chronos-text);
+    --roman-brown: var(--chronos-bg-card);
+    --roman-brown-dark: var(--chronos-bg-dark);
     
     /* Layout & Spacing */
-    --border-width: 3px;
+    --border-width: 1px;
     --border-radius: 8px;
+    --border-radius-lg: 12px;
     --spacing-xs: 8px;
     --spacing-sm: 12px;
     --spacing-md: 20px;
     --spacing-lg: 30px;
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.7);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(26, 95, 122, 0.3);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.15s ease;
     
     /* Typography */
-    --font-primary: 'Trajan Pro', 'Cinzel', 'Times New Roman', serif;
-    --font-size-base: clamp(0.9em, 2vw, 1em);
-    --font-size-large: clamp(1.4em, 3.5vw, 2em);
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Cinzel', 'Times New Roman', serif;
+    --font-size-base: clamp(0.9rem, 2vw, 1rem);
+    --font-size-large: clamp(1.4rem, 3.5vw, 2rem);
     --line-height-normal: 1.6;
 }
 
@@ -132,9 +161,12 @@ html {
 
 body {
     font-family: var(--font-primary);
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #2d2416 100%);
+    background: var(--chronos-bg-dark);
+    background-image: 
+        radial-gradient(ellipse at top, rgba(26, 95, 122, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(201, 162, 39, 0.08) 0%, transparent 50%);
     background-attachment: fixed;
-    color: var(--roman-cream);
+    color: var(--chronos-text);
     min-height: 100vh;
     padding: var(--spacing-md);
     overflow-x: hidden;
@@ -146,22 +178,18 @@ body {
 .container {
     max-width: 100%;
     margin: 0 auto;
-    background: rgba(42, 35, 25, 0.98);
-    border: var(--border-width) solid var(--roman-gold);
-    border-radius: var(--border-radius);
+    background: var(--chronos-bg-card);
+    border: var(--border-width) solid var(--chronos-border);
+    border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
-    box-shadow: 
-        0 0 60px rgba(212, 175, 55, 0.4),
-        inset 0 0 100px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     display: flex;
     flex-direction: column;
     height: calc(100vh - calc(var(--spacing-md) * 2));
     max-height: calc(100vh - calc(var(--spacing-md) * 2));
     position: relative;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
     overflow: hidden;
-    will-change: transform; /* Performance hint */
+    will-change: transform;
 }
 
 .container::before {
@@ -173,26 +201,14 @@ body {
     height: 2px;
     background: linear-gradient(90deg, 
         transparent, 
-        var(--roman-gold) 20%, 
-        var(--roman-gold) 80%, 
+        var(--chronos-primary) 20%, 
+        var(--chronos-primary) 80%, 
         transparent);
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .container::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(212, 175, 55, 0.02) 2px,
-            rgba(212, 175, 55, 0.02) 4px
-        );
-    pointer-events: none;
-    opacity: 0.3;
+    display: none;
 }
 
 /* ============================================
@@ -202,7 +218,7 @@ header {
     text-align: center;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 2px solid var(--roman-gold);
+    border-bottom: 1px solid var(--chronos-border);
     position: relative;
     flex-shrink: 0;
 }
@@ -210,33 +226,28 @@ header {
 header::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -1px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
+    width: 150px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--roman-gold-light), transparent);
+    background: linear-gradient(90deg, transparent, var(--chronos-primary), transparent);
 }
 
 h1 {
-    font-size: clamp(2em, 5vw, 3.5em);
-    color: var(--roman-gold);
-    text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.9),
-        0 0 20px rgba(212, 175, 55, 0.6),
-        0 0 40px rgba(212, 175, 55, 0.3);
-    letter-spacing: clamp(4px, 1vw, 10px);
-    margin-bottom: 12px;
-    font-weight: bold;
-    animation: fadeInDown 0.8s ease-out;
+    font-family: var(--font-display);
+    font-size: clamp(1.8em, 5vw, 2.8em);
+    color: var(--chronos-text);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: clamp(4px, 1vw, 8px);
+    margin-bottom: 8px;
+    font-weight: 600;
+    animation: fadeInDown 0.6s ease-out;
     position: relative;
 }
 
 h1::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
+    display: none;
     transform: translateX(-50%);
     width: 60%;
     height: 1px;
@@ -245,12 +256,13 @@ h1::after {
 }
 
 .subtitle {
-    font-size: clamp(0.9em, 2vw, 1.3em);
-    color: var(--roman-cream);
-    letter-spacing: clamp(2px, 0.5vw, 4px);
-    font-style: italic;
-    opacity: 0.9;
-    animation: fadeInUp 1s ease-out 0.2s both;
+    font-size: clamp(0.85em, 2vw, 1.1em);
+    color: var(--chronos-text-muted);
+    letter-spacing: clamp(1px, 0.5vw, 3px);
+    font-style: normal;
+    font-weight: 400;
+    opacity: 0.85;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 @keyframes fadeInDown {
@@ -284,7 +296,7 @@ h1::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #2d2416 100%);
+    background: var(--chronos-bg-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,16 +306,16 @@ h1::after {
 
 .loading-content {
     text-align: center;
-    color: var(--roman-gold);
+    color: var(--chronos-primary-light);
     position: relative;
 }
 
 .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(212, 175, 55, 0.15);
-    border-top-color: var(--roman-gold);
-    border-right-color: var(--roman-gold-light);
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--chronos-border);
+    border-top-color: var(--chronos-primary);
+    border-right-color: var(--chronos-primary-light);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
@@ -911,18 +923,23 @@ body.is-touch .fort-marker:hover {
     width: 2px;
     height: 24px;
     background: linear-gradient(to bottom, 
-        var(--roman-gold) 0%, 
-        var(--roman-gold-light) 50%, 
+        var(--chronos-accent) 0%, 
+        var(--chronos-accent-light) 50%, 
         transparent 100%);
     transform: translateX(-50%);
     opacity: 0.7;
-    box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 0 4px rgba(201, 162, 39, 0.5);
 }
 
-.marker-republic { left: 0%; }
-.marker-empire { left: 48.9%; }
-.marker-peak { left: 63.6%; }
-.marker-fall { left: 100%; }
+/* Timeline Era Markers (3000 BCE to 2025 CE = 5025 years total)
+   Ancient: -3000 (0%)
+   Classical: -500 (~50% of way to year 0)
+   Medieval: 500 (~70%)
+   Modern: 1500 (~90%) */
+.marker-ancient { left: 0%; }
+.marker-classical { left: 50%; }
+.marker-medieval { left: 70%; }
+.marker-modern { left: 90%; }
 
 /* Speed Control */
 .speed-control {
@@ -1543,31 +1560,47 @@ footer {
 .legend {
     display: flex;
     justify-content: center;
-    gap: 24px;
+    gap: 16px;
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
     align-items: center;
+    padding: 8px 0;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.9em;
+    gap: 6px;
+    font-size: 0.85em;
 }
+
+.legend-color {
+    width: 24px;
+    height: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+/* Empire color legend classes */
+.empire-color-egypt { background: var(--empire-egypt); }
+.empire-color-persia { background: var(--empire-persia); }
+.empire-color-rome { background: var(--empire-rome); }
+.empire-color-mongol { background: var(--empire-mongol); }
+.empire-color-ottoman { background: var(--empire-ottoman); }
+.empire-color-byzantine { background: var(--empire-byzantine); }
+.empire-color-british { background: var(--empire-british); }
 
 .legend-color-established,
 .legend-color-expansion {
-    width: 32px;
-    height: 22px;
-    border: 2px solid var(--roman-gold);
-    border-radius: 4px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    width: 24px;
+    height: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }
 
 .legend-color-established {
-    background: #8B0000;
+    background: var(--empire-rome);
 }
 
 .legend-color-expansion {
@@ -1575,31 +1608,36 @@ footer {
 }
 
 .legend-city {
-    font-size: 20px;
-    color: var(--roman-gold);
-    text-shadow: 0 0 4px rgba(212, 175, 55, 0.6);
-    line-height: 22px;
+    font-size: 16px;
+    color: var(--chronos-accent);
+    line-height: 16px;
 }
 
 .legend-fort {
-    font-size: 18px;
+    font-size: 14px;
     color: #8B4513;
-    text-shadow: 0 0 3px rgba(139, 69, 19, 0.6);
-    line-height: 22px;
+    line-height: 16px;
 }
 
 .legend-wall {
-    font-size: 16px;
+    font-size: 12px;
     color: #CD853F;
-    text-shadow: 0 0 3px rgba(205, 133, 63, 0.6);
-    line-height: 22px;
-    letter-spacing: 2px;
+    line-height: 16px;
+    letter-spacing: 1px;
     font-weight: bold;
 }
 
 .legend-item span {
-    color: var(--roman-cream);
-    font-size: 0.95em;
+    color: var(--chronos-text-muted);
+    font-size: 0.9em;
+}
+
+.footer-credit {
+    text-align: center;
+    color: var(--chronos-text-muted);
+    font-size: 0.75em;
+    margin-top: 8px;
+    opacity: 0.7;
 }
 
 /* ============================================
@@ -2142,4 +2180,47 @@ footer {
     .map-container {
         page-break-inside: avoid;
     }
+}
+
+/* ============================================
+   SEA ROUTES & SHIP ANIMATIONS
+   ============================================ */
+.sea-route-animated {
+    animation: dash-animation 1s linear infinite;
+}
+
+@keyframes dash-animation {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+.ship-marker {
+    background: transparent;
+    border: none;
+}
+
+.ship-icon {
+    font-size: 20px;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    animation: ship-bob 2s ease-in-out infinite;
+}
+
+@keyframes ship-bob {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+    50% {
+        transform: translateY(-3px) rotate(5deg);
+    }
+}
+
+/* Sea route popup styling */
+.leaflet-popup-content strong {
+    color: var(--chronos-accent, #c9a227);
+}
+
+.leaflet-popup-content em {
+    color: var(--chronos-text-muted, #888);
+    font-size: 0.9em;
 }

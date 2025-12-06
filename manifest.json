@@ -1,13 +1,14 @@
 {
-  "name": "IMPERIVM ROMANVM - Roman Empire History",
-  "short_name": "IMPERIVM",
-  "description": "Interactive visualization of the Roman Empire's expansion from 509 BCE to 476 CE",
-  "start_url": "/",
+  "name": "CHRONOS - World History Atlas",
+  "short_name": "CHRONOS",
+  "description": "Interactive visualization of world history from 3000 BCE to the present day. Explore the rise and fall of empires across time.",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#1a1a1a",
-  "theme_color": "#8B0000",
+  "background_color": "#0d1117",
+  "theme_color": "#1a5f7a",
   "orientation": "any",
-  "scope": "/",
+  "scope": "./",
+  "id": "chronos-world-history-atlas",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
@@ -63,47 +64,49 @@
       "src": "screenshots/desktop.png",
       "sizes": "1920x1080",
       "type": "image/png",
-      "form_factor": "wide"
+      "form_factor": "wide",
+      "label": "Desktop view of Chronos World History Atlas"
     },
     {
       "src": "screenshots/mobile.png",
       "sizes": "750x1334",
       "type": "image/png",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "Mobile view of Chronos World History Atlas"
     }
   ],
-  "categories": ["education", "history", "reference"],
+  "categories": ["education", "history", "reference", "books"],
   "shortcuts": [
     {
-      "name": "Early Republic",
-      "short_name": "509 BCE",
-      "description": "View the founding of the Roman Republic",
-      "url": "/?period=0",
+      "name": "Ancient Egypt",
+      "short_name": "Egypt",
+      "description": "Explore Ancient Egyptian civilization",
+      "url": "./index.html?year=-2500",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
-      "name": "Greatest Extent",
-      "short_name": "117 CE",
-      "description": "View Rome at its territorial peak",
-      "url": "/?period=11",
+      "name": "Alexander's Empire",
+      "short_name": "Alexander",
+      "description": "View Alexander the Great's conquests",
+      "url": "./index.html?year=-330",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
-      "name": "Fall of Rome",
-      "short_name": "476 CE",
-      "description": "View the fall of Western Rome",
-      "url": "/?period=19",
+      "name": "Roman Empire Peak",
+      "short_name": "Rome",
+      "description": "View Rome at its territorial peak (117 CE)",
+      "url": "./index.html?year=117",
+      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Mongol Empire",
+      "short_name": "Mongols",
+      "description": "View the largest contiguous land empire",
+      "url": "./index.html?year=1250",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     }
   ],
-  "share_target": {
-    "action": "/share",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  }
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false
 }
