@@ -627,17 +627,20 @@ body.is-touch .fort-marker:hover {
     transition: stroke-width 0.3s ease, stroke-opacity 0.3s ease, fill-opacity 0.3s ease;
 }
 
-/* Territory layers should have NO stroke/border */
+/* Territory layers should have NO stroke/border but be clickable */
 .territory-layer {
     stroke: none !important;
     stroke-width: 0 !important;
     stroke-opacity: 0 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
 .territory-layer:hover {
     stroke: none !important;
     stroke-width: 0 !important;
     stroke-opacity: 0 !important;
+    fill-opacity: 0.7 !important;
 }
 
 /* Only add hover effects to non-territory interactive elements */
@@ -2341,4 +2344,107 @@ footer {
         padding: 8px 12px;
         font-size: 0.9rem;
     }
+}
+
+/* ============================================
+   EMPIRE DETAILS PANEL
+   ============================================ */
+.empire-color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.empire-period {
+    font-size: 0.9rem;
+    color: var(--chronos-accent, #c9a227);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--chronos-border, #333);
+}
+
+.empire-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    color: var(--chronos-text, #e0e0e0);
+}
+
+.empire-capital {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--chronos-text-muted, #888);
+}
+
+.empire-capital strong {
+    color: var(--chronos-text, #e0e0e0);
+}
+
+.empire-facts {
+    margin-bottom: 12px;
+}
+
+.empire-facts strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--chronos-accent, #c9a227);
+    font-size: 0.9rem;
+}
+
+.empire-facts ul {
+    margin: 0;
+    padding-left: 18px;
+    list-style-type: disc;
+}
+
+.empire-facts li {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    color: var(--chronos-text, #e0e0e0);
+}
+
+.empire-leaders {
+    font-size: 0.9rem;
+    color: var(--chronos-text-muted, #888);
+    padding-top: 8px;
+    border-top: 1px solid var(--chronos-border, #333);
+}
+
+.empire-leaders strong {
+    color: var(--chronos-text, #e0e0e0);
+}
+
+/* Info panel locked state */
+.info-panel.info-locked {
+    border-left: 3px solid var(--chronos-accent, #c9a227);
+}
+
+.unlock-hint {
+    background: var(--chronos-accent, #c9a227);
+    color: var(--chronos-bg, #1a1a2e);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    margin: -15px -15px 15px -15px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s ease;
+}
+
+.unlock-hint:hover {
+    background: #dbb847;
+}
+
+/* Clickable territory hover effect */
+.empire-layer {
+    cursor: pointer;
+    transition: fill-opacity 0.2s ease;
+}
+
+.empire-layer:hover {
+    fill-opacity: 0.7 !important;
 }

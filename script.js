@@ -280,6 +280,12 @@ const CIVILIZATIONS = {
         color: '#0055A4', // French Blue
         textColor: '#FFFFFF'
     },
+    napoleonic: {
+        id: 'napoleonic',
+        name: 'Napoleonic French Empire',
+        color: '#002395', // Deep French Blue
+        textColor: '#FFFFFF'
+    },
     russian: {
         id: 'russian',
         name: 'Russian Empire',
@@ -1992,6 +1998,122 @@ const WORLD_EMPIRES = {
         ]
     },
     
+    // Napoleonic French Empire
+    napoleonic: {
+        name: 'Napoleonic French Empire',
+        periods: [
+            {
+                startYear: 1799,
+                endYear: 1804,
+                name: 'French Consulate (Napoleon rises)',
+                territories: [[
+                    [51.0, -4.0], [51.0, 2.0], [49.5, 8.0], [47.5, 7.5],
+                    [46.0, 6.5], [44.0, 7.0], [43.0, 3.0], [42.5, -2.0],
+                    [44.0, -1.5], [46.0, -2.0], [48.0, -5.0], [51.0, -4.0]
+                ]]
+            },
+            {
+                startYear: 1804,
+                endYear: 1807,
+                name: 'First French Empire (Early Expansion)',
+                territories: [
+                    // France proper
+                    [
+                        [51.0, -4.0], [51.0, 2.0], [49.5, 8.0], [47.5, 7.5],
+                        [46.0, 6.5], [44.0, 7.0], [43.0, 3.0], [42.5, -2.0],
+                        [44.0, -1.5], [46.0, -2.0], [48.0, -5.0], [51.0, -4.0]
+                    ],
+                    // Northern Italy
+                    [
+                        [46.0, 7.0], [46.5, 12.0], [45.0, 14.0], [43.5, 12.0],
+                        [44.0, 8.0], [46.0, 7.0]
+                    ],
+                    // Netherlands/Belgium
+                    [
+                        [51.0, 2.0], [53.5, 5.0], [52.0, 7.0], [50.5, 6.0],
+                        [49.5, 4.0], [51.0, 2.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1807,
+                endYear: 1812,
+                name: 'First French Empire (Maximum Extent)',
+                territories: [
+                    // France + Low Countries + Western Germany
+                    [
+                        [51.0, -4.0], [53.5, 5.0], [54.0, 10.0], [52.0, 12.0],
+                        [48.0, 15.0], [46.0, 15.0], [44.0, 11.0], [43.5, 7.0],
+                        [42.0, 3.0], [42.5, -2.0], [44.0, -1.5], [48.0, -5.0],
+                        [51.0, -4.0]
+                    ],
+                    // Spain (Occupied)
+                    [
+                        [43.5, -9.0], [43.5, -2.0], [42.5, 3.0], [40.0, 4.0],
+                        [38.0, 0.0], [37.0, -5.0], [37.0, -9.0], [40.0, -9.0],
+                        [43.5, -9.0]
+                    ],
+                    // Italy (Most of peninsula)
+                    [
+                        [46.5, 10.0], [46.0, 14.0], [44.0, 14.5], [42.0, 15.0],
+                        [40.0, 16.0], [38.5, 16.0], [38.0, 14.0], [40.0, 12.0],
+                        [43.0, 10.0], [46.5, 10.0]
+                    ],
+                    // Illyrian Provinces (Balkans coast)
+                    [
+                        [46.0, 14.0], [46.5, 16.0], [45.0, 17.0], [43.0, 17.0],
+                        [42.5, 15.0], [44.0, 14.0], [46.0, 14.0]
+                    ],
+                    // Grand Duchy of Warsaw (Poland)
+                    [
+                        [54.0, 15.0], [54.5, 22.0], [52.0, 23.0], [50.0, 20.0],
+                        [50.0, 15.0], [54.0, 15.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1812,
+                endYear: 1812,
+                name: 'Invasion of Russia (1812)',
+                territories: [
+                    // France + territories
+                    [
+                        [51.0, -4.0], [53.5, 5.0], [54.0, 10.0], [52.0, 12.0],
+                        [48.0, 15.0], [46.0, 15.0], [44.0, 11.0], [43.5, 7.0],
+                        [42.0, 3.0], [42.5, -2.0], [44.0, -1.5], [48.0, -5.0],
+                        [51.0, -4.0]
+                    ],
+                    // Path into Russia (invasion route)
+                    [
+                        [54.5, 22.0], [55.0, 26.0], [56.0, 30.0], [55.5, 35.0],
+                        [54.0, 38.0], [53.0, 35.0], [52.5, 30.0], [52.0, 24.0],
+                        [54.5, 22.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1813,
+                endYear: 1814,
+                name: 'French Empire (Collapse)',
+                territories: [[
+                    [51.0, -4.0], [51.0, 2.0], [49.5, 8.0], [47.5, 7.5],
+                    [46.0, 6.5], [44.0, 7.0], [43.0, 3.0], [42.5, -2.0],
+                    [44.0, -1.5], [46.0, -2.0], [48.0, -5.0], [51.0, -4.0]
+                ]]
+            },
+            {
+                startYear: 1815,
+                endYear: 1815,
+                name: 'Hundred Days (Waterloo)',
+                territories: [[
+                    [51.0, -4.0], [51.0, 2.0], [49.5, 8.0], [47.5, 7.5],
+                    [46.0, 6.5], [44.0, 7.0], [43.0, 3.0], [42.5, -2.0],
+                    [44.0, -1.5], [46.0, -2.0], [48.0, -5.0], [51.0, -4.0]
+                ]]
+            }
+        ]
+    },
+    
     // Sassanid Persian Empire
     sassanid: {
         name: 'Sassanid Empire',
@@ -2310,8 +2432,8 @@ const SEA_ROUTES = {
     // Columbus Voyages
     columbus_1492: {
         name: "Columbus's First Voyage (1492)",
-        startYear: 1492,
-        endYear: 1493,
+        startYear: 1490,
+        endYear: 1495,
         color: '#FF0000',
         points: [
             [37.0, -7.0],     // Palos, Spain
@@ -2324,13 +2446,28 @@ const SEA_ROUTES = {
     columbus_return: {
         name: "Columbus's Return (1493)",
         startYear: 1493,
-        endYear: 1493,
+        endYear: 1496,
         color: '#FF4500',
         points: [
             [20.0, -75.0],    // Cuba
             [30.0, -70.0],    // Gulf Stream
             [38.0, -25.0],    // Azores
             [37.0, -7.0]      // Palos, Spain
+        ],
+        icon: '🚢'
+    },
+    columbus_later: {
+        name: "Columbus's Later Voyages (1493-1504)",
+        startYear: 1496,
+        endYear: 1510,
+        color: '#FF6600',
+        points: [
+            [37.0, -7.0],     // Spain
+            [28.0, -17.0],    // Canary Islands
+            [18.0, -65.0],    // Puerto Rico
+            [18.5, -70.0],    // Hispaniola
+            [10.0, -83.0],    // Central America
+            [9.0, -79.5]      // Panama
         ],
         icon: '🚢'
     },
@@ -2485,7 +2622,9 @@ const REGION_VIEWS = {
     middleeast: { center: [30, 45], zoom: 4, name: 'Middle East' },
     asia: { center: [35, 100], zoom: 3, name: 'Asia' },
     americas: { center: [15, -80], zoom: 3, name: 'Americas' },
-    africa: { center: [5, 20], zoom: 3, name: 'Africa' }
+    africa: { center: [5, 20], zoom: 3, name: 'Africa' },
+    atlantic: { center: [30, -40], zoom: 3, name: 'Atlantic (Columbus Routes)' },
+    pacific: { center: [0, 150], zoom: 3, name: 'Pacific' }
 };
 
 // ============================================
@@ -2667,6 +2806,13 @@ function initializeMap() {
         attribution: 'Tiles &copy; Esri',
         maxZoom: 19
     }).addTo(STATE.map);
+    
+    // Click on map (not on territory) to unlock info panel
+    STATE.map.on('click', (e) => {
+        if (STATE.infoLocked) {
+            unlockInfoPanel();
+        }
+    });
     
     // Adjust zoom on window resize
     let resizeTimeout;
@@ -3724,7 +3870,9 @@ function createUnifiedTerritoryLayer(territories, isNew = false, color = '#DC143
         color: 'transparent', // Backup: make stroke color transparent
         smoothFactor: 1.5,
         className: 'territory-layer',
-        fillRule: 'nonzero'
+        fillRule: 'nonzero',
+        interactive: true,  // Ensure layer is clickable
+        bubblingMouseEvents: false  // Prevent clicks from propagating to map
     });
     
     return layer;
@@ -3798,7 +3946,9 @@ function createSingleTerritoryLayer(territory, entryPoint) {
         color: 'transparent',
         smoothFactor: 1.5,
         className: 'territory-layer water-flow',
-        fillRule: 'nonzero'
+        fillRule: 'nonzero',
+        interactive: true,
+        bubblingMouseEvents: false
     });
     
     // Store entry point for animation
@@ -3869,9 +4019,30 @@ function updateEmpireTerritories(empireId, territories, year) {
         
         // Add interaction
         const { year: absYear, era } = utils.formatYear(year);
-        layer.bindTooltip(`${empire.name} (${absYear} ${era})`, {
+        const periodName = `${empire.name} (${absYear} ${era})`;
+        
+        layer.bindTooltip(periodName, {
             className: 'territory-label',
             sticky: true
+        });
+        
+        // Add click handler to show empire details
+        layer.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showEmpireDetails(empireId, periodName, empire.color);
+        });
+        
+        // Highlight on hover
+        layer.on('mouseover', () => {
+            layer.setStyle({
+                fillOpacity: 0.75
+            });
+        });
+        
+        layer.on('mouseout', () => {
+            layer.setStyle({
+                fillOpacity: 0.6
+            });
         });
     }
 }
@@ -4056,6 +4227,7 @@ function addUnifiedTerritoryInteraction(layer, periodData) {
     });
     
     layer.on('click', (e) => {
+        L.DomEvent.stopPropagation(e);
         const latlng = e.latlng;
         showTerritoryInfo(periodData, false, latlng.lat, latlng.lng, true);
     });
@@ -4505,7 +4677,9 @@ function renderEmpireOnMap(empireId, territories, color, periodName) {
         color: color,
         opacity: 0.8,
         smoothFactor: 1.5,
-        className: `empire-layer empire-${empireId}`
+        className: `empire-layer empire-${empireId}`,
+        interactive: true,
+        bubblingMouseEvents: false
     });
     
     // Add tooltip
@@ -4514,9 +4688,456 @@ function renderEmpireOnMap(empireId, territories, color, periodName) {
         sticky: true
     });
     
+    // Add click handler to show empire details
+    layer.on('click', (e) => {
+        L.DomEvent.stopPropagation(e);
+        showEmpireDetails(empireId, periodName, color);
+    });
+    
+    // Highlight on hover
+    layer.on('mouseover', () => {
+        layer.setStyle({
+            fillOpacity: 0.7,
+            weight: 2
+        });
+    });
+    
+    layer.on('mouseout', () => {
+        layer.setStyle({
+            fillOpacity: 0.5,
+            weight: 1
+        });
+    });
+    
     // Store and add to map
     STATE.empireLayers[empireId] = layer;
     STATE.territoryLayerGroup.addLayer(layer);
+}
+
+// Show detailed information about an empire when clicked
+function showEmpireDetails(empireId, periodName, color) {
+    const civilization = CIVILIZATIONS[empireId];
+    const empireData = WORLD_EMPIRES[empireId];
+    
+    if (!civilization && !empireData) return;
+    
+    const name = civilization?.name || empireData?.name || periodName;
+    
+    // Build detailed info content
+    let detailsHtml = '';
+    
+    // Period info
+    if (empireData) {
+        const currentPeriod = empireData.periods.find(p => 
+            STATE.currentYear >= p.startYear && STATE.currentYear <= p.endYear
+        );
+        if (currentPeriod) {
+            const startEra = currentPeriod.startYear < 0 ? 'BCE' : 'CE';
+            const endEra = currentPeriod.endYear < 0 ? 'BCE' : 'CE';
+            detailsHtml += `<div class="empire-period">
+                <strong>Period:</strong> ${Math.abs(currentPeriod.startYear)} ${startEra} - ${Math.abs(currentPeriod.endYear)} ${endEra}
+            </div>`;
+        }
+    }
+    
+    // Get empire-specific facts from EMPIRE_INFO if available
+    const empireInfo = getEmpireInfo(empireId);
+    if (empireInfo) {
+        if (empireInfo.description) {
+            detailsHtml += `<div class="empire-description">${empireInfo.description}</div>`;
+        }
+        if (empireInfo.capital) {
+            detailsHtml += `<div class="empire-capital"><strong>Capital:</strong> ${empireInfo.capital}</div>`;
+        }
+        if (empireInfo.facts && empireInfo.facts.length > 0) {
+            detailsHtml += `<div class="empire-facts"><strong>Key Facts:</strong><ul>`;
+            empireInfo.facts.forEach(fact => {
+                detailsHtml += `<li>${fact}</li>`;
+            });
+            detailsHtml += `</ul></div>`;
+        }
+        if (empireInfo.leaders && empireInfo.leaders.length > 0) {
+            detailsHtml += `<div class="empire-leaders"><strong>Notable Leaders:</strong> ${empireInfo.leaders.join(', ')}</div>`;
+        }
+    }
+    
+    // Update info panel
+    const nameElement = document.getElementById('periodName');
+    const descElement = document.getElementById('periodDescription');
+    
+    if (nameElement) {
+        nameElement.innerHTML = `<span class="empire-color-dot" style="background-color: ${color}"></span> ${name}`;
+    }
+    
+    if (descElement) {
+        if (detailsHtml) {
+            descElement.innerHTML = detailsHtml;
+        } else {
+            descElement.textContent = periodName;
+        }
+    }
+    
+    // Lock the info panel so it doesn't get overwritten
+    lockInfoPanel({ empireId, periodName, color });
+    
+    // Expand educational section automatically
+    const eduToggle = document.getElementById('eduToggle');
+    const eduContent = document.getElementById('eduContent');
+    if (eduToggle && eduContent && eduContent.hidden) {
+        STATE.eduExpanded = true;
+        eduContent.hidden = false;
+        eduToggle.setAttribute('aria-expanded', 'true');
+        updateEducationalContentForEmpire(empireId);
+    }
+}
+
+// Get empire-specific information
+function getEmpireInfo(empireId) {
+    const EMPIRE_INFO = {
+        egypt: {
+            description: "One of the world's oldest civilizations, flourishing along the Nile River for over 3,000 years.",
+            capital: "Memphis, later Thebes, then Alexandria",
+            facts: [
+                "Built the Great Pyramids of Giza",
+                "Developed hieroglyphic writing",
+                "Pioneered mummification and elaborate burial practices",
+                "Created one of the first 365-day calendars"
+            ],
+            leaders: ["Narmer", "Khufu", "Hatshepsut", "Ramesses II", "Cleopatra VII"]
+        },
+        sumer: {
+            description: "The earliest known civilization in Mesopotamia, credited with inventing writing.",
+            capital: "Uruk, Ur, Eridu (city-states)",
+            facts: [
+                "Invented cuneiform writing (c. 3400 BCE)",
+                "Created the first known legal codes",
+                "Developed the 60-minute hour and 360-degree circle",
+                "Built ziggurats as temple towers"
+            ],
+            leaders: ["Gilgamesh", "Ur-Nammu", "Sargon of Akkad"]
+        },
+        babylon: {
+            description: "A powerful Mesopotamian empire centered on the city of Babylon.",
+            capital: "Babylon",
+            facts: [
+                "Home to the Hanging Gardens (one of the Seven Wonders)",
+                "Hammurabi's Code - one of the oldest law codes",
+                "Advanced astronomy and mathematics",
+                "The Ishtar Gate was one of antiquity's greatest monuments"
+            ],
+            leaders: ["Hammurabi", "Nebuchadnezzar II", "Nabonidus"]
+        },
+        persia: {
+            description: "The first Persian Empire (Achaemenid) was the largest empire the ancient world had seen.",
+            capital: "Persepolis, Susa, Ecbatana",
+            facts: [
+                "Stretched from Egypt to India at its peak",
+                "Built the Royal Road for communication",
+                "Practiced religious tolerance under Cyrus",
+                "Created the first postal system"
+            ],
+            leaders: ["Cyrus the Great", "Darius I", "Xerxes I"]
+        },
+        macedon: {
+            description: "Under Alexander the Great, Macedonia conquered the Persian Empire and spread Greek culture.",
+            capital: "Pella, later Alexandria (Egypt)",
+            facts: [
+                "Alexander never lost a battle",
+                "Spread Hellenistic culture across three continents",
+                "Founded over 20 cities named Alexandria",
+                "Empire fragmented after Alexander's death in 323 BCE"
+            ],
+            leaders: ["Philip II", "Alexander the Great"]
+        },
+        rome: {
+            description: "From a small city-state to the greatest empire of the ancient Western world.",
+            capital: "Rome",
+            facts: [
+                "At its peak, controlled the entire Mediterranean",
+                "Built roads, aqueducts, and monuments that still stand",
+                "Roman law influenced Western legal systems",
+                "Latin became the basis of Romance languages"
+            ],
+            leaders: ["Julius Caesar", "Augustus", "Trajan", "Marcus Aurelius", "Constantine"]
+        },
+        han: {
+            description: "One of China's golden ages, the Han Dynasty established the Silk Road trade.",
+            capital: "Chang'an (Xi'an), Luoyang",
+            facts: [
+                "Paper was invented during this period",
+                "Established the Silk Road connecting East and West",
+                "Civil service examinations began",
+                "Chinese identity formed (Han Chinese)"
+            ],
+            leaders: ["Emperor Gaozu", "Emperor Wu", "Wang Mang"]
+        },
+        maurya: {
+            description: "The first empire to unite most of the Indian subcontinent.",
+            capital: "Pataliputra",
+            facts: [
+                "Emperor Ashoka spread Buddhism across Asia",
+                "Created extensive road networks",
+                "Established diplomatic relations with Hellenistic kingdoms",
+                "Ashoka's edicts promoted non-violence"
+            ],
+            leaders: ["Chandragupta Maurya", "Ashoka the Great"]
+        },
+        mongol: {
+            description: "The largest contiguous land empire in history, spanning from Korea to Poland.",
+            capital: "Karakorum, later Khanbaliq (Beijing)",
+            facts: [
+                "Genghis Khan united the Mongol tribes",
+                "Created the Pax Mongolica, enabling trade",
+                "Used advanced military tactics and siege warfare",
+                "Established the Yuan Dynasty in China"
+            ],
+            leaders: ["Genghis Khan", "Ögedei Khan", "Kublai Khan"]
+        },
+        ottoman: {
+            description: "A vast empire lasting over 600 years, bridging East and West.",
+            capital: "Bursa, Edirne, Constantinople (Istanbul)",
+            facts: [
+                "Conquered Constantinople in 1453, ending the Byzantine Empire",
+                "Controlled trade routes between Europe and Asia",
+                "Famous for architecture like the Blue Mosque",
+                "Practiced the millet system of religious tolerance"
+            ],
+            leaders: ["Osman I", "Mehmed II", "Suleiman the Magnificent"]
+        },
+        british: {
+            description: "The largest empire in history, on which 'the sun never set'.",
+            capital: "London",
+            facts: [
+                "At its peak, controlled 25% of world's land and population",
+                "Spread English language and parliamentary systems globally",
+                "Industrial Revolution originated in Britain",
+                "Decolonization occurred mainly after World War II"
+            ],
+            leaders: ["Queen Victoria", "Winston Churchill"]
+        },
+        maya: {
+            description: "A sophisticated Mesoamerican civilization known for astronomy and architecture.",
+            capital: "Various city-states: Tikal, Chichen Itza, Copán",
+            facts: [
+                "Developed advanced hieroglyphic writing",
+                "Created accurate astronomical calendars",
+                "Built impressive pyramid temples",
+                "Classic Maya 'collapse' remains partially mysterious"
+            ],
+            leaders: ["K'inich Janaab Pakal (Palenque)", "Jasaw Chan K'awiil I (Tikal)"]
+        },
+        aztec: {
+            description: "The dominant Mesoamerican empire when the Spanish arrived.",
+            capital: "Tenochtitlan (modern Mexico City)",
+            facts: [
+                "Built Tenochtitlan on an island in Lake Texcoco",
+                "Practiced human sacrifice as religious ritual",
+                "Created floating gardens (chinampas) for agriculture",
+                "Conquered by Hernán Cortés in 1521"
+            ],
+            leaders: ["Montezuma I", "Montezuma II", "Cuauhtémoc"]
+        },
+        inca: {
+            description: "The largest empire in pre-Columbian America, spanning the Andes.",
+            capital: "Cusco",
+            facts: [
+                "Built Machu Picchu and extensive road networks",
+                "Used quipu (knotted strings) for record-keeping",
+                "Had no written language or wheeled vehicles",
+                "Conquered by Francisco Pizarro in 1533"
+            ],
+            leaders: ["Pachacuti", "Huayna Capac", "Atahualpa"]
+        },
+        vikings: {
+            description: "Norse seafarers who raided, traded, and settled across Europe and beyond.",
+            capital: "Various (not unified): Uppsala, Hedeby, Dublin",
+            facts: [
+                "First Europeans to reach North America (Vinland)",
+                "Established the Danelaw in England",
+                "Founded Normandy, Russia (Rus), and Sicily",
+                "Exceptional shipbuilders and navigators"
+            ],
+            leaders: ["Ragnar Lothbrok", "Leif Erikson", "Harald Hardrada"]
+        },
+        nazi_germany: {
+            description: "The Third Reich under Adolf Hitler, whose aggressive expansion led to World War II.",
+            capital: "Berlin",
+            facts: [
+                "Invaded Poland in 1939, starting World War II in Europe",
+                "Occupied most of Europe at peak expansion (1942)",
+                "Responsible for the Holocaust",
+                "Defeated by Allied forces in 1945"
+            ],
+            leaders: ["Adolf Hitler", "Heinrich Himmler", "Hermann Göring"]
+        },
+        german_ww1: {
+            description: "The German Empire during World War I, a major Central Power.",
+            capital: "Berlin",
+            facts: [
+                "Fought on multiple fronts: Western, Eastern, and overseas",
+                "Introduced trench warfare and poison gas",
+                "Occupied Belgium and parts of France and Russia",
+                "Defeated in 1918, leading to the Treaty of Versailles"
+            ],
+            leaders: ["Kaiser Wilhelm II", "Paul von Hindenburg", "Erich Ludendorff"]
+        },
+        imperial_japan: {
+            description: "The Empire of Japan expanded aggressively in Asia and the Pacific.",
+            capital: "Tokyo",
+            facts: [
+                "Modernized rapidly during the Meiji Restoration",
+                "Attacked Pearl Harbor in 1941, bringing USA into WWII",
+                "Occupied much of East Asia and the Pacific",
+                "Surrendered after atomic bombings of Hiroshima and Nagasaki"
+            ],
+            leaders: ["Emperor Meiji", "Emperor Hirohito", "Hideki Tojo"]
+        },
+        soviet_union: {
+            description: "The world's first socialist state, a superpower during the Cold War.",
+            capital: "Moscow",
+            facts: [
+                "Formed after the Russian Revolution of 1917",
+                "Industrialized rapidly under Stalin's Five-Year Plans",
+                "Key Allied power defeating Nazi Germany",
+                "Collapsed in 1991, ending the Cold War"
+            ],
+            leaders: ["Vladimir Lenin", "Joseph Stalin", "Nikita Khrushchev", "Mikhail Gorbachev"]
+        },
+        byzantine: {
+            description: "The Eastern Roman Empire, which preserved Roman civilization for a thousand years after Rome fell.",
+            capital: "Constantinople (Istanbul)",
+            facts: [
+                "Preserved Greek and Roman culture through the Middle Ages",
+                "Built the Hagia Sophia, an architectural masterpiece",
+                "Created the Justinian Code, foundation of modern law",
+                "Fell to the Ottoman Turks in 1453"
+            ],
+            leaders: ["Justinian I", "Theodora", "Basil II", "Constantine XI"]
+        },
+        frankish: {
+            description: "The Carolingian Empire united much of Western Europe under Charlemagne.",
+            capital: "Aachen",
+            facts: [
+                "Charlemagne crowned Holy Roman Emperor in 800 CE",
+                "Promoted education and literacy (Carolingian Renaissance)",
+                "Divided into three kingdoms at Treaty of Verdun (843)",
+                "Laid foundations for modern France and Germany"
+            ],
+            leaders: ["Charlemagne", "Louis the Pious", "Charles the Bald"]
+        },
+        hre: {
+            description: "The Holy Roman Empire, a complex of territories in central Europe.",
+            capital: "Various (Vienna, Prague, Aachen)",
+            facts: [
+                "Called 'Holy Roman Empire' but was mostly German",
+                "Lasted from 800/962 CE to 1806",
+                "Voltaire quipped it was 'neither holy, nor Roman, nor an empire'",
+                "Dissolved during the Napoleonic Wars"
+            ],
+            leaders: ["Otto I", "Frederick Barbarossa", "Charles V", "Francis II"]
+        },
+        carthage: {
+            description: "A Phoenician trading empire that became Rome's greatest rival.",
+            capital: "Carthage (near modern Tunis)",
+            facts: [
+                "Founded by Phoenician colonists from Tyre",
+                "Controlled western Mediterranean trade routes",
+                "Hannibal crossed the Alps with war elephants",
+                "Completely destroyed by Rome in 146 BCE"
+            ],
+            leaders: ["Hannibal Barca", "Hamilcar Barca", "Hasdrubal"]
+        },
+        umayyad: {
+            description: "The first great Islamic caliphate, spreading from Spain to India.",
+            capital: "Damascus, later Córdoba (in Spain)",
+            facts: [
+                "Created the largest empire the world had seen",
+                "Built the Dome of the Rock in Jerusalem",
+                "Umayyad Caliphate of Córdoba preserved classical knowledge",
+                "Overthrown by Abbasids in 750 CE (except in Spain)"
+            ],
+            leaders: ["Muawiya I", "Abd al-Malik", "Abd al-Rahman I (Spain)"]
+        },
+        abbasid: {
+            description: "The golden age of Islamic civilization and learning.",
+            capital: "Baghdad",
+            facts: [
+                "Founded the House of Wisdom in Baghdad",
+                "Preserved and translated Greek and Roman texts",
+                "Advanced mathematics, astronomy, and medicine",
+                "Eventually weakened and destroyed by the Mongols (1258)"
+            ],
+            leaders: ["Al-Mansur", "Harun al-Rashid", "Al-Ma'mun"]
+        },
+        russian: {
+            description: "The Russian Empire expanded across Eurasia to become a major world power.",
+            capital: "St. Petersburg, Moscow",
+            facts: [
+                "Peter the Great modernized and westernized Russia",
+                "Expanded from Poland to Alaska",
+                "Abolished serfdom in 1861",
+                "Collapsed in the Russian Revolution of 1917"
+            ],
+            leaders: ["Peter the Great", "Catherine the Great", "Alexander II", "Nicholas II"]
+        },
+        spanish: {
+            description: "The Spanish Empire was the first global empire, spanning four continents.",
+            capital: "Madrid",
+            facts: [
+                "First European power to colonize the Americas",
+                "Controlled vast territories in the New World",
+                "The 'empire on which the sun never sets' before Britain",
+                "Declined after wars and independence movements"
+            ],
+            leaders: ["Charles V", "Philip II", "Isabella I", "Ferdinand II"]
+        },
+        portuguese: {
+            description: "Pioneer of the Age of Exploration, establishing a global maritime empire.",
+            capital: "Lisbon",
+            facts: [
+                "First European power to reach India by sea",
+                "Controlled key trading posts in Africa, Asia, and Brazil",
+                "Introduced European goods and Christianity worldwide",
+                "Brazil was their largest and most important colony"
+            ],
+            leaders: ["Henry the Navigator", "Manuel I", "Afonso de Albuquerque"]
+        },
+        napoleonic: {
+            description: "Napoleon Bonaparte's empire that dominated Europe and reshaped the continent.",
+            capital: "Paris",
+            facts: [
+                "Napoleon crowned himself Emperor in 1804",
+                "Won major battles at Austerlitz, Jena, and Wagram",
+                "Introduced the Napoleonic Code, basis of civil law in many countries",
+                "Disastrous invasion of Russia in 1812 led to his downfall",
+                "Finally defeated at Waterloo in 1815"
+            ],
+            leaders: ["Napoleon Bonaparte", "Joséphine de Beauharnais", "Marshal Ney", "Marshal Murat"]
+        }
+    };
+    
+    return EMPIRE_INFO[empireId] || null;
+}
+
+// Update educational content for a specific empire
+function updateEducationalContentForEmpire(empireId) {
+    const empireInfo = getEmpireInfo(empireId);
+    const eduFacts = document.getElementById('eduFacts');
+    const figuresText = document.getElementById('figuresText');
+    
+    if (empireInfo && eduFacts) {
+        let html = '';
+        if (empireInfo.facts) {
+            empireInfo.facts.forEach(fact => {
+                html += `<li>${fact}</li>`;
+            });
+        }
+        eduFacts.innerHTML = html || '<li>Historical data being compiled...</li>';
+    }
+    
+    if (empireInfo && figuresText && empireInfo.leaders) {
+        figuresText.textContent = empireInfo.leaders.join(', ');
+    }
 }
 
 // Helper function to lock info panel content
