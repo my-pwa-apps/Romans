@@ -285,6 +285,32 @@ const CIVILIZATIONS = {
         name: 'Russian Empire',
         color: '#1E90FF', // Dodger Blue
         textColor: '#FFFFFF'
+    },
+    
+    // World Wars
+    german_ww1: {
+        id: 'german_ww1',
+        name: 'German Empire (WW1)',
+        color: '#2F2F2F', // Dark Gray
+        textColor: '#FFFFFF'
+    },
+    nazi_germany: {
+        id: 'nazi_germany',
+        name: 'Nazi Germany (WW2)',
+        color: '#333333', // Darker Gray
+        textColor: '#FFFFFF'
+    },
+    imperial_japan: {
+        id: 'imperial_japan',
+        name: 'Imperial Japan',
+        color: '#BC002D', // Japan Red
+        textColor: '#FFFFFF'
+    },
+    soviet_union: {
+        id: 'soviet_union',
+        name: 'Soviet Union',
+        color: '#CC0000', // Soviet Red
+        textColor: '#FFFFFF'
     }
 };
 
@@ -1982,6 +2008,260 @@ const WORLD_EMPIRES = {
                 ]]
             }
         ]
+    },
+    
+    // ============================================
+    // WORLD WARS - 20TH CENTURY
+    // ============================================
+    
+    // German Empire WW1
+    german_ww1: {
+        name: 'German Empire (WW1)',
+        periods: [
+            {
+                startYear: 1914,
+                endYear: 1918,
+                name: 'German Empire - Maximum Extent (1917)',
+                territories: [
+                    // Germany proper
+                    [
+                        [55.0, 6.0], [54.5, 14.0], [52.5, 15.0], [51.0, 15.0],
+                        [50.0, 12.0], [48.5, 13.5], [47.5, 10.0], [47.5, 7.5],
+                        [49.0, 6.0], [50.0, 6.0], [51.5, 6.0], [55.0, 6.0]
+                    ],
+                    // Occupied Belgium
+                    [
+                        [51.5, 2.5], [51.5, 6.0], [50.5, 6.0], [49.5, 6.0],
+                        [49.5, 4.0], [50.0, 2.5], [51.5, 2.5]
+                    ],
+                    // Occupied Northern France
+                    [
+                        [50.5, 1.5], [50.0, 4.5], [49.0, 4.5], [48.5, 3.0],
+                        [49.0, 1.5], [50.5, 1.5]
+                    ],
+                    // Eastern Front gains (Poland, Baltics, Ukraine)
+                    [
+                        [56.0, 14.0], [57.5, 22.0], [56.0, 28.0], [54.0, 28.0],
+                        [52.0, 24.0], [50.0, 24.0], [48.0, 22.0], [50.0, 15.0],
+                        [52.5, 15.0], [56.0, 14.0]
+                    ]
+                ]
+            }
+        ]
+    },
+    
+    // German Empire (WW1)
+    german_ww1: {
+        name: 'German Empire',
+        periods: [
+            {
+                startYear: 1871,
+                endYear: 1914,
+                name: 'German Empire (1871-1914)',
+                territories: [[
+                    [55.5, 6.0], [55.0, 15.0], [54.0, 18.0], [51.0, 18.0],
+                    [50.0, 17.0], [48.5, 15.0], [47.5, 12.0], [47.5, 9.0],
+                    [48.5, 7.0], [49.5, 6.0], [51.0, 6.0], [55.5, 6.0]
+                ]]
+            },
+            {
+                startYear: 1914,
+                endYear: 1917,
+                name: 'German Empire - WW1 Maximum Extent (1917)',
+                territories: [
+                    // Germany proper
+                    [
+                        [55.5, 6.0], [55.0, 15.0], [54.0, 18.0], [51.0, 18.0],
+                        [50.0, 17.0], [48.5, 15.0], [47.5, 12.0], [47.5, 9.0],
+                        [48.5, 7.0], [49.5, 6.0], [51.0, 6.0], [55.5, 6.0]
+                    ],
+                    // Occupied Belgium
+                    [
+                        [51.5, 2.5], [51.5, 6.0], [50.0, 6.0], [49.5, 4.5],
+                        [50.0, 2.5], [51.5, 2.5]
+                    ],
+                    // Occupied Northern France
+                    [
+                        [50.0, 2.5], [50.5, 4.5], [49.5, 4.5], [49.0, 4.0],
+                        [48.5, 3.5], [49.0, 2.0], [50.0, 2.5]
+                    ],
+                    // Occupied Poland/Lithuania (Ober Ost)
+                    [
+                        [56.0, 18.0], [57.0, 25.0], [55.0, 26.0], [52.0, 24.0],
+                        [51.0, 18.0], [54.0, 18.0], [56.0, 18.0]
+                    ],
+                    // Occupied Romania
+                    [
+                        [46.0, 25.0], [48.0, 25.0], [48.0, 30.0], [46.0, 30.0],
+                        [44.0, 28.0], [44.0, 25.0], [46.0, 25.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1918,
+                endYear: 1918,
+                name: 'German Empire - Collapse (1918)',
+                territories: [[
+                    [55.5, 6.0], [55.0, 15.0], [54.0, 18.0], [51.0, 18.0],
+                    [50.0, 17.0], [48.5, 15.0], [47.5, 12.0], [47.5, 9.0],
+                    [48.5, 7.0], [49.5, 6.0], [51.0, 6.0], [55.5, 6.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Nazi Germany WW2
+    nazi_germany: {
+        name: 'Nazi Germany (WW2)',
+        periods: [
+            {
+                startYear: 1939,
+                endYear: 1942,
+                name: 'Nazi Germany - Maximum Extent (1942)',
+                territories: [
+                    // Greater Germany + Occupied Western Europe
+                    [
+                        [55.0, 6.0], [54.0, 18.0], [52.0, 21.0], [50.0, 20.0],
+                        [48.0, 17.0], [46.5, 15.0], [44.0, 12.0], [43.5, 7.0],
+                        [43.0, 3.0], [44.0, -1.0], [46.0, -2.0], [49.0, -5.0],
+                        [50.0, 2.0], [52.0, 4.0], [53.5, 5.0], [55.0, 6.0]
+                    ],
+                    // Occupied Eastern Europe (Poland, Ukraine, Baltics)
+                    [
+                        [56.0, 18.0], [59.0, 24.0], [58.0, 30.0], [54.0, 35.0],
+                        [50.0, 40.0], [47.0, 40.0], [45.0, 35.0], [46.0, 30.0],
+                        [48.0, 22.0], [50.0, 20.0], [54.0, 18.0], [56.0, 18.0]
+                    ],
+                    // Norway
+                    [
+                        [62.0, 5.0], [70.0, 20.0], [70.0, 30.0], [65.0, 15.0],
+                        [60.0, 10.0], [58.0, 6.0], [62.0, 5.0]
+                    ],
+                    // North Africa (Libya)
+                    [
+                        [33.0, 10.0], [33.0, 25.0], [30.0, 25.0], [28.0, 20.0],
+                        [30.0, 10.0], [33.0, 10.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1943,
+                endYear: 1945,
+                name: 'Nazi Germany - Retreating (1943-45)',
+                territories: [[
+                    [55.0, 6.0], [54.0, 15.0], [52.0, 18.0], [50.0, 17.0],
+                    [48.0, 15.0], [47.5, 12.0], [47.5, 9.0], [48.5, 7.0],
+                    [50.0, 6.0], [52.0, 6.0], [55.0, 6.0]
+                ]]
+            }
+        ]
+    },
+    
+    // Imperial Japan
+    imperial_japan: {
+        name: 'Imperial Japan',
+        periods: [
+            {
+                startYear: 1895,
+                endYear: 1930,
+                name: 'Empire of Japan - Early Expansion',
+                territories: [
+                    // Japan home islands
+                    [
+                        [45.5, 140.0], [43.0, 145.5], [40.0, 142.0], [35.0, 140.0],
+                        [33.0, 132.0], [34.0, 129.5], [36.0, 133.0], [38.0, 136.0],
+                        [40.0, 138.0], [45.5, 140.0]
+                    ],
+                    // Korea
+                    [
+                        [43.0, 128.0], [42.0, 130.5], [38.0, 128.5], [35.0, 129.0],
+                        [35.0, 126.0], [38.0, 125.0], [40.0, 125.0], [43.0, 128.0]
+                    ],
+                    // Taiwan
+                    [
+                        [25.5, 120.0], [25.0, 122.0], [22.0, 121.5], [22.0, 120.0],
+                        [23.5, 119.5], [25.5, 120.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1931,
+                endYear: 1942,
+                name: 'Empire of Japan - Maximum Extent (1942)',
+                territories: [
+                    // Japan + Korea + Manchuria
+                    [
+                        [50.0, 125.0], [50.0, 135.0], [45.0, 145.0], [35.0, 140.0],
+                        [33.0, 130.0], [35.0, 126.0], [40.0, 120.0], [45.0, 120.0],
+                        [50.0, 125.0]
+                    ],
+                    // Occupied China (coastal)
+                    [
+                        [40.0, 117.0], [40.0, 122.0], [35.0, 122.0], [30.0, 122.0],
+                        [25.0, 118.0], [22.0, 114.0], [22.0, 110.0], [25.0, 110.0],
+                        [30.0, 115.0], [35.0, 117.0], [40.0, 117.0]
+                    ],
+                    // Southeast Asia (Burma, Thailand, Indochina, Malaya)
+                    [
+                        [25.0, 95.0], [22.0, 100.0], [20.0, 106.0], [12.0, 109.0],
+                        [8.0, 105.0], [1.0, 104.0], [1.0, 100.0], [5.0, 98.0],
+                        [12.0, 98.0], [18.0, 95.0], [25.0, 95.0]
+                    ],
+                    // Philippines
+                    [
+                        [20.0, 118.0], [18.0, 122.5], [12.0, 125.0], [6.0, 126.0],
+                        [6.0, 120.0], [12.0, 118.0], [20.0, 118.0]
+                    ],
+                    // Indonesia (Dutch East Indies)
+                    [
+                        [5.0, 95.0], [5.0, 105.0], [0.0, 110.0], [-5.0, 120.0],
+                        [-8.0, 130.0], [-8.0, 140.0], [-5.0, 140.0], [0.0, 135.0],
+                        [0.0, 120.0], [0.0, 105.0], [5.0, 95.0]
+                    ],
+                    // Pacific Islands
+                    [
+                        [20.0, 145.0], [15.0, 155.0], [5.0, 165.0], [0.0, 175.0],
+                        [-5.0, 165.0], [0.0, 150.0], [10.0, 140.0], [20.0, 145.0]
+                    ]
+                ]
+            },
+            {
+                startYear: 1943,
+                endYear: 1945,
+                name: 'Empire of Japan - Retreating (1943-45)',
+                territories: [
+                    // Japan + Korea + Manchuria
+                    [
+                        [50.0, 125.0], [50.0, 135.0], [45.0, 145.0], [35.0, 140.0],
+                        [33.0, 130.0], [35.0, 126.0], [40.0, 120.0], [45.0, 120.0],
+                        [50.0, 125.0]
+                    ],
+                    // Reduced China
+                    [
+                        [40.0, 117.0], [40.0, 122.0], [35.0, 122.0], [30.0, 120.0],
+                        [28.0, 118.0], [30.0, 115.0], [35.0, 117.0], [40.0, 117.0]
+                    ]
+                ]
+            }
+        ]
+    },
+    
+    // Soviet Union
+    soviet_union: {
+        name: 'Soviet Union',
+        periods: [
+            {
+                startYear: 1922,
+                endYear: 1991,
+                name: 'Union of Soviet Socialist Republics',
+                territories: [[
+                    [70.0, 30.0], [75.0, 70.0], [75.0, 110.0], [70.0, 170.0],
+                    [65.0, 180.0], [55.0, 170.0], [45.0, 135.0], [42.0, 80.0],
+                    [38.0, 58.0], [40.0, 45.0], [45.0, 35.0], [50.0, 22.0],
+                    [55.0, 20.0], [60.0, 28.0], [70.0, 30.0]
+                ]]
+            }
+        ]
     }
 };
 
@@ -2195,6 +2475,17 @@ const MAP_CONFIG = {
         if (width < 1024) return 3;       // Tablets
         return 3;                          // Desktop
     }
+};
+
+// Region view presets for navigation
+const REGION_VIEWS = {
+    world: { center: [20, 0], zoom: 2, name: 'World View' },
+    mediterranean: { center: [38, 18], zoom: 4, name: 'Mediterranean' },
+    europe: { center: [50, 10], zoom: 4, name: 'Europe' },
+    middleeast: { center: [30, 45], zoom: 4, name: 'Middle East' },
+    asia: { center: [35, 100], zoom: 3, name: 'Asia' },
+    americas: { center: [15, -80], zoom: 3, name: 'Americas' },
+    africa: { center: [5, 20], zoom: 3, name: 'Africa' }
 };
 
 // ============================================
@@ -2436,6 +2727,59 @@ function setupEventListeners() {
     }, 250);
     
     window.addEventListener('resize', throttledResize, { passive: true });
+    
+    // Region navigation
+    setupRegionNavigation();
+}
+
+// ============================================
+// REGION NAVIGATION
+// ============================================
+function setupRegionNavigation() {
+    const toggle = document.getElementById('regionToggle');
+    const menu = document.getElementById('regionMenu');
+    
+    if (!toggle || !menu) return;
+    
+    // Toggle menu
+    toggle.addEventListener('click', () => {
+        const isHidden = menu.hidden;
+        menu.hidden = !isHidden;
+        toggle.setAttribute('aria-expanded', isHidden);
+    });
+    
+    // Handle region button clicks
+    menu.querySelectorAll('button[data-region]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const region = btn.dataset.region;
+            if (REGION_VIEWS[region] && STATE.map) {
+                const view = REGION_VIEWS[region];
+                STATE.map.flyTo(view.center, view.zoom, {
+                    duration: 1.5,
+                    easeLinearity: 0.25
+                });
+                console.log(`📍 Navigating to ${view.name}`);
+            }
+            menu.hidden = true;
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.hidden = true;
+        }
+    });
+}
+
+// Navigate to region (also callable programmatically)
+function navigateToRegion(regionId) {
+    const view = REGION_VIEWS[regionId];
+    if (view && STATE.map) {
+        STATE.map.flyTo(view.center, view.zoom, { duration: 1.5 });
+        return true;
+    }
+    return false;
 }
 
 // ============================================
@@ -4086,6 +4430,11 @@ function updateDisplay(forceUpdate = false) {
 // SEA ROUTES RENDERING
 // ============================================
 function updateSeaRoutes(year) {
+    if (!STATE.map) {
+        console.warn('⚠️ Sea routes: Map not initialized');
+        return;
+    }
+    
     // Clear existing sea route layers
     seaRouteLayers.forEach(layer => {
         if (STATE.map.hasLayer(layer)) {
@@ -4094,9 +4443,13 @@ function updateSeaRoutes(year) {
     });
     seaRouteLayers = [];
     
+    let activeRoutes = 0;
+    
     // Add active sea routes for the current year
     for (const [routeId, route] of Object.entries(SEA_ROUTES)) {
         if (year >= route.startYear && year <= route.endYear) {
+            activeRoutes++;
+            
             // Create the route line with animation
             const routeLine = L.polyline(route.points, {
                 color: route.color,
@@ -4130,6 +4483,11 @@ function updateSeaRoutes(year) {
             shipMarker.addTo(STATE.map);
             seaRouteLayers.push(shipMarker);
         }
+    }
+    
+    // Log active routes (helpful for debugging)
+    if (activeRoutes > 0) {
+        console.log(`🚢 ${activeRoutes} sea route(s) active for year ${year}`);
     }
 }
 

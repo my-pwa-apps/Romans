@@ -2224,3 +2224,121 @@ footer {
     color: var(--chronos-text-muted, #888);
     font-size: 0.9em;
 }
+
+/* ============================================
+   REGION NAVIGATION
+   ============================================ */
+.region-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.region-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--chronos-primary, #1a5f7a), var(--chronos-secondary, #2e86ab));
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.region-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.region-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    background: var(--chronos-bg, #1a1a2e);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--chronos-border, #333);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 180px;
+}
+
+.region-menu[hidden] {
+    display: none;
+}
+
+.region-menu button {
+    background: transparent;
+    border: none;
+    color: var(--chronos-text, #fff);
+    padding: 10px 14px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.region-menu button:hover {
+    background: var(--chronos-primary, #1a5f7a);
+    transform: translateX(4px);
+}
+
+.region-menu button:active {
+    background: var(--chronos-accent, #c9a227);
+    color: var(--chronos-bg, #1a1a2e);
+}
+
+/* Sea route legend indicator */
+.legend-sea-routes {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--chronos-border, #333);
+}
+
+.legend-sea-routes .legend-item {
+    font-size: 0.85rem;
+}
+
+.legend-color-route {
+    width: 24px;
+    height: 3px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.legend-color-route::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    font-size: 12px;
+}
+
+/* Mobile adjustments for region nav */
+@media (max-width: 768px) {
+    .region-nav {
+        bottom: 80px;
+        left: 10px;
+    }
+    
+    .region-toggle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+    }
+    
+    .region-menu {
+        min-width: 150px;
+    }
+    
+    .region-menu button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
