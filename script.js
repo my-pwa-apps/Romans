@@ -2586,8 +2586,32 @@ const STATE = {
     // Quiz State
     quizIndex: 0,
     quizScore: 0,
-    quizAnswered: 0
+    quizAnswered: 0,
+    
+    // Cached DOM elements (populated on init)
+    dom: {}
 };
+
+// Cache frequently accessed DOM elements
+function cacheDOMElements() {
+    STATE.dom = {
+        slider: document.getElementById('year-slider'),
+        playBtn: document.getElementById('playBtn'),
+        resetBtn: document.getElementById('resetBtn'),
+        currentYear: document.getElementById('currentYear'),
+        era: document.querySelector('.era'),
+        periodName: document.getElementById('periodName'),
+        periodDescription: document.getElementById('periodDescription'),
+        loadingOverlay: document.getElementById('loadingOverlay'),
+        infoPanel: document.querySelector('.info-panel'),
+        eduToggle: document.getElementById('eduToggle'),
+        eduContent: document.getElementById('eduContent'),
+        eduFacts: document.getElementById('eduFacts'),
+        figuresText: document.getElementById('figuresText'),
+        playIcon: document.querySelector('.play-icon'),
+        pauseIcon: document.querySelector('.pause-icon')
+    };
+}
 
 // Speed configuration mapping (slower speeds for better visibility)
 const SPEED_MAP = {
@@ -2631,11 +2655,20 @@ const REGION_VIEWS = {
 // UTILITY FUNCTIONS
 // ============================================
 const utils = {
-    // Format year display
+    // Cache for formatted years
+    _yearCache: new Map(),
+    
+    // Format year display with caching
     formatYear: (year) => {
-        const absYear = Math.abs(year);
-        const era = year < 0 ? 'BCE' : 'CE';
-        return { year: absYear, era };
+        if (utils._yearCache.has(year)) {
+            return utils._yearCache.get(year);
+        }
+        const result = {
+            year: Math.abs(year),
+            era: year < 0 ? 'BCE' : 'CE'
+        };
+        utils._yearCache.set(year, result);
+        return result;
     },
     
     // Fade element opacity with callback
@@ -2664,12 +2697,12 @@ const utils = {
     
     // Remove layers safely
     removeLayers: (layers, map) => {
-        if (!map) return;
+        if (!map || !layers) return [];
         layers.forEach(layer => {
             try {
                 map.removeLayer(layer);
             } catch (e) {
-                console.warn('Failed to remove layer:', e);
+                // Silently ignore removal errors
             }
         });
         return [];
@@ -2709,6 +2742,7 @@ function init() {
     
     try {
         showLoading();
+        cacheDOMElements(); // Cache DOM elements for performance
         detectMobile();
         initializeMap();
         initTerritorySystem(); // Initialize territory layer group
@@ -2718,8 +2752,7 @@ function init() {
         setupEducationalFeatures();
         
         // Initialize slider to current year
-        const slider = document.getElementById('year-slider');
-        if (slider) slider.value = STATE.currentYear;
+        if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
         
         addReferenceCities();
         updateDisplay();
@@ -2735,11 +2768,12 @@ function init() {
             }
         });
         
-        const loadTime = (performance.now() - startTime).toFixed(0);
-        console.log(`✅ CHRONOS World History Atlas initialized in ${loadTime}ms`);
+        if (typeof DEBUG !== 'undefined' && DEBUG) {
+            const loadTime = (performance.now() - startTime).toFixed(0);
+            console.log(`✅ CHRONOS initialized in ${loadTime}ms`);
+        }
     } catch (error) {
-        console.error('❌ Initialization error:', error);
-        console.error('Stack:', error.stack);
+        console.error('Initialization error:', error);
         showError('Failed to initialize. Please check your connection and refresh.');
         hideLoading();
     }
@@ -2904,7 +2938,6 @@ function setupRegionNavigation() {
                     duration: 1.5,
                     easeLinearity: 0.25
                 });
-                console.log(`📍 Navigating to ${view.name}`);
             }
             menu.hidden = true;
         });
@@ -3039,25 +3072,22 @@ function setupKeyboardShortcuts() {
 function navigateTimeline(direction) {
     if (STATE.isPlaying) togglePlay();
     
-    const slider = document.getElementById('year-slider');
     STATE.currentYear = Math.max(MIN_YEAR, Math.min(MAX_YEAR, STATE.currentYear + direction));
-    if (slider) slider.value = STATE.currentYear;
+    if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
     updateDisplay();
 }
 
 function jumpToStart() {
     if (STATE.isPlaying) togglePlay();
     STATE.currentYear = MIN_YEAR;
-    const slider = document.getElementById('year-slider');
-    if (slider) slider.value = STATE.currentYear;
+    if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
     updateDisplay();
 }
 
 function jumpToEnd() {
     if (STATE.isPlaying) togglePlay();
     STATE.currentYear = MAX_YEAR;
-    const slider = document.getElementById('year-slider');
-    if (slider) slider.value = STATE.currentYear;
+    if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
     updateDisplay();
 }
 
@@ -4320,23 +4350,24 @@ function setupEducationalFeatures() {
     }
 }
 
-function updateEducationalContent() {
-    const currentYear = STATE.currentYear;
-    
-    // Find closest educational data
+// Helper to find closest educational data for a year
+function getEducationalDataForYear(year) {
     let closestYear = -Infinity;
     let eduData = null;
     
     for (const dataYearStr in EDUCATIONAL_DATA) {
         const dataYear = parseInt(dataYearStr);
-        if (dataYear <= currentYear && dataYear > closestYear) {
+        if (dataYear <= year && dataYear > closestYear) {
             closestYear = dataYear;
             eduData = EDUCATIONAL_DATA[dataYearStr];
         }
     }
-    
-    const factsElement = document.getElementById('eduFacts');
-    const figuresElement = document.getElementById('figuresText');
+    return eduData;
+}
+
+function updateEducationalContent() {
+    const eduData = getEducationalDataForYear(STATE.currentYear);
+    const { eduFacts: factsElement, figuresText: figuresElement } = STATE.dom;
     
     if (eduData && factsElement) {
         factsElement.innerHTML = eduData.facts.map(fact => `<li>${fact}</li>`).join('');
@@ -4353,19 +4384,7 @@ function updateEducationalContent() {
 }
 
 function showRandomFact() {
-    const currentYear = STATE.currentYear;
-    
-    // Find closest educational data
-    let closestYear = -Infinity;
-    let eduData = null;
-    
-    for (const dataYearStr in EDUCATIONAL_DATA) {
-        const dataYear = parseInt(dataYearStr);
-        if (dataYear <= currentYear && dataYear > closestYear) {
-            closestYear = dataYear;
-            eduData = EDUCATIONAL_DATA[dataYearStr];
-        }
-    }
+    const eduData = getEducationalDataForYear(STATE.currentYear);
     
     if (eduData && eduData.facts && eduData.facts.length > 0) {
         const randomFact = eduData.facts[Math.floor(Math.random() * eduData.facts.length)];
@@ -4495,13 +4514,10 @@ function updateDisplay(forceUpdate = false) {
     if (STATE.infoLocked && !forceUpdate) return;
     
     const year = STATE.currentYear;
-    const era = year < 0 ? 'BCE' : 'CE';
-    const absYear = Math.abs(year);
+    const { year: absYear, era } = utils.formatYear(year);
     
-    const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
-    const nameElement = document.getElementById('periodName');
-    const descElement = document.getElementById('periodDescription');
+    // Use cached DOM elements
+    const { currentYear: yearElement, era: eraElement, periodName: nameElement, periodDescription: descElement } = STATE.dom;
     
     if (yearElement) yearElement.textContent = absYear;
     if (eraElement) eraElement.textContent = era;
@@ -4621,10 +4637,7 @@ function updateDisplay(forceUpdate = false) {
 // SEA ROUTES RENDERING
 // ============================================
 function updateSeaRoutes(year) {
-    if (!STATE.map) {
-        console.warn('⚠️ Sea routes: Map not initialized');
-        return;
-    }
+    if (!STATE.map) return;
     
     // Clear existing sea route layers
     seaRouteLayers.forEach(layer => {
@@ -4703,11 +4716,6 @@ function updateSeaRoutes(year) {
             shipMarker.addTo(STATE.map);
             seaRouteLayers.push(shipMarker);
         }
-    }
-    
-    // Log active routes (helpful for debugging)
-    if (activeRoutes > 0) {
-        console.log(`🚢 ${activeRoutes} sea route(s) active for year ${year}`);
     }
 }
 
@@ -5444,10 +5452,8 @@ function showTerritoryInfo(periodData, isNewExpansion, lat, lon, isClick = false
 // ANIMATION CONTROL
 // ============================================
 function togglePlay() {
-    const playBtn = document.getElementById('playBtn');
-    const slider = document.getElementById('year-slider');
-    const playIcon = document.querySelector('.play-icon');
-    const pauseIcon = document.querySelector('.pause-icon');
+    // Use cached DOM elements
+    const { playBtn, slider, playIcon, pauseIcon } = STATE.dom;
     
     if (STATE.isPlaying) {
         // Pause
@@ -5484,26 +5490,14 @@ function togglePlay() {
     }
 }
 
-function animate(timestamp = 0) {
-    // Deprecated - using setInterval in togglePlay instead
-}
-
 function reset() {
     if (STATE.isPlaying) {
         togglePlay();
     }
     STATE.currentYear = DEFAULT_YEAR;
-    const slider = document.getElementById('year-slider');
-    if (slider) slider.value = STATE.currentYear;
+    if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
     
     updateDisplay();
-}
-
-// ============================================
-// EVENT HANDLERS
-// ============================================
-function handleTimelineChange(e) {
-    // Deprecated - handled by setupEventListeners
 }
 
 // ============================================
