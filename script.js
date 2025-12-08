@@ -3548,7 +3548,8 @@ function updateTimeBasedMarkers() {
         if (city.year <= currentYear) {
             const marker = L.marker([city.lat, city.lon], { 
                 icon: cityIcon,
-                zIndexOffset: 1000
+                zIndexOffset: 1000,
+                bubblingMouseEvents: false
             }).addTo(STATE.map);
             
             const tooltipContent = city.founded 
@@ -3563,7 +3564,8 @@ function updateTimeBasedMarkers() {
             });
             
             // Add click handler to show and lock city info
-            marker.on('click', () => {
+            marker.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
                 showCityInfo(city, true); // true = lock the info
             });
             
@@ -3596,7 +3598,8 @@ function updateTimeBasedMarkers() {
         if (fort.year <= currentYear) {
             const marker = L.marker([fort.lat, fort.lon], { 
                 icon: fortIcon,
-                zIndexOffset: 999
+                zIndexOffset: 999,
+                bubblingMouseEvents: false
             }).addTo(STATE.map);
             
             const tooltipContent = `${fort.name}<br><span class="city-founded">${fort.type} - ${fort.wall}</span>`;
@@ -3609,7 +3612,8 @@ function updateTimeBasedMarkers() {
             });
             
             // Add hover and click handlers for fort info
-            marker.on('click', () => {
+            marker.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
                 showFortInfo(fort, true); // true = lock the info
             });
             
@@ -3715,7 +3719,7 @@ function updateDefensiveWalls(currentYear) {
     
     // Rhine Limes (-12 to 260 CE)
     if (currentYear >= -12 && currentYear <= 260) {
-        const rhineLine = L.polyline(rhineLimes, limesStyle).addTo(STATE.map);
+        const rhineLine = L.polyline(rhineLimes, { ...limesStyle, interactive: true, bubblingMouseEvents: false }).addTo(STATE.map);
         rhineLine.bindTooltip('Rhine Limes', { className: 'wall-label', sticky: true });
         rhineLine.on('mouseover', () => {
             if (!STATE.infoLocked) showWallInfo('Rhine Limes', -12, 260, false);
@@ -3723,13 +3727,16 @@ function updateDefensiveWalls(currentYear) {
         rhineLine.on('mouseout', () => {
             if (!STATE.infoLocked) updateDisplay();
         });
-        rhineLine.on('click', () => showWallInfo('Rhine Limes', -12, 260, true));
+        rhineLine.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showWallInfo('Rhine Limes', -12, 260, true);
+        });
         STATE.wallLayers.push(rhineLine);
     }
     
     // Danube Limes (10 to 400 CE)
     if (currentYear >= 10 && currentYear <= 400) {
-        const danubeLine = L.polyline(danubeLimes, limesStyle).addTo(STATE.map);
+        const danubeLine = L.polyline(danubeLimes, { ...limesStyle, interactive: true, bubblingMouseEvents: false }).addTo(STATE.map);
         danubeLine.bindTooltip('Danube Limes', { className: 'wall-label', sticky: true });
         danubeLine.on('mouseover', () => {
             if (!STATE.infoLocked) showWallInfo('Danube Limes', 10, 400, false);
@@ -3737,13 +3744,16 @@ function updateDefensiveWalls(currentYear) {
         danubeLine.on('mouseout', () => {
             if (!STATE.infoLocked) updateDisplay();
         });
-        danubeLine.on('click', () => showWallInfo('Danube Limes', 10, 400, true));
+        danubeLine.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showWallInfo('Danube Limes', 10, 400, true);
+        });
         STATE.wallLayers.push(danubeLine);
     }
     
     // Upper Germanic Limes (85 to 260 CE)
     if (currentYear >= 85 && currentYear <= 260) {
-        const germanicLine = L.polyline(germanicLimes, limesStyle).addTo(STATE.map);
+        const germanicLine = L.polyline(germanicLimes, { ...limesStyle, interactive: true, bubblingMouseEvents: false }).addTo(STATE.map);
         germanicLine.bindTooltip('Upper Germanic Limes', { className: 'wall-label', sticky: true });
         germanicLine.on('mouseover', () => {
             if (!STATE.infoLocked) showWallInfo('Upper Germanic Limes', 85, 260, false);
@@ -3751,13 +3761,16 @@ function updateDefensiveWalls(currentYear) {
         germanicLine.on('mouseout', () => {
             if (!STATE.infoLocked) updateDisplay();
         });
-        germanicLine.on('click', () => showWallInfo('Upper Germanic Limes', 85, 260, true));
+        germanicLine.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showWallInfo('Upper Germanic Limes', 85, 260, true);
+        });
         STATE.wallLayers.push(germanicLine);
     }
     
     // Hadrian's Wall (122 to 410 CE)
     if (currentYear >= 122 && currentYear <= 410) {
-        const hadrianLine = L.polyline(hadriansWall, { ...wallStyle, color: '#654321' }).addTo(STATE.map);
+        const hadrianLine = L.polyline(hadriansWall, { ...wallStyle, color: '#654321', interactive: true, bubblingMouseEvents: false }).addTo(STATE.map);
         hadrianLine.bindTooltip('Hadrian\'s Wall (122-128 CE)', { className: 'wall-label', sticky: true });
         hadrianLine.on('mouseover', () => {
             if (!STATE.infoLocked) showWallInfo('Hadrian\'s Wall', 122, 410, false);
@@ -3765,13 +3778,16 @@ function updateDefensiveWalls(currentYear) {
         hadrianLine.on('mouseout', () => {
             if (!STATE.infoLocked) updateDisplay();
         });
-        hadrianLine.on('click', () => showWallInfo('Hadrian\'s Wall', 122, 410, true));
+        hadrianLine.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showWallInfo('Hadrian\'s Wall', 122, 410, true);
+        });
         STATE.wallLayers.push(hadrianLine);
     }
     
     // Antonine Wall (142 to 162 CE)
     if (currentYear >= 142 && currentYear <= 162) {
-        const antonineLine = L.polyline(antonineWall, { ...wallStyle, color: '#704214' }).addTo(STATE.map);
+        const antonineLine = L.polyline(antonineWall, { ...wallStyle, color: '#704214', interactive: true, bubblingMouseEvents: false }).addTo(STATE.map);
         antonineLine.bindTooltip('Antonine Wall (142-162 CE)', { className: 'wall-label', sticky: true });
         antonineLine.on('mouseover', () => {
             if (!STATE.infoLocked) showWallInfo('Antonine Wall', 142, 162, false);
@@ -3779,7 +3795,10 @@ function updateDefensiveWalls(currentYear) {
         antonineLine.on('mouseout', () => {
             if (!STATE.infoLocked) updateDisplay();
         });
-        antonineLine.on('click', () => showWallInfo('Antonine Wall', 142, 162, true));
+        antonineLine.on('click', (e) => {
+            L.DomEvent.stopPropagation(e);
+            showWallInfo('Antonine Wall', 142, 162, true);
+        });
         STATE.wallLayers.push(antonineLine);
     }
 }
@@ -4628,15 +4647,35 @@ function updateSeaRoutes(year) {
                 weight: 3,
                 opacity: 0.8,
                 dashArray: '10, 10',
-                className: 'sea-route-animated'
+                className: 'sea-route-animated',
+                interactive: true,
+                bubblingMouseEvents: false
             });
             
-            // Add popup with route info
-            routeLine.bindPopup(`
-                <strong>${route.icon} ${route.name}</strong><br>
-                <em>${Math.abs(route.startYear)} ${route.startYear < 0 ? 'BCE' : 'CE'} - 
-                    ${Math.abs(route.endYear)} ${route.endYear < 0 ? 'BCE' : 'CE'}</em>
-            `);
+            // Add tooltip for hover
+            routeLine.bindTooltip(`${route.icon} ${route.name}`, {
+                className: 'sea-route-label',
+                sticky: true
+            });
+            
+            // Add hover handler
+            routeLine.on('mouseover', () => {
+                if (!STATE.infoLocked) {
+                    showSeaRouteInfo(route, false);
+                }
+            });
+            
+            routeLine.on('mouseout', () => {
+                if (!STATE.infoLocked) {
+                    updateDisplay();
+                }
+            });
+            
+            // Add click handler to show and lock info
+            routeLine.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
+                showSeaRouteInfo(route, true);
+            });
             
             routeLine.addTo(STATE.map);
             seaRouteLayers.push(routeLine);
@@ -4650,8 +4689,17 @@ function updateSeaRoutes(year) {
                 iconAnchor: [12, 12]
             });
             
-            const shipMarker = L.marker(endPoint, { icon: shipIcon });
-            shipMarker.bindPopup(`<strong>${route.name}</strong>`);
+            const shipMarker = L.marker(endPoint, { 
+                icon: shipIcon,
+                bubblingMouseEvents: false
+            });
+            
+            // Add click handler for ship marker too
+            shipMarker.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
+                showSeaRouteInfo(route, true);
+            });
+            
             shipMarker.addTo(STATE.map);
             seaRouteLayers.push(shipMarker);
         }
@@ -4661,6 +4709,52 @@ function updateSeaRoutes(year) {
     if (activeRoutes > 0) {
         console.log(`🚢 ${activeRoutes} sea route(s) active for year ${year}`);
     }
+}
+
+// Show information about a sea route in the info panel
+function showSeaRouteInfo(route, isClick = false) {
+    // If it's a click, lock the info panel
+    if (isClick) {
+        lockInfoPanel({ type: 'seaRoute', data: route });
+    }
+    
+    // Don't update if locked to different content
+    if (STATE.infoLocked && STATE.lockedContent?.data !== route) return;
+    
+    const yearElement = document.getElementById('currentYear');
+    const eraElement = document.querySelector('.era');
+    const nameElement = document.getElementById('periodName');
+    const descElement = document.getElementById('periodDescription');
+    
+    if (!yearElement || !eraElement || !nameElement || !descElement) return;
+    
+    const startYear = Math.abs(route.startYear);
+    const startEra = route.startYear < 0 ? 'BCE' : 'CE';
+    const endYear = Math.abs(route.endYear);
+    const endEra = route.endYear < 0 ? 'BCE' : 'CE';
+    
+    // Build description based on route type
+    let description = '';
+    if (route.name.includes('Viking')) {
+        description = `${route.icon} Norse exploration route active from ${startYear} ${startEra} to ${endYear} ${endEra}. The Vikings were skilled seafarers who established trade routes and settlements across the North Atlantic. Using their advanced longships, they explored, traded, and settled in Iceland, Greenland, and briefly North America (Vinland).`;
+    } else if (route.name.includes('Columbus')) {
+        description = `${route.icon} Historic voyage of Christopher Columbus, ${startYear} ${startEra} - ${endYear} ${endEra}. These expeditions, sponsored by the Spanish Crown, connected Europe and the Americas, initiating the Age of Exploration and the Columbian Exchange that transformed both hemispheres.`;
+    } else {
+        description = `${route.icon} Maritime route active from ${startYear} ${startEra} to ${endYear} ${endEra}. These sea routes were vital for trade, exploration, and cultural exchange throughout history.`;
+    }
+    
+    // Update with fade transition
+    nameElement.style.opacity = '0';
+    descElement.style.opacity = '0';
+    
+    setTimeout(() => {
+        yearElement.textContent = startYear;
+        eraElement.textContent = startEra;
+        nameElement.textContent = `${route.icon} ${route.name}`;
+        descElement.textContent = description;
+        nameElement.style.opacity = '1';
+        descElement.style.opacity = '1';
+    }, 150);
 }
 
 // Render an empire from WORLD_EMPIRES on the map

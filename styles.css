@@ -2190,6 +2190,22 @@ footer {
    ============================================ */
 .sea-route-animated {
     animation: dash-animation 1s linear infinite;
+    cursor: pointer;
+}
+
+.sea-route-label {
+    background: rgba(20, 40, 80, 0.95) !important;
+    border: 2px solid #4682B4 !important;
+    color: #87CEEB !important;
+    font-weight: bold !important;
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(70, 130, 180, 0.2) !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
 }
 
 @keyframes dash-animation {
@@ -2201,6 +2217,7 @@ footer {
 .ship-marker {
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .ship-icon {
