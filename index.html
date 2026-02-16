@@ -168,7 +168,7 @@
         <!-- Floating Year Display -->
         <div class="year-display" id="yearDisplay" role="status" aria-live="polite" tabindex="0">
             <span id="currentYear">509</span>
-            <span class="era">BCE</span>
+            <span class="era" id="era">BCE</span>
         </div>
 
         <!-- Mobile Touch Hints -->
@@ -266,9 +266,6 @@
                 
                 navigator.serviceWorker.register(swPath)
                     .then((registration) => {
-                        console.log('✅ ServiceWorker registered successfully');
-                        console.log('   Scope:', registration.scope);
-                        console.log('   Script URL:', swPath);
                         
                         // Check for updates
                         registration.addEventListener('updatefound', () => {
@@ -284,9 +281,7 @@
                             });
                         });
                     })
-                    .catch((error) => {
-                        console.error('❌ ServiceWorker registration failed:', error);
-                    });
+                    .catch(() => { /* ServiceWorker registration failed */ });
                 
                 // Reload page when new service worker takes control
                 navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -302,8 +297,6 @@
             deferredPrompt = e;
             
             // Show install button (you can add a custom button later)
-            console.log('💾 Install prompt available');
-            
             // Create install banner
             const installBanner = document.createElement('div');
             installBanner.className = 'install-banner';
@@ -319,7 +312,6 @@
             document.getElementById('installBtn').addEventListener('click', async () => {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to install prompt: ${outcome}`);
                 deferredPrompt = null;
                 installBanner.remove();
             });
@@ -331,22 +323,8 @@
         
         // Track install success
         window.addEventListener('appinstalled', () => {
-            console.log('✅ PWA installed successfully!');
             deferredPrompt = null;
         });
-        
-        // Handle iOS "Add to Home Screen"
-        const isIos = () => {
-            const userAgent = window.navigator.userAgent.toLowerCase();
-            return /iphone|ipad|ipod/.test(userAgent);
-        };
-        
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-        
-        if (isIos() && !isInStandaloneMode()) {
-            // Show iOS install instructions
-            console.log('📱 iOS device detected - use Share > Add to Home Screen');
-        }
     </script>
 </body>
 </html>

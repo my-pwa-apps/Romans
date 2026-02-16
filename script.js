@@ -320,86 +320,6 @@ const CIVILIZATIONS = {
     }
 };
 
-// Historical conquest entry points - where Roman armies entered each territory
-// Used for water-flow animation effect - maps territory name -> entry point data
-const CONQUEST_DIRECTIONS = {
-    // Italia - Rome at center, expands outward
-    'romecore': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    'rome_core': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    'italia': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    'latium': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    'greaterlatium': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    'centralitaly': { entryLat: 41.9, entryLon: 12.5, direction: 'center' },
-    
-    // Islands - conquered from Italian mainland
-    'sicilia': { entryLat: 38.2, entryLon: 15.6, direction: 'ne' },
-    'sardinia': { entryLat: 41.0, entryLon: 9.5, direction: 'n' },
-    'corsica': { entryLat: 41.5, entryLon: 9.2, direction: 's' },
-    
-    // Western provinces - conquered from Mediterranean coast
-    'gallia': { entryLat: 43.5, entryLon: 5.0, direction: 'se' },
-    'hispania': { entryLat: 42.5, entryLon: 3.0, direction: 'ne' },
-    'hispaniaciterior': { entryLat: 42.5, entryLon: 3.0, direction: 'ne' },
-    'hispaniaulterior': { entryLat: 37.5, entryLon: -6.0, direction: 'e' },
-    'britannia': { entryLat: 51.0, entryLon: 1.0, direction: 's' },
-    
-    // Germania - conquered from Rhine/Gaul
-    'germaniainferior': { entryLat: 50.5, entryLon: 6.0, direction: 'sw' },
-    'germania_inferior': { entryLat: 50.5, entryLon: 6.0, direction: 'sw' },
-    'germaniasuperior': { entryLat: 48.0, entryLon: 8.0, direction: 'sw' },
-    'germania_superior': { entryLat: 48.0, entryLon: 8.0, direction: 'sw' },
-    
-    // Alpine provinces - conquered from Italy
-    'raetia': { entryLat: 46.5, entryLon: 10.0, direction: 's' },
-    'noricum': { entryLat: 46.5, entryLon: 13.0, direction: 'sw' },
-    
-    // Balkans - conquered from Italy/Macedonia
-    'illyricum': { entryLat: 45.0, entryLon: 14.0, direction: 'w' },
-    'pannonia': { entryLat: 46.0, entryLon: 16.0, direction: 'sw' },
-    'moesia': { entryLat: 44.0, entryLon: 21.0, direction: 'w' },
-    'dacia': { entryLat: 44.5, entryLon: 23.0, direction: 's' },
-    'thracia': { entryLat: 41.5, entryLon: 24.0, direction: 'w' },
-    'thrace': { entryLat: 41.5, entryLon: 24.0, direction: 'w' },
-    'macedonia': { entryLat: 40.0, entryLon: 20.0, direction: 'w' },
-    'greece': { entryLat: 38.5, entryLon: 22.0, direction: 'n' },
-    'achaea': { entryLat: 38.0, entryLon: 22.0, direction: 'n' },
-    
-    // Greek islands
-    'crete': { entryLat: 35.5, entryLon: 24.0, direction: 'n' },
-    'cyprus': { entryLat: 35.0, entryLon: 33.0, direction: 'w' },
-    
-    // Asia Minor - conquered from Aegean coast
-    'asia': { entryLat: 39.0, entryLon: 27.0, direction: 'w' },
-    'asiaminor': { entryLat: 39.0, entryLon: 27.0, direction: 'w' },
-    'anatolia': { entryLat: 39.0, entryLon: 27.0, direction: 'w' },
-    'bithynia': { entryLat: 40.5, entryLon: 29.0, direction: 'w' },
-    'pontus': { entryLat: 41.0, entryLon: 36.0, direction: 'w' },
-    'cappadocia': { entryLat: 38.5, entryLon: 35.0, direction: 'w' },
-    'galatia': { entryLat: 39.5, entryLon: 32.0, direction: 'w' },
-    'cilicia': { entryLat: 37.0, entryLon: 35.0, direction: 'w' },
-    
-    // Eastern provinces - conquered from Syria/Mediterranean
-    'syria': { entryLat: 36.0, entryLon: 36.0, direction: 'nw' },
-    'judaea': { entryLat: 32.5, entryLon: 35.0, direction: 'n' },
-    'palaestina': { entryLat: 32.5, entryLon: 35.0, direction: 'n' },
-    'arabia': { entryLat: 30.5, entryLon: 35.5, direction: 'n' },
-    'arabiapetraea': { entryLat: 30.5, entryLon: 35.5, direction: 'n' },
-    'mesopotamia': { entryLat: 36.0, entryLon: 40.0, direction: 'w' },
-    'armenia': { entryLat: 39.5, entryLon: 42.0, direction: 'sw' },
-    
-    // Egypt - conquered from Mediterranean (Alexandria)
-    'aegyptus': { entryLat: 31.5, entryLon: 30.0, direction: 'n' },
-    'egypt': { entryLat: 31.5, entryLon: 30.0, direction: 'n' },
-    
-    // North Africa - conquered from Carthage/east
-    'africa': { entryLat: 37.0, entryLon: 10.0, direction: 'ne' },
-    'africaproconsularis': { entryLat: 37.0, entryLon: 10.0, direction: 'ne' },
-    'numidia': { entryLat: 36.0, entryLon: 7.0, direction: 'e' },
-    'mauretania': { entryLat: 35.5, entryLon: 0.0, direction: 'e' },
-    'mauretaniacaesariensis': { entryLat: 35.5, entryLon: 0.0, direction: 'e' },
-    'mauretaniatingitana': { entryLat: 35.8, entryLon: -5.0, direction: 'e' }
-};
-
 // Educational Data - Historical Facts and Context
 const EDUCATIONAL_DATA = {
     "-3000": {
@@ -1098,8 +1018,44 @@ function getRegionName(lat, lon) {
     if (lat >= 30 && lat <= 38 && lon >= 40 && lon <= 50) {
         return "Mesopotamia (Iraq)";
     }
+    // East Asia (China, Korea, Japan)
+    if (lat >= 20 && lat <= 55 && lon >= 75 && lon <= 150) {
+        return "East Asia";
+    }
+    // South Asia (India)
+    if (lat >= 5 && lat <= 35 && lon >= 65 && lon <= 100) {
+        return "South Asia (Indian Subcontinent)";
+    }
+    // Southeast Asia
+    if (lat >= -10 && lat <= 25 && lon >= 95 && lon <= 140) {
+        return "Southeast Asia";
+    }
+    // Central Asia / Steppe
+    if (lat >= 35 && lat <= 55 && lon >= 50 && lon <= 90) {
+        return "Central Asia (Steppe)";
+    }
+    // Sub-Saharan Africa
+    if (lat >= -35 && lat <= 15 && lon >= -20 && lon <= 50) {
+        return "Sub-Saharan Africa";
+    }
+    // Mesoamerica
+    if (lat >= 14 && lat <= 25 && lon >= -105 && lon <= -82) {
+        return "Mesoamerica";
+    }
+    // South America (Andes)
+    if (lat >= -35 && lat <= 5 && lon >= -82 && lon <= -60) {
+        return "South America";
+    }
+    // Scandinavia
+    if (lat >= 54 && lat <= 72 && lon >= 4 && lon <= 30) {
+        return "Scandinavia";
+    }
+    // Eastern Europe / Russia
+    if (lat >= 45 && lat <= 70 && lon >= 25 && lon <= 60) {
+        return "Eastern Europe";
+    }
     
-    return "Roman Territory";
+    return "Historical Territory";
 }
 
 // ============================================
@@ -2138,42 +2094,6 @@ const WORLD_EMPIRES = {
     
     // German Empire WW1
     german_ww1: {
-        name: 'German Empire (WW1)',
-        periods: [
-            {
-                startYear: 1914,
-                endYear: 1918,
-                name: 'German Empire - Maximum Extent (1917)',
-                territories: [
-                    // Germany proper
-                    [
-                        [55.0, 6.0], [54.5, 14.0], [52.5, 15.0], [51.0, 15.0],
-                        [50.0, 12.0], [48.5, 13.5], [47.5, 10.0], [47.5, 7.5],
-                        [49.0, 6.0], [50.0, 6.0], [51.5, 6.0], [55.0, 6.0]
-                    ],
-                    // Occupied Belgium
-                    [
-                        [51.5, 2.5], [51.5, 6.0], [50.5, 6.0], [49.5, 6.0],
-                        [49.5, 4.0], [50.0, 2.5], [51.5, 2.5]
-                    ],
-                    // Occupied Northern France
-                    [
-                        [50.5, 1.5], [50.0, 4.5], [49.0, 4.5], [48.5, 3.0],
-                        [49.0, 1.5], [50.5, 1.5]
-                    ],
-                    // Eastern Front gains (Poland, Baltics, Ukraine)
-                    [
-                        [56.0, 14.0], [57.5, 22.0], [56.0, 28.0], [54.0, 28.0],
-                        [52.0, 24.0], [50.0, 24.0], [48.0, 22.0], [50.0, 15.0],
-                        [52.5, 15.0], [56.0, 14.0]
-                    ]
-                ]
-            }
-        ]
-    },
-    
-    // German Empire (WW1)
-    german_ww1: {
         name: 'German Empire',
         periods: [
             {
@@ -2559,26 +2479,14 @@ const STATE = {
     wallLayers: [],
     
     // Timeline & Animation
-    currentIndex: 0,
     currentYear: DEFAULT_YEAR, // Year-based timeline
     isPlaying: false,
     playInterval: null, // For setInterval based animation
-    animationId: null,
-    lastUpdateTime: 0,
-    animationSpeed: 2, // Default to slower speed for better visibility
-    updateInterval: 1500, // Slower default
-    
-    // Territory transition animation
-    transitionInProgress: false,
-    transitionStartTime: 0,
-    transitionDuration: 1500,
-    pendingTerritories: null,  // Territories to transition to
+    animationSpeed: 3, // Default medium speed
     
     // UI State
     isInitialized: false,
     isMobile: false,
-    touchStartX: 0,
-    touchStartY: 0,
     eduExpanded: false,
     infoLocked: false,
     lockedContent: null,
@@ -2599,7 +2507,7 @@ function cacheDOMElements() {
         playBtn: document.getElementById('playBtn'),
         resetBtn: document.getElementById('resetBtn'),
         currentYear: document.getElementById('currentYear'),
-        era: document.querySelector('.era'),
+        era: document.getElementById('era'),
         periodName: document.getElementById('periodName'),
         periodDescription: document.getElementById('periodDescription'),
         loadingOverlay: document.getElementById('loadingOverlay'),
@@ -2884,29 +2792,26 @@ function setupEventListeners() {
         resetBtn.addEventListener('click', reset);
     }
     
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            STATE.currentYear = Math.max(MIN_YEAR, STATE.currentYear - 1);
-            if (slider) slider.value = STATE.currentYear;
-            updateDisplay();
-        } else if (e.key === 'ArrowRight') {
-            STATE.currentYear = Math.min(MAX_YEAR, STATE.currentYear + 1);
-            if (slider) slider.value = STATE.currentYear;
-            updateDisplay();
-        } else if (e.key === ' ') {
-            e.preventDefault(); // Prevent scrolling
-            togglePlay();
-        }
-    });
-    
-    // Handle window resize with throttling for performance
-    const throttledResize = utils.throttle(() => {
-        detectMobile();
-        if (STATE.map) STATE.map.invalidateSize();
-    }, 250);
-    
-    window.addEventListener('resize', throttledResize, { passive: true });
+    // Wire up speed slider
+    const speedSlider = document.getElementById('speedSlider');
+    if (speedSlider) {
+        speedSlider.addEventListener('input', (e) => {
+            STATE.animationSpeed = parseInt(e.target.value);
+            // If currently playing, restart interval with new speed
+            if (STATE.isPlaying) {
+                clearInterval(STATE.playInterval);
+                STATE.playInterval = setInterval(() => {
+                    if (STATE.currentYear >= MAX_YEAR) {
+                        togglePlay();
+                        return;
+                    }
+                    STATE.currentYear++;
+                    if (slider) slider.value = STATE.currentYear;
+                    updateDisplay();
+                }, SPEED_MAP[STATE.animationSpeed] || 1000);
+            }
+        });
+    }
     
     // Region navigation
     setupRegionNavigation();
@@ -3673,6 +3578,18 @@ function updateTimeBasedMarkers() {
 function updateDefensiveWalls(currentYear) {
     if (!STATE.map) return;
     
+    // Build a cache key from which walls are active at this year
+    const wallKey = [
+        currentYear >= -12 && currentYear <= 260 ? 'rhine' : '',
+        currentYear >= 10 && currentYear <= 400 ? 'danube' : '',
+        currentYear >= 85 && currentYear <= 260 ? 'germanic' : '',
+        currentYear >= 122 && currentYear <= 410 ? 'hadrian' : '',
+        currentYear >= 142 && currentYear <= 162 ? 'antonine' : ''
+    ].filter(Boolean).join(',');
+    
+    if (wallKey === STATE._lastWallKey) return;
+    STATE._lastWallKey = wallKey;
+    
     // Clear existing wall layers efficiently
     STATE.wallLayers = utils.removeLayers(STATE.wallLayers, STATE.map);
     // Hadrian's Wall (122 CE - 128 CE)
@@ -3927,112 +3844,12 @@ function createUnifiedTerritoryLayer(territories, isNew = false, color = '#DC143
     return layer;
 }
 
-// Get the entry point for a territory based on historical conquest direction
-function getConquestEntryPoint(territory) {
-    const name = (territory.name || '').toLowerCase().replace(/[\s_-]/g, '');
-    
-    // Check various name formats in CONQUEST_DIRECTIONS
-    const possibleKeys = [
-        name,
-        name.replace('province', ''),
-        territory.name?.toLowerCase()?.replace(/[\s]/g, '_'),
-    ];
-    
-    for (const key of possibleKeys) {
-        if (CONQUEST_DIRECTIONS[key]) {
-            return CONQUEST_DIRECTIONS[key];
-        }
-    }
-    
-    // Default: expand from center of polygon
-    const coords = getDetailedCoords(territory);
-    if (coords && coords.length > 0) {
-        let sumLat = 0, sumLon = 0;
-        coords.forEach(c => { sumLat += c[0]; sumLon += c[1]; });
-        return {
-            entryLat: sumLat / coords.length,
-            entryLon: sumLon / coords.length,
-            direction: 'center'
-        };
-    }
-    
-    return { entryLat: 41.9, entryLon: 12.5, direction: 'center' }; // Rome as default
-}
-
-// Calculate distance from entry point to a polygon coordinate
-function distanceFromEntry(entryLat, entryLon, lat, lon, direction) {
-    // Base distance calculation
-    const dLat = lat - entryLat;
-    const dLon = lon - entryLon;
-    
-    // Adjust distance based on conquest direction
-    // This creates a "wave" effect that moves in the historical direction
-    switch (direction) {
-        case 'n': return -dLat + Math.abs(dLon) * 0.3;
-        case 's': return dLat + Math.abs(dLon) * 0.3;
-        case 'e': return -dLon + Math.abs(dLat) * 0.3;
-        case 'w': return dLon + Math.abs(dLat) * 0.3;
-        case 'ne': return (-dLat - dLon) / 1.4;
-        case 'nw': return (-dLat + dLon) / 1.4;
-        case 'se': return (dLat - dLon) / 1.4;
-        case 'sw': return (dLat + dLon) / 1.4;
-        case 'center':
-        default:
-            return Math.sqrt(dLat * dLat + dLon * dLon);
-    }
-}
-
-// Create a single territory layer with water flow animation support
-function createSingleTerritoryLayer(territory, entryPoint) {
-    const coords = getDetailedCoords(territory);
-    if (!coords || coords.length === 0) return null;
-    
-    const layer = L.polygon(coords, {
-        fillColor: '#DC143C',
-        fillOpacity: 0,
-        stroke: false,
-        weight: 0,
-        color: 'transparent',
-        smoothFactor: 1.5,
-        className: 'territory-layer water-flow',
-        fillRule: 'nonzero',
-        interactive: true,
-        bubblingMouseEvents: false
-    });
-    
-    // Store entry point for animation
-    layer._entryPoint = entryPoint;
-    layer._coords = coords;
-    
-    return layer;
-}
-
-// Calculate the bounding box and furthest point from entry for a territory
-function getTerritoryAnimationBounds(coords, entryPoint) {
-    let maxDist = 0;
-    
-    coords.forEach(coord => {
-        const dist = distanceFromEntry(
-            entryPoint.entryLat, entryPoint.entryLon,
-            coord[0], coord[1], entryPoint.direction
-        );
-        maxDist = Math.max(maxDist, dist);
-    });
-    
-    return maxDist;
-}
-
 // Smoothly update a territory layer's opacity
 function setTerritoryOpacity(layer, fillOpacity) {
     if (!layer) return;
     layer.setStyle({
         fillOpacity: fillOpacity
     });
-}
-
-// Easing function for smooth animation
-function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 // Update territories for a new time period - the main function
@@ -4096,199 +3913,12 @@ function updateEmpireTerritories(empireId, territories, year) {
     }
 }
 
-// Find territories that are new in this period (not in previous period)
-function findNewTerritories(oldTerritories, newTerritories) {
-    const oldNames = new Set(oldTerritories.map(t => (t.name || '').toLowerCase().replace(/[\s_-]/g, '')));
-    return newTerritories.filter(t => {
-        const name = (t.name || '').toLowerCase().replace(/[\s_-]/g, '');
-        return !oldNames.has(name);
-    });
-}
-
-// Find territories that exist in both periods (continuing)
-function findContinuingTerritories(oldTerritories, newTerritories) {
-    const oldNames = new Set(oldTerritories.map(t => (t.name || '').toLowerCase().replace(/[\s_-]/g, '')));
-    return newTerritories.filter(t => {
-        const name = (t.name || '').toLowerCase().replace(/[\s_-]/g, '');
-        return oldNames.has(name);
-    });
-}
-
-// Animate transition between periods with water flow effect for new territories
-function animateUnifiedTransition(previousData, newTerritories, currentData, newKey, previousKey) {
-    const duration = getTransitionDuration();
-    const startTime = performance.now();
-    
-    const oldTerritories = previousData ? previousData.territories : [];
-    const oldLayer = previousData ? previousData.layer : null;
-    
-    // Separate new territories from continuing ones
-    const newlyConquered = findNewTerritories(oldTerritories, newTerritories);
-    const continuing = findContinuingTerritories(oldTerritories, newTerritories);
-    
-    // Create layer for continuing territories (simple fade)
-    const continuingLayer = continuing.length > 0 ? createUnifiedTerritoryLayer(continuing, false) : null;
-    if (continuingLayer) {
-        continuingLayer.addTo(STATE.territoryLayerGroup);
-        setTerritoryOpacity(continuingLayer, 0); // Start invisible
-    }
-    
-    // Create individual layers for new territories (water flow animation)
-    const newTerritoryLayers = [];
-    const newTerritoryData = [];
-    
-    newlyConquered.forEach(territory => {
-        if (territory.type === 'polygon') {
-            const entryPoint = getConquestEntryPoint(territory);
-            const coords = getDetailedCoords(territory);
-            
-            // Calculate the max distance for this territory
-            const maxDist = getTerritoryAnimationBounds(coords, entryPoint);
-            
-            const layer = createSingleTerritoryLayer(territory, entryPoint);
-            if (layer) {
-                layer.addTo(STATE.territoryLayerGroup);
-                newTerritoryLayers.push(layer);
-                newTerritoryData.push({
-                    layer,
-                    entryPoint,
-                    coords,
-                    maxDist
-                });
-            }
-        }
-    });
-    
-    // Also create the final unified layer (starts hidden, shown at end)
-    const finalLayer = createUnifiedTerritoryLayer(newTerritories, false);
-    
-    STATE.transitionInProgress = true;
-    
-    function animationFrame(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(1, elapsed / duration);
-        const easedProgress = easeInOutCubic(progress);
-        
-        // Fade out old layer
-        if (oldLayer) {
-            setTerritoryOpacity(oldLayer, 0.45 * (1 - easedProgress));
-        }
-        
-        // Fade in continuing territories (simple fade)
-        if (continuingLayer) {
-            setTerritoryOpacity(continuingLayer, 0.45 * easedProgress);
-        }
-        
-        // Water flow animation for newly conquered territories
-        // The fill expands from the entry point like water flowing
-        newTerritoryData.forEach(data => {
-            const { layer, entryPoint, coords, maxDist } = data;
-            
-            // Calculate how far the "water" has spread based on progress
-            const currentReach = maxDist * easedProgress;
-            
-            // Calculate a weighted opacity based on how much of the territory
-            // is within the current "water reach"
-            let coveredPoints = 0;
-            coords.forEach(coord => {
-                const dist = distanceFromEntry(
-                    entryPoint.entryLat, entryPoint.entryLon,
-                    coord[0], coord[1], entryPoint.direction
-                );
-                if (dist <= currentReach) {
-                    coveredPoints++;
-                }
-            });
-            
-            // Opacity increases as more of the territory is "reached" by water
-            const coverageRatio = coveredPoints / coords.length;
-            
-            // Use a gradual fill that follows the water flow
-            // Early in animation: low opacity, growing from entry point
-            // Late in animation: full opacity across whole territory
-            const fillOpacity = 0.45 * coverageRatio * easedProgress;
-            
-            setTerritoryOpacity(layer, Math.min(0.5, fillOpacity + 0.1 * easedProgress));
-        });
-        
-        if (progress < 1) {
-            requestAnimationFrame(animationFrame);
-        } else {
-            // Animation complete - clean up and show final unified layer
-            STATE.transitionInProgress = false;
-            
-            // Remove individual animation layers
-            newTerritoryLayers.forEach(layer => {
-                STATE.territoryLayerGroup.removeLayer(layer);
-            });
-            
-            // Remove continuing layer
-            if (continuingLayer) {
-                STATE.territoryLayerGroup.removeLayer(continuingLayer);
-            }
-            
-            // Remove old layer
-            if (oldLayer) {
-                STATE.territoryLayerGroup.removeLayer(oldLayer);
-            }
-            
-            // Show final unified layer
-            if (finalLayer) {
-                finalLayer.addTo(STATE.territoryLayerGroup);
-                setTerritoryOpacity(finalLayer, 0.45);
-                finalLayer.setStyle({ fillColor: '#8B0000' });
-                addUnifiedTerritoryInteraction(finalLayer, currentData);
-                STATE.activeTerritories.set(newKey, { layer: finalLayer, territories: newTerritories });
-            }
-            
-            // Clean up old state
-            if (previousKey) {
-                STATE.activeTerritories.delete(previousKey);
-            }
-        }
-    }
-    
-    requestAnimationFrame(animationFrame);
-}
-
-// Get transition duration based on speed setting
-function getTransitionDuration() {
-    const durations = { 1: 2500, 2: 2000, 3: 1500, 4: 1000, 5: 600 };
-    return durations[STATE.animationSpeed] || 1500;
-}
-
-// Add mouse/touch interaction to unified territory layer
-function addUnifiedTerritoryInteraction(layer, periodData) {
-    layer.on('mouseover', (e) => {
-        if (!STATE.infoLocked) {
-            const latlng = e.latlng;
-            showTerritoryInfo(periodData, false, latlng.lat, latlng.lng, false);
-        }
-        // Highlight on hover - slightly increase opacity
-        layer.setStyle({ fillOpacity: 0.55 });
-    });
-    
-    layer.on('mouseout', () => {
-        if (!STATE.infoLocked) {
-            updateDisplay();
-        }
-        layer.setStyle({ fillOpacity: 0.45 });
-    });
-    
-    layer.on('click', (e) => {
-        L.DomEvent.stopPropagation(e);
-        const latlng = e.latlng;
-        showTerritoryInfo(periodData, false, latlng.lat, latlng.lng, true);
-    });
-}
-
 // Clear all territories (used on reset)
 function clearAllTerritories() {
     if (STATE.territoryLayerGroup) {
         STATE.territoryLayerGroup.clearLayers();
     }
     STATE.activeTerritories.clear();
-    STATE.transitionInProgress = false;
 }
 
 // ============================================
@@ -4392,6 +4022,7 @@ function showRandomFact() {
         // Create toast notification
         const toast = document.createElement('div');
         toast.className = 'fact-toast';
+        toast.setAttribute('role', 'alert');
         toast.innerHTML = `<strong>💡 Did you know?</strong><br>${randomFact}`;
         document.body.appendChild(toast);
         
@@ -4522,12 +4153,6 @@ function updateDisplay(forceUpdate = false) {
     if (yearElement) yearElement.textContent = absYear;
     if (eraElement) eraElement.textContent = era;
     
-    // Clear all existing territory layers
-    if (STATE.territoryLayerGroup) {
-        STATE.territoryLayerGroup.clearLayers();
-    }
-    STATE.empireLayers = {};
-    
     // Find and display ALL active empires for this year
     const activeEmpires = [];
     
@@ -4560,17 +4185,33 @@ function updateDisplay(forceUpdate = false) {
         }
     }
     
-    // Render all active empires on the map
-    for (const empire of activeEmpires) {
-        // Skip Rome from WORLD_EMPIRES if we have detailed Roman data
-        if (empire.id === 'rome' && romanData) continue;
-        
-        renderEmpireOnMap(empire.id, empire.territories, empire.color, empire.periodName);
-    }
+    // Build a cache key from active empires to skip redundant re-renders
+    const cacheKey = activeEmpires.map(e => `${e.id}:${e.periodName}`).join('|') +
+        (romanData ? `|roman:${romanData.year}` : '');
     
-    // Render detailed Roman data if in Roman era
-    if (isRomanEra && romanData) {
-        updateTerritories(romanData.territories, year);
+    if (cacheKey !== STATE._lastDisplayKey || forceUpdate) {
+        STATE._lastDisplayKey = cacheKey;
+        
+        // Clear all existing territory layers
+        if (STATE.territoryLayerGroup) {
+            STATE.territoryLayerGroup.clearLayers();
+        }
+        STATE.empireLayers = {};
+        
+        // Render all active empires on the map
+        for (const empire of activeEmpires) {
+            // Skip Rome from WORLD_EMPIRES if we have detailed Roman data
+            if (empire.id === 'rome' && romanData) continue;
+            
+            renderEmpireOnMap(empire.id, empire.territories, empire.color, empire.periodName);
+        }
+        
+        // Render detailed Roman data if in Roman era
+        if (isRomanEra && romanData) {
+            updateTerritories(romanData.territories, year);
+        }
+        
+        // Always update time-based markers (clears stale markers outside Roman era)
         updateTimeBasedMarkers();
     }
     
@@ -4639,6 +4280,15 @@ function updateDisplay(forceUpdate = false) {
 function updateSeaRoutes(year) {
     if (!STATE.map) return;
     
+    // Build a key of active routes to skip redundant re-renders
+    const activeIds = Object.keys(SEA_ROUTES).filter(id => {
+        const r = SEA_ROUTES[id];
+        return year >= r.startYear && year <= r.endYear;
+    }).join(',');
+    
+    if (activeIds === STATE._lastSeaRouteKey) return;
+    STATE._lastSeaRouteKey = activeIds;
+    
     // Clear existing sea route layers
     seaRouteLayers.forEach(layer => {
         if (STATE.map.hasLayer(layer)) {
@@ -4647,12 +4297,9 @@ function updateSeaRoutes(year) {
     });
     seaRouteLayers = [];
     
-    let activeRoutes = 0;
-    
     // Add active sea routes for the current year
     for (const [routeId, route] of Object.entries(SEA_ROUTES)) {
         if (year >= route.startYear && year <= route.endYear) {
-            activeRoutes++;
             
             // Create the route line with animation
             const routeLine = L.polyline(route.points, {
@@ -4730,7 +4377,7 @@ function showSeaRouteInfo(route, isClick = false) {
     if (STATE.infoLocked && STATE.lockedContent?.data !== route) return;
     
     const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
+    const eraElement = document.getElementById('era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
@@ -4893,9 +4540,8 @@ function showEmpireDetails(empireId, periodName, color) {
     }
 }
 
-// Get empire-specific information
-function getEmpireInfo(empireId) {
-    const EMPIRE_INFO = {
+// Get empire-specific information (module-level constant for performance)
+const EMPIRE_INFO = {
         egypt: {
             description: "One of the world's oldest civilizations, flourishing along the Nile River for over 3,000 years.",
             capital: "Memphis, later Thebes, then Alexandria",
@@ -5216,8 +4862,9 @@ function getEmpireInfo(empireId) {
             ],
             leaders: ["Napoleon Bonaparte", "Joséphine de Beauharnais", "Marshal Ney", "Marshal Murat"]
         }
-    };
-    
+};
+
+function getEmpireInfo(empireId) {
     return EMPIRE_INFO[empireId] || null;
 }
 
@@ -5291,7 +4938,7 @@ function showCityInfo(city, isClick = false) {
     if (STATE.infoLocked && STATE.lockedContent?.data !== city) return;
     
     const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
+    const eraElement = document.getElementById('era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
@@ -5312,7 +4959,7 @@ function showFortInfo(fort, isClick = false) {
     if (STATE.infoLocked && STATE.lockedContent?.data !== fort) return;
     
     const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
+    const eraElement = document.getElementById('era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
@@ -5362,7 +5009,7 @@ function showWallInfo(wallName, startYear, endYear, isClick = false) {
     if (STATE.infoLocked && STATE.lockedContent?.data?.wallName !== wallName) return;
     
     const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
+    const eraElement = document.getElementById('era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
@@ -5411,7 +5058,7 @@ function showTerritoryInfo(periodData, isNewExpansion, lat, lon, isClick = false
     if (STATE.infoLocked && STATE.lockedContent?.data?.regionName !== regionName) return;
     
     const yearElement = document.getElementById('currentYear');
-    const eraElement = document.querySelector('.era');
+    const eraElement = document.getElementById('era');
     const nameElement = document.getElementById('periodName');
     const descElement = document.getElementById('periodDescription');
     
@@ -5486,7 +5133,7 @@ function togglePlay() {
             STATE.currentYear++;
             if (slider) slider.value = STATE.currentYear;
             updateDisplay();
-        }, 100); // 100ms per year
+        }, SPEED_MAP[STATE.animationSpeed] || 1000);
     }
 }
 
@@ -5636,10 +5283,8 @@ function setupOfflineDetection() {
     function updateOnlineStatus() {
         if (navigator.onLine) {
             document.body.classList.remove('offline');
-            console.log('✅ Back online');
         } else {
             document.body.classList.add('offline');
-            console.log('📵 Offline mode - using cached data');
         }
     }
     
@@ -5660,7 +5305,6 @@ function setupPWAFeatures() {
                       || document.referrer.includes('android-app://');
     
     if (isStandalone) {
-        console.log('✅ Running as installed PWA');
         document.body.classList.add('pwa-standalone');
     }
     
@@ -5690,10 +5334,9 @@ function setupPWAFeatures() {
                 const appState = JSON.parse(savedState);
                 // Only restore if less than 24 hours old
                 if (Date.now() - appState.timestamp < 24 * 60 * 60 * 1000) {
-                    STATE.currentYear = appState.currentYear || DEFAULT_YEAR;
-                    STATE.quizScore = appState.quizScore || 0;
-                    STATE.quizAnswered = appState.quizAnswered || 0;
-                    console.log('✅ Restored previous session');
+                    STATE.currentYear = appState.currentYear ?? DEFAULT_YEAR;
+                    STATE.quizScore = appState.quizScore ?? 0;
+                    STATE.quizAnswered = appState.quizAnswered ?? 0;
                 }
             }
         } catch (error) {
@@ -5702,7 +5345,8 @@ function setupPWAFeatures() {
     }
     
     // Save state periodically and on visibility change
-    setInterval(saveAppState, 30000); // Every 30 seconds
+    if (STATE._saveIntervalId) clearInterval(STATE._saveIntervalId);
+    STATE._saveIntervalId = setInterval(saveAppState, 30000); // Every 30 seconds
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             saveAppState();
