@@ -2647,17 +2647,19 @@ const utils = {
 // ============================================
 function init() {
     const startTime = performance.now();
+    showLoading();
+    
+    // Always setup event listeners and UI, regardless of map load status
+    cacheDOMElements();
+    detectMobile();
+    setupEventListeners();
+    setupKeyboardShortcuts();
+    setupEducationalFeatures();
     
     try {
-        showLoading();
-        cacheDOMElements(); // Cache DOM elements for performance
-        detectMobile();
         initializeMap();
-        initTerritorySystem(); // Initialize territory layer group
-        setupEventListeners();
-        setupKeyboardShortcuts();
+        initTerritorySystem();
         setupTouchGestures();
-        setupEducationalFeatures();
         
         // Initialize slider to current year
         if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
@@ -2681,9 +2683,20 @@ function init() {
             console.log(`✅ CHRONOS initialized in ${loadTime}ms`);
         }
     } catch (error) {
-        console.error('Initialization error:', error);
-        showError('Failed to initialize. Please check your connection and refresh.');
+        console.error('Map initialization error:', error);
+        // Still initialize slider and show UI even without map
+        if (STATE.dom.slider) STATE.dom.slider.value = STATE.currentYear;
+        updateDisplay(true);
         hideLoading();
+        
+        // Show a non-blocking warning instead of an alert
+        const infoPanel = document.querySelector('.info-panel');
+        if (infoPanel) {
+            const warning = document.createElement('p');
+            warning.style.cssText = 'color: #da3633; font-size: 0.9em; margin-top: 10px;';
+            warning.textContent = '⚠️ Map failed to load. Try using a local server or check your connection.';
+            infoPanel.appendChild(warning);
+        }
     }
 }
 
